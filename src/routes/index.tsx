@@ -1,24 +1,370 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
+import { useState } from "react";
+import {
+  Play, Pause, Heart, Sparkles, Moon, Wind, Flame, CloudRain, Trees,
+  Waves, Bird, Cloud, Coffee, Mountain, Music, Brain, Timer, Star,
+  ArrowRight, Check,
+} from "lucide-react";
+import { PageShell, SectionHeading } from "@/components/site-chrome";
+import { SOUND_LIBRARY, SoundCard } from "@/components/sound-card";
 
-// No head() here: the home route inherits title/description/og/twitter from
-// __root.tsx, and ships no og:image so serve-time hosting can inject the
-// project's social preview (explicit og:image or latest screenshot).
 export const Route = createFileRoute("/")({
-  component: Index,
+  head: () => ({
+    meta: [
+      { title: "Serene — Breathe. Relax. Feel better." },
+      { name: "description", content: "A premium relaxation platform. Nature sounds, guided meditation and deep sleep for a calmer, clearer mind." },
+      { property: "og:title", content: "Serene — Breathe. Relax. Feel better." },
+      { property: "og:description", content: "Nature sounds, guided meditation and deep sleep — a peaceful place, always in your pocket." },
+      { property: "og:url", content: "/" },
+    ],
+    links: [{ rel: "canonical", href: "/" }],
+    scripts: [{
+      type: "application/ld+json",
+      children: JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        name: "Serene",
+        applicationCategory: "HealthApplication",
+        operatingSystem: "iOS, Android, Web",
+        offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
+      }),
+    }],
+  }),
+  component: HomePage,
 });
 
-// IMPORTANT: Replace this placeholder. See ./README.md for routing conventions.
-function Index() {
+function HomePage() {
   return (
-    <div
-      className="flex min-h-screen items-center justify-center"
-      style={{ backgroundColor: "#fcfbf8" }}
-    >
-      <img
-        data-lovable-blank-page-placeholder="REMOVE_THIS"
-        src="https://cdn.gpteng.co/blank-app-v1.svg"
-        alt="Your app will live here!"
-      />
+    <PageShell>
+      <Hero />
+      <TrustBar />
+      <Features />
+      <SoundPreview />
+      <Mixer />
+      <AppPreview />
+      <Testimonials />
+      <CtaBand />
+    </PageShell>
+  );
+}
+
+function Hero() {
+  return (
+    <section className="relative px-4 pt-16 sm:pt-24 pb-20">
+      <div className="mx-auto max-w-6xl text-center">
+        <span className="inline-flex items-center gap-2 glass rounded-full px-4 py-1.5 text-xs font-medium text-ink-soft animate-rise">
+          <Sparkles className="h-3.5 w-3.5 text-brand" />
+          Now with adaptive soundscapes
+        </span>
+        <h1 className="mt-8 text-5xl sm:text-7xl md:text-8xl font-semibold text-ink leading-[0.98] tracking-tight animate-rise">
+          Breathe. Relax.
+          <br />
+          <span className="bg-gradient-to-r from-ink via-[#3b82f6] to-brand bg-clip-text text-transparent">
+            Feel better.
+          </span>
+        </h1>
+        <p className="mt-6 max-w-2xl mx-auto text-lg sm:text-xl text-ink-soft leading-relaxed animate-rise">
+          Your peaceful place, always in your pocket. Nature sounds, guided meditations
+          and sleep stories — designed to quiet the mind in seconds.
+        </p>
+        <div className="mt-10 flex flex-wrap items-center justify-center gap-3 animate-rise">
+          <Link to="/register" className="btn-primary px-7 py-3.5 rounded-full text-sm font-semibold inline-flex items-center gap-2">
+            Start free <ArrowRight className="h-4 w-4" />
+          </Link>
+          <Link to="/sounds" className="btn-ghost px-7 py-3.5 rounded-full text-sm font-medium inline-flex items-center gap-2">
+            <Play className="h-4 w-4 fill-current" /> Try a soundscape
+          </Link>
+        </div>
+
+        {/* floating preview cards */}
+        <div className="relative mt-20 max-w-5xl mx-auto">
+          <div className="glass-card rounded-[36px] p-6 sm:p-10">
+            <div className="grid gap-4 sm:grid-cols-3">
+              <PreviewSoundCard icon={CloudRain} title="Gentle Rain" mood="Focus" playing />
+              <PreviewSoundCard icon={Waves} title="Ocean Waves" mood="Calm" />
+              <PreviewSoundCard icon={Flame} title="Fireplace" mood="Sleep" />
+            </div>
+          </div>
+          <div className="hidden md:block absolute -top-8 -left-10 glass-card rounded-2xl px-5 py-4 animate-float-slow">
+            <div className="flex items-center gap-3">
+              <div className="grid place-items-center h-10 w-10 rounded-xl bg-gradient-to-br from-brand-soft to-brand">
+                <Moon className="h-4 w-4 text-primary-foreground" />
+              </div>
+              <div className="text-left">
+                <div className="text-xs text-ink-soft">Tonight</div>
+                <div className="text-sm font-semibold">Deep sleep, 8h 12m</div>
+              </div>
+            </div>
+          </div>
+          <div className="hidden md:block absolute -bottom-8 -right-8 glass-card rounded-2xl px-5 py-4 animate-float-slower">
+            <div className="flex items-center gap-3">
+              <div className="grid place-items-center h-10 w-10 rounded-xl bg-gradient-to-br from-brand-soft to-brand">
+                <Brain className="h-4 w-4 text-primary-foreground" />
+              </div>
+              <div className="text-left">
+                <div className="text-xs text-ink-soft">Focus streak</div>
+                <div className="text-sm font-semibold">14 sessions this week</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function PreviewSoundCard({ icon: Icon, title, mood, playing = false }: {
+  icon: typeof Waves; title: string; mood: string; playing?: boolean;
+}) {
+  const [p, setP] = useState(playing);
+  return (
+    <div className="glass rounded-3xl p-5 text-left transition-all hover:-translate-y-1 hover:shadow-2xl">
+      <div className="flex items-center justify-between">
+        <div className="grid place-items-center h-11 w-11 rounded-2xl bg-gradient-to-br from-sky-mist to-brand-soft">
+          <Icon className="h-5 w-5 text-ink" />
+        </div>
+        <button
+          onClick={() => setP(!p)}
+          className="grid place-items-center h-11 w-11 rounded-full btn-primary"
+          aria-label={p ? "Pause" : "Play"}
+        >
+          {p ? <Pause className="h-4 w-4 fill-current" /> : <Play className="h-4 w-4 fill-current ml-0.5" />}
+        </button>
+      </div>
+      <div className="mt-5">
+        <div className="text-xs text-ink-soft">{mood}</div>
+        <div className="text-lg font-semibold text-ink">{title}</div>
+      </div>
+      <div className="mt-4 h-1.5 rounded-full bg-white/60 overflow-hidden">
+        <div className={`h-full bg-gradient-to-r from-brand-soft to-brand ${p ? "w-2/3 animate-shimmer" : "w-1/4"}`} />
+      </div>
     </div>
+  );
+}
+
+function TrustBar() {
+  const items = ["Featured in Wellness Weekly", "4.9 on the App Store", "Trusted by 2M+ dreamers", "Editor's Choice 2025"];
+  return (
+    <section className="px-4">
+      <div className="mx-auto max-w-6xl glass rounded-full px-6 py-4 grid grid-cols-2 md:grid-cols-4 gap-3 text-center">
+        {items.map((i) => (
+          <div key={i} className="text-xs sm:text-sm text-ink-soft font-medium">{i}</div>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+const FEATURES = [
+  { icon: Trees, title: "Nature Sounds", desc: "Rain, ocean, forest — mastered in high fidelity." },
+  { icon: Moon, title: "Deep Sleep", desc: "Sleep stories and soundscapes that guide you off." },
+  { icon: Brain, title: "Meditation", desc: "Guided sessions from 3 to 45 minutes." },
+  { icon: Wind, title: "Breathing", desc: "Box, 4-7-8 and coherent breathing exercises." },
+  { icon: Sparkles, title: "Focus", desc: "Binaural beats and lo-fi loops that stick." },
+  { icon: Heart, title: "Relaxation", desc: "Gentle audio journeys to melt tension." },
+  { icon: Music, title: "Personal Playlists", desc: "Save the mixes that get you into flow." },
+  { icon: Timer, title: "Smart Timer", desc: "Fade out beautifully — never wake to silence." },
+  { icon: Star, title: "Favorites", desc: "Tap once. Your ritual is always one gesture away." },
+  { icon: Cloud, title: "Cross-device Sync", desc: "iPhone, iPad, web — everything, everywhere." },
+];
+
+function Features() {
+  return (
+    <section id="features" className="px-4 pt-32">
+      <SectionHeading
+        eyebrow="Everything you need"
+        title="A quieter mind, one tap away."
+        subtitle="Ten thoughtful tools, one calm interface. Made to disappear so you can be present."
+      />
+      <div className="mt-16 mx-auto max-w-6xl grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        {FEATURES.map((f) => (
+          <div key={f.title} className="glass-card rounded-3xl p-6 transition-all hover:-translate-y-1 group">
+            <div className="grid place-items-center h-12 w-12 rounded-2xl bg-gradient-to-br from-sky-mist to-brand-soft group-hover:scale-110 transition-transform">
+              <f.icon className="h-5 w-5 text-ink" />
+            </div>
+            <h3 className="mt-5 text-xl font-semibold text-ink">{f.title}</h3>
+            <p className="mt-2 text-sm text-ink-soft leading-relaxed">{f.desc}</p>
+          </div>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+function SoundPreview() {
+  return (
+    <section className="px-4 pt-32">
+      <div className="mx-auto max-w-6xl flex flex-col md:flex-row md:items-end justify-between gap-6">
+        <SectionHeading eyebrow="Sound library" title="A world of sound, curated." align="left" />
+        <Link to="/sounds" className="btn-ghost self-start md:self-auto px-5 py-2.5 rounded-full text-sm font-medium inline-flex items-center gap-2">
+          Explore all 16 <ArrowRight className="h-4 w-4" />
+        </Link>
+      </div>
+      <div className="mt-12 mx-auto max-w-6xl grid gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+        {SOUND_LIBRARY.slice(0, 8).map((s) => (
+          <SoundCard key={s.title} {...s} />
+        ))}
+      </div>
+    </section>
+  );
+}
+
+function Mixer() {
+  const [mix, setMix] = useState({ Rain: 40, Wind: 20, Fire: 50, Birds: 15 });
+  const rows = [
+    { key: "Rain" as const, icon: CloudRain },
+    { key: "Wind" as const, icon: Wind },
+    { key: "Fire" as const, icon: Flame },
+    { key: "Birds" as const, icon: Bird },
+  ];
+  return (
+    <section className="px-4 pt-32">
+      <div className="mx-auto max-w-6xl grid gap-10 md:grid-cols-2 md:items-center">
+        <div>
+          <SectionHeading
+            eyebrow="Sound mixer"
+            title="Design the silence that suits you."
+            subtitle="Combine sounds like a producer. Save your mix, open it in one tap tomorrow."
+            align="left"
+          />
+          <Link to="/register" className="mt-8 inline-flex btn-primary px-6 py-3 rounded-full text-sm font-semibold items-center gap-2">
+            Try the mixer <ArrowRight className="h-4 w-4" />
+          </Link>
+        </div>
+        <div className="glass-card rounded-[32px] p-8">
+          {rows.map(({ key, icon: Icon }) => (
+            <div key={key} className="py-4 first:pt-0 last:pb-0 border-b border-white/50 last:border-0">
+              <div className="flex items-center justify-between gap-4">
+                <div className="flex items-center gap-3 min-w-0">
+                  <div className="grid place-items-center h-10 w-10 rounded-xl bg-gradient-to-br from-sky-mist to-brand-soft shrink-0">
+                    <Icon className="h-4 w-4 text-ink" />
+                  </div>
+                  <div className="font-medium">{key}</div>
+                </div>
+                <div className="text-sm text-ink-soft tabular-nums">{mix[key]}%</div>
+              </div>
+              <input
+                type="range" min={0} max={100} value={mix[key]}
+                onChange={(e) => setMix({ ...mix, [key]: Number(e.target.value) })}
+                className="mt-3 w-full accent-[#87c8ff]"
+                aria-label={`${key} volume`}
+              />
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function AppPreview() {
+  return (
+    <section className="px-4 pt-32">
+      <div className="mx-auto max-w-6xl glass-card rounded-[40px] p-8 sm:p-16 overflow-hidden relative">
+        <div className="grid gap-10 md:grid-cols-2 md:items-center">
+          <div>
+            <SectionHeading
+              eyebrow="Everywhere you are"
+              title="Beautifully quiet, on every device."
+              subtitle="Native apps for iPhone, iPad, Android, macOS and the web. Your rituals sync in real time."
+              align="left"
+            />
+          </div>
+          <div className="relative h-[440px]">
+            <PhoneMock className="absolute left-4 top-4 rotate-[-6deg] animate-float-slow" title="Rain" mood="Deep focus" icon={CloudRain} />
+            <PhoneMock className="absolute right-4 bottom-0 rotate-[6deg] animate-float-slower" title="Night Forest" mood="Sleep" icon={Moon} />
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function PhoneMock({ className = "", title, mood, icon: Icon }: {
+  className?: string; title: string; mood: string; icon: typeof Waves;
+}) {
+  return (
+    <div className={`w-[240px] rounded-[42px] p-2 bg-gradient-to-b from-white/90 to-white/60 border border-white/80 shadow-2xl ${className}`}>
+      <div className="rounded-[34px] bg-gradient-to-br from-sky-ice via-white to-sky-mist p-5 h-[400px] flex flex-col">
+        <div className="mx-auto h-1 w-16 rounded-full bg-ink/10" />
+        <div className="mt-6 grid place-items-center h-40 rounded-3xl bg-gradient-to-br from-brand-soft to-brand">
+          <Icon className="h-16 w-16 text-white/90" strokeWidth={1.2} />
+        </div>
+        <div className="mt-5">
+          <div className="text-[10px] uppercase tracking-widest text-ink-soft">{mood}</div>
+          <div className="text-xl font-semibold">{title}</div>
+        </div>
+        <div className="mt-auto flex items-center justify-between">
+          <span className="text-xs text-ink-soft tabular-nums">01:24</span>
+          <button className="grid place-items-center h-12 w-12 rounded-full btn-primary" aria-label="Play">
+            <Play className="h-5 w-5 fill-current ml-0.5" />
+          </button>
+          <span className="text-xs text-ink-soft tabular-nums">08:00</span>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+const TESTIMONIALS = [
+  { name: "Ava Lindqvist", role: "Designer, Stockholm", quote: "I fall asleep before the first story ends. Serene replaced three apps for me." },
+  { name: "Marcus Chen", role: "Founder, Singapore", quote: "The mixer is quietly genius. My focus sessions have never been calmer." },
+  { name: "Sofia Rey", role: "Therapist, Barcelona", quote: "I recommend Serene to clients weekly. It feels premium without ever being loud." },
+];
+
+function Testimonials() {
+  return (
+    <section className="px-4 pt-32">
+      <SectionHeading eyebrow="Loved by 2M+ people" title="A calmer life, in their words." />
+      <div className="mt-14 mx-auto max-w-6xl grid gap-4 md:grid-cols-3">
+        {TESTIMONIALS.map((t) => (
+          <figure key={t.name} className="glass-card rounded-3xl p-7">
+            <div className="flex gap-0.5 text-brand">
+              {[...Array(5)].map((_, i) => <Star key={i} className="h-4 w-4 fill-current" />)}
+            </div>
+            <blockquote className="mt-5 text-lg text-ink leading-relaxed">"{t.quote}"</blockquote>
+            <figcaption className="mt-6 flex items-center gap-3">
+              <div className="h-11 w-11 rounded-full bg-gradient-to-br from-sky-mist to-brand-soft" />
+              <div>
+                <div className="text-sm font-semibold">{t.name}</div>
+                <div className="text-xs text-ink-soft">{t.role}</div>
+              </div>
+            </figcaption>
+          </figure>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+function CtaBand() {
+  return (
+    <section className="px-4 pt-32">
+      <div className="mx-auto max-w-6xl glass-card rounded-[40px] p-10 sm:p-16 text-center relative overflow-hidden">
+        <div aria-hidden className="absolute -top-20 -left-20 h-80 w-80 rounded-full bg-brand-soft/40 blur-3xl animate-float-slow" />
+        <div aria-hidden className="absolute -bottom-20 -right-20 h-80 w-80 rounded-full bg-sky-mist/70 blur-3xl animate-float-slower" />
+        <div className="relative">
+          <h2 className="text-4xl sm:text-6xl font-semibold text-ink leading-tight">
+            Your peaceful place<br />begins here.
+          </h2>
+          <p className="mt-5 text-lg text-ink-soft max-w-xl mx-auto">
+            Seven days free. No card required. Cancel any time.
+          </p>
+          <div className="mt-8 flex flex-wrap justify-center gap-3">
+            <Link to="/register" className="btn-primary px-7 py-3.5 rounded-full text-sm font-semibold inline-flex items-center gap-2">
+              Start free <ArrowRight className="h-4 w-4" />
+            </Link>
+            <Link to="/pricing" className="btn-ghost px-7 py-3.5 rounded-full text-sm font-medium">
+              See pricing
+            </Link>
+          </div>
+          <div className="mt-8 flex flex-wrap justify-center gap-6 text-xs text-ink-soft">
+            {["No ads, ever","Cancel anytime","Sync across devices"].map((t) => (
+              <span key={t} className="inline-flex items-center gap-1.5"><Check className="h-3.5 w-3.5 text-brand" />{t}</span>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
   );
 }
