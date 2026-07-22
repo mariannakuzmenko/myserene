@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
-import { PageShell, SectionHeading } from "@/components/site-chrome";
+import { PageShell, SectionHeading, Scene, NATURE } from "@/components/site-chrome";
 import { SOUND_LIBRARY, SoundCard } from "@/components/sound-card";
 
 export const Route = createFileRoute("/sounds")({
@@ -24,7 +24,7 @@ function SoundsPage() {
   const shown = cat === "All" ? SOUND_LIBRARY : SOUND_LIBRARY.filter((s) => s.cat === cat);
   return (
     <PageShell>
-      <section className="px-4 pt-16 pb-8">
+      <Scene image={NATURE.waterfall} className="px-4 pt-20 pb-16 rounded-b-[48px]" minHeight="60vh">
         <SectionHeading
           eyebrow="Sound library"
           title="A world of sound, curated."
@@ -43,8 +43,8 @@ function SoundsPage() {
             </button>
           ))}
         </div>
-      </section>
-      <section className="px-4 pt-8">
+      </Scene>
+      <section className="px-4 pt-16">
         <div className="mx-auto max-w-6xl grid gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
           {shown.map((s) => <SoundCard key={s.title} {...s} />)}
         </div>

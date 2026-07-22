@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowRight, Trees, Moon, Brain, Wind, Sparkles, Heart, Music, Timer, Star, Cloud } from "lucide-react";
-import { PageShell, SectionHeading } from "@/components/site-chrome";
+import { PageShell, SectionHeading, Scene, NATURE } from "@/components/site-chrome";
 
 export const Route = createFileRoute("/features")({
   head: () => ({
@@ -32,10 +32,10 @@ const F = [
 function FeaturesPage() {
   return (
     <PageShell>
-      <section className="px-4 pt-16 pb-8">
+      <Scene image={NATURE.bamboo} className="px-4 pt-20 pb-16 rounded-b-[48px]" minHeight="55vh">
         <SectionHeading eyebrow="Everything Serene does" title="Ten quiet tools. One calm interface." subtitle="Designed to disappear so you can be present." />
-      </section>
-      <section className="px-4 pt-8">
+      </Scene>
+      <section className="px-4 pt-16">
         <div className="mx-auto max-w-6xl grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {F.map((f) => (
             <div key={f.title} className="glass-card rounded-3xl p-7 transition-all hover:-translate-y-1 group">

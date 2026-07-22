@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { Moon, Star, CloudRain, Waves, BookOpen, ArrowRight, Play } from "lucide-react";
-import { PageShell, SectionHeading } from "@/components/site-chrome";
+import { PageShell, SectionHeading, Scene, NATURE } from "@/components/site-chrome";
 
 export const Route = createFileRoute("/sleep")({
   head: () => ({
@@ -28,14 +28,14 @@ const STORIES = [
 function SleepPage() {
   return (
     <PageShell>
-      <section className="px-4 pt-16 pb-8">
+      <Scene image={NATURE.beachSunset} className="px-4 pt-20 pb-16 rounded-b-[48px]" minHeight="55vh">
         <SectionHeading
           eyebrow="Sleep"
           title="Fall asleep faster. Wake up gentler."
           subtitle="Bedtime stories, ambient loops and sleep music engineered for the last five minutes before dreams."
         />
-      </section>
-      <section className="px-4 pt-8">
+      </Scene>
+      <section className="px-4 pt-16">
         <div className="mx-auto max-w-6xl grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {STORIES.map((s) => (
             <div key={s.title} className="glass-card rounded-3xl overflow-hidden transition-all hover:-translate-y-1 group">
