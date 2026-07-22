@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Menu, X, Waves, Instagram, Twitter, Youtube } from "lucide-react";
 
 const NAV = [
@@ -149,16 +149,87 @@ function FooterCol({ title, links }: { title: string; links: [string, string][] 
 export function AuroraBg() {
   return (
     <div aria-hidden className="pointer-events-none fixed inset-0 -z-10 overflow-hidden bg-aurora">
-      <div className="absolute -top-40 -left-40 h-[520px] w-[520px] rounded-full bg-brand-soft/50 blur-3xl animate-float-slow" />
-      <div className="absolute top-1/3 -right-40 h-[600px] w-[600px] rounded-full bg-sky-mist/70 blur-3xl animate-float-slower" />
-      <div className="absolute bottom-0 left-1/3 h-[400px] w-[400px] rounded-full bg-brand/25 blur-3xl animate-float-slow" />
+      <div className="absolute -top-40 -left-40 h-[520px] w-[520px] rounded-full bg-mint/60 blur-3xl animate-float-slow" />
+      <div className="absolute top-1/3 -right-40 h-[600px] w-[600px] rounded-full bg-aqua/50 blur-3xl animate-float-slower" />
+      <div className="absolute bottom-0 left-1/3 h-[420px] w-[420px] rounded-full bg-sun/40 blur-3xl animate-float-slow" />
+      <div className="absolute top-1/2 left-1/2 h-[300px] w-[300px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-emerald/10 blur-3xl animate-breathe" />
+      {/* Floating particles */}
+      <Particles />
+      {/* Soft light rays */}
+      <div className="absolute inset-0 opacity-40 mix-blend-soft-light bg-[radial-gradient(ellipse_at_top,rgba(255,255,255,0.9),transparent_60%)]" />
+    </div>
+  );
+}
+
+function Particles() {
+  // 18 particles, deterministic positions & delays
+  const dots = Array.from({ length: 18 }, (_, i) => {
+    const left = (i * 53) % 100;
+    const size = 3 + ((i * 7) % 5);
+    const delay = (i * 1.3) % 12;
+    const dur = 14 + ((i * 5) % 14);
+    return { left, size, delay, dur, i };
+  });
+  return (
+    <div className="absolute inset-0">
+      {dots.map((d) => (
+        <span
+          key={d.i}
+          className="absolute rounded-full bg-white/70 shadow-[0_0_12px_rgba(255,255,255,0.9)]"
+          style={{
+            left: `${d.left}%`,
+            bottom: `-5vh`,
+            width: d.size,
+            height: d.size,
+            animation: `particle ${d.dur}s linear ${d.delay}s infinite`,
+          }}
+        />
+      ))}
+    </div>
+  );
+}
+
+function useTimeOfDay() {
+  useEffect(() => {
+    const apply = () => {
+      const h = new Date().getHours();
+      const cls =
+        h >= 5 && h < 10 ? "tod-morning" :
+        h >= 10 && h < 17 ? "tod-day" :
+        h >= 17 && h < 20 ? "tod-sunset" : "tod-night";
+      const html = document.documentElement;
+      html.classList.remove("tod-morning","tod-day","tod-sunset","tod-night");
+      html.classList.add(cls);
+    };
+    apply();
+    const id = setInterval(apply, 60_000);
+    return () => clearInterval(id);
+  }, []);
+}
+
+function LoadingVeil() {
+  const [gone, setGone] = useState(false);
+  useEffect(() => {
+    const t = setTimeout(() => setGone(true), 900);
+    return () => clearTimeout(t);
+  }, []);
+  if (gone) return null;
+  return (
+    <div className="fixed inset-0 z-[100] grid place-items-center bg-aurora transition-opacity duration-700"
+         style={{ opacity: gone ? 0 : 1 }}>
+      <div className="relative">
+        <div className="breath-orb h-24 w-24 rounded-full animate-breathe" />
+        <div className="absolute inset-0 rounded-full border border-white/60" style={{ animation: "ripple 2s ease-out infinite" }} />
+      </div>
     </div>
   );
 }
 
 export function PageShell({ children }: { children: React.ReactNode }) {
+  useTimeOfDay();
   return (
     <div className="relative min-h-screen">
+      <LoadingVeil />
       <AuroraBg />
       <Header />
       <main className="animate-rise">{children}</main>
@@ -166,6 +237,46 @@ export function PageShell({ children }: { children: React.ReactNode }) {
     </div>
   );
 }
+
+/**
+ * Scene — a full-width cinematic section with a nature photo background,
+ * gradient overlay for readability, and gentle drift animation.
+ */
+export function Scene({
+  image,
+  children,
+  className = "",
+  dark = false,
+  minHeight,
+}: {
+  image: string;
+  children: React.ReactNode;
+  className?: string;
+  dark?: boolean;
+  minHeight?: string;
+}) {
+  return (
+    <section className={`scene ${dark ? "scene-dark" : ""} ${className}`} style={{ minHeight }}>
+      <div className="scene-img" style={{ backgroundImage: `url(${image})` }} />
+      <div className="scene-overlay" />
+      {children}
+    </section>
+  );
+}
+
+/** Curated nature imagery (Unsplash) for reusable scenes. */
+export const NATURE = {
+  sunrise: "https://images.unsplash.com/photo-1503803548695-c2a7b4a5b875?auto=format&fit=crop&w=2400&q=80",
+  ocean: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=2400&q=80",
+  forest: "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&w=2400&q=80",
+  waterfall: "https://images.unsplash.com/photo-1432405972618-c60b0225b8f9?auto=format&fit=crop&w=2400&q=80",
+  lake: "https://images.unsplash.com/photo-1470770841072-f978cf4d019e?auto=format&fit=crop&w=2400&q=80",
+  bamboo: "https://images.unsplash.com/photo-1441325193581-b6dc9a1a6adb?auto=format&fit=crop&w=2400&q=80",
+  beachSunset: "https://images.unsplash.com/photo-1502680390469-be75c86b636f?auto=format&fit=crop&w=2400&q=80",
+  night: "https://images.unsplash.com/photo-1419242902214-272b3f66ee7a?auto=format&fit=crop&w=2400&q=80",
+  mist: "https://images.unsplash.com/photo-1418065460487-3e41a6c84dc5?auto=format&fit=crop&w=2400&q=80",
+  mountains: "https://images.unsplash.com/photo-1454496522488-7a8e488e8606?auto=format&fit=crop&w=2400&q=80",
+};
 
 export function SectionHeading({ eyebrow, title, subtitle, align = "center" }: {
   eyebrow?: string; title: string; subtitle?: string; align?: "center" | "left";
@@ -178,7 +289,7 @@ export function SectionHeading({ eyebrow, title, subtitle, align = "center" }: {
           {eyebrow}
         </span>
       )}
-      <h2 className="mt-5 text-4xl sm:text-5xl md:text-6xl font-semibold text-ink leading-[1.05]">
+      <h2 className="mt-5 text-4xl sm:text-5xl md:text-6xl font-medium text-ink leading-[1.05]">
         {title}
       </h2>
       {subtitle && (
