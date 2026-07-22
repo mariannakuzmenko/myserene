@@ -5,7 +5,7 @@ import {
   Waves, Bird, Cloud, Coffee, Mountain, Music, Brain, Timer, Star,
   ArrowRight, Check,
 } from "lucide-react";
-import { PageShell, SectionHeading } from "@/components/site-chrome";
+import { PageShell, SectionHeading, Scene, NATURE } from "@/components/site-chrome";
 import { SOUND_LIBRARY, SoundCard } from "@/components/sound-card";
 
 export const Route = createFileRoute("/")({
@@ -50,24 +50,26 @@ function HomePage() {
 
 function Hero() {
   return (
-    <section className="relative px-4 pt-16 sm:pt-24 pb-20">
-      <div className="mx-auto max-w-6xl text-center">
+    <Scene image={NATURE.sunrise} className="px-4 pt-16 sm:pt-24 pb-24 rounded-b-[48px]" minHeight="90vh">
+      <div className="mx-auto max-w-6xl text-center relative">
+        {/* Breathing halo behind headline */}
+        <div aria-hidden className="pointer-events-none absolute left-1/2 top-24 -translate-x-1/2 h-[360px] w-[360px] rounded-full bg-gradient-to-br from-white/60 to-mint/40 blur-3xl animate-breathe" />
         <span className="inline-flex items-center gap-2 glass rounded-full px-4 py-1.5 text-xs font-medium text-ink-soft animate-rise">
           <Sparkles className="h-3.5 w-3.5 text-brand" />
           Now with adaptive soundscapes
         </span>
-        <h1 className="mt-8 text-5xl sm:text-7xl md:text-8xl font-semibold text-ink leading-[0.98] tracking-tight animate-rise">
+        <h1 className="relative mt-8 text-5xl sm:text-7xl md:text-8xl font-medium text-ink leading-[0.98] tracking-tight animate-rise">
           Breathe. Relax.
           <br />
-          <span className="bg-gradient-to-r from-ink via-[#3b82f6] to-brand bg-clip-text text-transparent">
+          <span className="text-gradient-nature italic" style={{ fontFamily: "Fraunces, serif" }}>
             Feel better.
           </span>
         </h1>
-        <p className="mt-6 max-w-2xl mx-auto text-lg sm:text-xl text-ink-soft leading-relaxed animate-rise">
+        <p className="relative mt-6 max-w-2xl mx-auto text-lg sm:text-xl text-ink-soft leading-relaxed animate-rise">
           Your peaceful place, always in your pocket. Nature sounds, guided meditations
           and sleep stories — designed to quiet the mind in seconds.
         </p>
-        <div className="mt-10 flex flex-wrap items-center justify-center gap-3 animate-rise">
+        <div className="relative mt-10 flex flex-wrap items-center justify-center gap-3 animate-rise">
           <Link to="/register" className="btn-primary px-7 py-3.5 rounded-full text-sm font-semibold inline-flex items-center gap-2">
             Start free <ArrowRight className="h-4 w-4" />
           </Link>
@@ -87,7 +89,7 @@ function Hero() {
           </div>
           <div className="hidden md:block absolute -top-8 -left-10 glass-card rounded-2xl px-5 py-4 animate-float-slow">
             <div className="flex items-center gap-3">
-              <div className="grid place-items-center h-10 w-10 rounded-xl bg-gradient-to-br from-brand-soft to-brand">
+              <div className="grid place-items-center h-10 w-10 rounded-xl bg-gradient-to-br from-mint to-emerald">
                 <Moon className="h-4 w-4 text-primary-foreground" />
               </div>
               <div className="text-left">
@@ -98,7 +100,7 @@ function Hero() {
           </div>
           <div className="hidden md:block absolute -bottom-8 -right-8 glass-card rounded-2xl px-5 py-4 animate-float-slower">
             <div className="flex items-center gap-3">
-              <div className="grid place-items-center h-10 w-10 rounded-xl bg-gradient-to-br from-brand-soft to-brand">
+              <div className="grid place-items-center h-10 w-10 rounded-xl bg-gradient-to-br from-aqua to-brand">
                 <Brain className="h-4 w-4 text-primary-foreground" />
               </div>
               <div className="text-left">
@@ -109,7 +111,7 @@ function Hero() {
           </div>
         </div>
       </div>
-    </section>
+    </Scene>
   );
 }
 
@@ -170,7 +172,7 @@ const FEATURES = [
 
 function Features() {
   return (
-    <section id="features" className="px-4 pt-32">
+    <Scene image={NATURE.forest} className="px-4 pt-32 pb-32 mt-24 rounded-[48px] mx-4">
       <SectionHeading
         eyebrow="Everything you need"
         title="A quieter mind, one tap away."
@@ -179,7 +181,7 @@ function Features() {
       <div className="mt-16 mx-auto max-w-6xl grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {FEATURES.map((f) => (
           <div key={f.title} className="glass-card rounded-3xl p-6 transition-all hover:-translate-y-1 group">
-            <div className="grid place-items-center h-12 w-12 rounded-2xl bg-gradient-to-br from-sky-mist to-brand-soft group-hover:scale-110 transition-transform">
+            <div className="grid place-items-center h-12 w-12 rounded-2xl bg-gradient-to-br from-mint to-aqua group-hover:scale-110 transition-transform">
               <f.icon className="h-5 w-5 text-ink" />
             </div>
             <h3 className="mt-5 text-xl font-semibold text-ink">{f.title}</h3>
@@ -187,7 +189,7 @@ function Features() {
           </div>
         ))}
       </div>
-    </section>
+    </Scene>
   );
 }
 
@@ -259,7 +261,7 @@ function Mixer() {
 
 function AppPreview() {
   return (
-    <section className="px-4 pt-32">
+    <Scene image={NATURE.lake} className="px-4 pt-32 pb-32 mt-24 rounded-[48px] mx-4">
       <div className="mx-auto max-w-6xl glass-card rounded-[40px] p-8 sm:p-16 overflow-hidden relative">
         <div className="grid gap-10 md:grid-cols-2 md:items-center">
           <div>
@@ -276,7 +278,7 @@ function AppPreview() {
           </div>
         </div>
       </div>
-    </section>
+    </Scene>
   );
 }
 
@@ -339,32 +341,43 @@ function Testimonials() {
 
 function CtaBand() {
   return (
-    <section className="px-4 pt-32">
-      <div className="mx-auto max-w-6xl glass-card rounded-[40px] p-10 sm:p-16 text-center relative overflow-hidden">
+    <Scene image={NATURE.night} dark className="px-4 pt-32 pb-32 mt-24 rounded-[48px] mx-4">
+      {/* Twinkling stars */}
+      <div aria-hidden className="absolute inset-0 pointer-events-none">
+        {Array.from({ length: 24 }).map((_, i) => (
+          <span key={i} className="absolute h-1 w-1 rounded-full bg-white/90 animate-twinkle"
+            style={{
+              left: `${(i * 37) % 100}%`,
+              top: `${(i * 53) % 90}%`,
+              animationDelay: `${(i * 0.4) % 4}s`,
+            }} />
+        ))}
+      </div>
+      <div className="mx-auto max-w-6xl glass-dark rounded-[40px] p-10 sm:p-16 text-center relative overflow-hidden">
         <div aria-hidden className="absolute -top-20 -left-20 h-80 w-80 rounded-full bg-brand-soft/40 blur-3xl animate-float-slow" />
         <div aria-hidden className="absolute -bottom-20 -right-20 h-80 w-80 rounded-full bg-sky-mist/70 blur-3xl animate-float-slower" />
         <div className="relative">
-          <h2 className="text-4xl sm:text-6xl font-semibold text-ink leading-tight">
+          <h2 className="text-4xl sm:text-6xl font-medium leading-tight text-white">
             Your peaceful place<br />begins here.
           </h2>
-          <p className="mt-5 text-lg text-ink-soft max-w-xl mx-auto">
+          <p className="mt-5 text-lg text-white/80 max-w-xl mx-auto">
             Seven days free. No card required. Cancel any time.
           </p>
           <div className="mt-8 flex flex-wrap justify-center gap-3">
             <Link to="/register" className="btn-primary px-7 py-3.5 rounded-full text-sm font-semibold inline-flex items-center gap-2">
               Start free <ArrowRight className="h-4 w-4" />
             </Link>
-            <Link to="/pricing" className="btn-ghost px-7 py-3.5 rounded-full text-sm font-medium">
+            <Link to="/pricing" className="btn-ghost px-7 py-3.5 rounded-full text-sm font-medium text-white">
               See pricing
             </Link>
           </div>
-          <div className="mt-8 flex flex-wrap justify-center gap-6 text-xs text-ink-soft">
+          <div className="mt-8 flex flex-wrap justify-center gap-6 text-xs text-white/70">
             {["No ads, ever","Cancel anytime","Sync across devices"].map((t) => (
-              <span key={t} className="inline-flex items-center gap-1.5"><Check className="h-3.5 w-3.5 text-brand" />{t}</span>
+              <span key={t} className="inline-flex items-center gap-1.5"><Check className="h-3.5 w-3.5 text-mint" />{t}</span>
             ))}
           </div>
         </div>
       </div>
-    </section>
+    </Scene>
   );
 }
