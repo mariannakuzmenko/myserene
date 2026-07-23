@@ -11,6 +11,9 @@ import { useEffect, type ReactNode } from "react";
 
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
+import { AudioProvider } from "../lib/audio/audio-provider";
+import { FloatingAudioPlayer } from "../components/audio-player";
+import { ImmersiveMode } from "../components/immersive-mode";
 
 function NotFoundComponent() {
   return (
@@ -122,8 +125,12 @@ function RootComponent() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
-      <Outlet />
+      <AudioProvider>
+        {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
+        <Outlet />
+        <FloatingAudioPlayer />
+        <ImmersiveMode />
+      </AudioProvider>
     </QueryClientProvider>
   );
 }
