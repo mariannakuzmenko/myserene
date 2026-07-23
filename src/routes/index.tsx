@@ -1,12 +1,14 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
 import {
-  Play, Pause, Heart, Sparkles, Moon, Wind, Flame, CloudRain, Trees,
-  Waves, Bird, Cloud, Coffee, Mountain, Music, Brain, Timer, Star,
+  Play, Pause, Sparkles, Moon, Wind, Flame, CloudRain, Trees,
+  Waves, Bird, Cloud, Music, Brain, Timer, Star, Heart,
   ArrowRight, Check,
 } from "lucide-react";
 import { PageShell, SectionHeading, Scene, NATURE } from "@/components/site-chrome";
 import { SOUND_LIBRARY, SoundCard } from "@/components/sound-card";
+import { useAudio } from "@/lib/audio/audio-provider";
+import type { SoundId } from "@/lib/audio/catalog";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -49,6 +51,7 @@ function HomePage() {
 }
 
 function Hero() {
+  const audio = useAudio();
   return (
     <Scene image={NATURE.sunrise} className="px-4 pt-16 sm:pt-24 pb-24 rounded-b-[48px]" minHeight="90vh">
       <div className="mx-auto max-w-6xl text-center relative">
@@ -58,23 +61,29 @@ function Hero() {
           <Sparkles className="h-3.5 w-3.5 text-brand" />
           Now with adaptive soundscapes
         </span>
-        <h1 className="relative mt-8 text-5xl sm:text-7xl md:text-8xl font-medium text-ink leading-[0.98] tracking-tight animate-rise">
+        <h1 className="relative mt-8 text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-medium text-ink leading-[1.02] tracking-tight animate-rise">
           Breathe. Relax.
           <br />
           <span className="text-gradient-nature italic" style={{ fontFamily: "Fraunces, serif" }}>
             Feel better.
           </span>
         </h1>
-        <p className="relative mt-6 max-w-2xl mx-auto text-lg sm:text-xl text-ink-soft leading-relaxed animate-rise">
+        <p className="relative mt-6 max-w-2xl mx-auto text-base sm:text-lg md:text-xl text-ink-soft leading-relaxed animate-rise px-2">
           Your peaceful place, always in your pocket. Nature sounds, guided meditations
           and sleep stories — designed to quiet the mind in seconds.
         </p>
         <div className="relative mt-10 flex flex-wrap items-center justify-center gap-3 animate-rise">
-          <Link to="/register" className="btn-primary px-7 py-3.5 rounded-full text-sm font-semibold inline-flex items-center gap-2">
-            Start free <ArrowRight className="h-4 w-4" />
-          </Link>
+          <button
+            onClick={() => audio.startImmersive("rain")}
+            className="btn-primary px-7 py-3.5 rounded-full text-sm font-semibold inline-flex items-center gap-2"
+          >
+            <Sparkles className="h-4 w-4" /> Start Relaxation
+          </button>
           <Link to="/sounds" className="btn-ghost px-7 py-3.5 rounded-full text-sm font-medium inline-flex items-center gap-2">
-            <Play className="h-4 w-4 fill-current" /> Try a soundscape
+            <Play className="h-4 w-4 fill-current" /> Explore sounds
+          </Link>
+          <Link to="/register" className="btn-ghost px-7 py-3.5 rounded-full text-sm font-medium inline-flex items-center gap-2">
+            Start free <ArrowRight className="h-4 w-4" />
           </Link>
         </div>
 
@@ -115,10 +124,11 @@ function Hero() {
   );
 }
 
-function PreviewSoundCard({ icon: Icon, title, mood, playing = false }: {
-  icon: typeof Waves; title: string; mood: string; playing?: boolean;
+function PreviewSoundCard({ icon: Icon, title, mood, soundId }: {
+  icon: typeof Waves; title: string; mood: string; soundId: SoundId;
 }) {
-  const [p, setP] = useState(playing);
+  const audio = useAudio();
+  const p = soundId in audio.active;
   return (
     <div className="glass rounded-3xl p-5 text-left transition-all hover:-translate-y-1 hover:shadow-2xl">
       <div className="flex items-center justify-between">
@@ -126,7 +136,7 @@ function PreviewSoundCard({ icon: Icon, title, mood, playing = false }: {
           <Icon className="h-5 w-5 text-ink" />
         </div>
         <button
-          onClick={() => setP(!p)}
+          onClick={() => audio.toggleTrack(soundId, 65)}
           className="grid place-items-center h-11 w-11 rounded-full btn-primary"
           aria-label={p ? "Pause" : "Play"}
         >
