@@ -84,10 +84,14 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { name: "description", content: "A premium relaxation platform. Nature sounds, guided meditation and deep sleep for a calmer, clearer mind." },
       { name: "author", content: "Serene" },
       { property: "og:title", content: "Serene — Breathe. Relax. Feel better." },
-      { property: "og:description", content: "Nature sounds, guided meditation and deep sleep — a peaceful place, always in your pocket." },
+      { property: "og:description", content: "A premium relaxation platform. Nature sounds, guided meditation and deep sleep for a calmer, clearer mind." },
       { property: "og:type", content: "website" },
       { property: "og:site_name", content: "Serene" },
       { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:title", content: "Serene — Breathe. Relax. Feel better." },
+      { name: "twitter:description", content: "A premium relaxation platform. Nature sounds, guided meditation and deep sleep for a calmer, clearer mind." },
+      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/b29b92b8-a6ee-4e6a-b2d8-a83a3a38c277/id-preview-13900f3c--2e33c0b0-da65-494e-99a2-9b0c0fd4c415.lovable.app-1784790657252.png" },
+      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/b29b92b8-a6ee-4e6a-b2d8-a83a3a38c277/id-preview-13900f3c--2e33c0b0-da65-494e-99a2-9b0c0fd4c415.lovable.app-1784790657252.png" },
     ],
     links: [
       {

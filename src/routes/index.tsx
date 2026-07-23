@@ -15,7 +15,7 @@ export const Route = createFileRoute("/")({
       { title: "Serene — Breathe. Relax. Feel better." },
       { name: "description", content: "A premium relaxation platform. Nature sounds, guided meditation and deep sleep for a calmer, clearer mind." },
       { property: "og:title", content: "Serene — Breathe. Relax. Feel better." },
-      { property: "og:description", content: "Nature sounds, guided meditation and deep sleep — a peaceful place, always in your pocket." },
+      { property: "og:description", content: "A premium relaxation platform. Nature sounds, guided meditation and deep sleep for a calmer, clearer mind." },
       { property: "og:url", content: "/" },
     ],
     links: [{ rel: "canonical", href: "/" }],
