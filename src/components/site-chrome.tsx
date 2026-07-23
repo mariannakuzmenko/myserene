@@ -232,7 +232,7 @@ export function PageShell({ children }: { children: React.ReactNode }) {
       <LoadingVeil />
       <AuroraBg />
       <Header />
-      <main className="animate-rise">{children}</main>
+      <main className="animate-rise pb-32 sm:pb-24">{children}</main>
       <Footer />
     </div>
   );

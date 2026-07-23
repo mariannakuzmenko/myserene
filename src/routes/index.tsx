@@ -1,12 +1,13 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useState } from "react";
 import {
-  Play, Pause, Heart, Sparkles, Moon, Wind, Flame, CloudRain, Trees,
-  Waves, Bird, Cloud, Coffee, Mountain, Music, Brain, Timer, Star,
+  Play, Pause, Sparkles, Moon, Wind, Flame, CloudRain, Trees,
+  Waves, Bird, Cloud, Music, Brain, Timer, Star, Heart,
   ArrowRight, Check,
 } from "lucide-react";
 import { PageShell, SectionHeading, Scene, NATURE } from "@/components/site-chrome";
 import { SOUND_LIBRARY, SoundCard } from "@/components/sound-card";
+import { useAudio } from "@/lib/audio/audio-provider";
+import type { SoundId } from "@/lib/audio/catalog";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -49,6 +50,7 @@ function HomePage() {
 }
 
 function Hero() {
+  const audio = useAudio();
   return (
     <Scene image={NATURE.sunrise} className="px-4 pt-16 sm:pt-24 pb-24 rounded-b-[48px]" minHeight="90vh">
       <div className="mx-auto max-w-6xl text-center relative">
@@ -58,23 +60,29 @@ function Hero() {
           <Sparkles className="h-3.5 w-3.5 text-brand" />
           Now with adaptive soundscapes
         </span>
-        <h1 className="relative mt-8 text-5xl sm:text-7xl md:text-8xl font-medium text-ink leading-[0.98] tracking-tight animate-rise">
+        <h1 className="relative mt-8 text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-medium text-ink leading-[1.02] tracking-tight animate-rise">
           Breathe. Relax.
           <br />
           <span className="text-gradient-nature italic" style={{ fontFamily: "Fraunces, serif" }}>
             Feel better.
           </span>
         </h1>
-        <p className="relative mt-6 max-w-2xl mx-auto text-lg sm:text-xl text-ink-soft leading-relaxed animate-rise">
+        <p className="relative mt-6 max-w-2xl mx-auto text-base sm:text-lg md:text-xl text-ink-soft leading-relaxed animate-rise px-2">
           Your peaceful place, always in your pocket. Nature sounds, guided meditations
           and sleep stories — designed to quiet the mind in seconds.
         </p>
         <div className="relative mt-10 flex flex-wrap items-center justify-center gap-3 animate-rise">
-          <Link to="/register" className="btn-primary px-7 py-3.5 rounded-full text-sm font-semibold inline-flex items-center gap-2">
-            Start free <ArrowRight className="h-4 w-4" />
-          </Link>
+          <button
+            onClick={() => audio.startImmersive("rain")}
+            className="btn-primary px-7 py-3.5 rounded-full text-sm font-semibold inline-flex items-center gap-2"
+          >
+            <Sparkles className="h-4 w-4" /> Start Relaxation
+          </button>
           <Link to="/sounds" className="btn-ghost px-7 py-3.5 rounded-full text-sm font-medium inline-flex items-center gap-2">
-            <Play className="h-4 w-4 fill-current" /> Try a soundscape
+            <Play className="h-4 w-4 fill-current" /> Explore sounds
+          </Link>
+          <Link to="/register" className="btn-ghost px-7 py-3.5 rounded-full text-sm font-medium inline-flex items-center gap-2">
+            Start free <ArrowRight className="h-4 w-4" />
           </Link>
         </div>
 
@@ -82,9 +90,9 @@ function Hero() {
         <div className="relative mt-20 max-w-5xl mx-auto">
           <div className="glass-card rounded-[36px] p-6 sm:p-10">
             <div className="grid gap-4 sm:grid-cols-3">
-              <PreviewSoundCard icon={CloudRain} title="Gentle Rain" mood="Focus" playing />
-              <PreviewSoundCard icon={Waves} title="Ocean Waves" mood="Calm" />
-              <PreviewSoundCard icon={Flame} title="Fireplace" mood="Sleep" />
+              <PreviewSoundCard icon={CloudRain} title="Gentle Rain" mood="Focus" soundId="rain" />
+              <PreviewSoundCard icon={Waves} title="Ocean Waves" mood="Calm" soundId="ocean" />
+              <PreviewSoundCard icon={Flame} title="Fireplace" mood="Sleep" soundId="fireplace" />
             </div>
           </div>
           <div className="hidden md:block absolute -top-8 -left-10 glass-card rounded-2xl px-5 py-4 animate-float-slow">
@@ -115,10 +123,11 @@ function Hero() {
   );
 }
 
-function PreviewSoundCard({ icon: Icon, title, mood, playing = false }: {
-  icon: typeof Waves; title: string; mood: string; playing?: boolean;
+function PreviewSoundCard({ icon: Icon, title, mood, soundId }: {
+  icon: typeof Waves; title: string; mood: string; soundId: SoundId;
 }) {
-  const [p, setP] = useState(playing);
+  const audio = useAudio();
+  const p = soundId in audio.active;
   return (
     <div className="glass rounded-3xl p-5 text-left transition-all hover:-translate-y-1 hover:shadow-2xl">
       <div className="flex items-center justify-between">
@@ -126,7 +135,7 @@ function PreviewSoundCard({ icon: Icon, title, mood, playing = false }: {
           <Icon className="h-5 w-5 text-ink" />
         </div>
         <button
-          onClick={() => setP(!p)}
+          onClick={() => audio.toggleTrack(soundId, 65)}
           className="grid place-items-center h-11 w-11 rounded-full btn-primary"
           aria-label={p ? "Pause" : "Play"}
         >
@@ -212,12 +221,13 @@ function SoundPreview() {
 }
 
 function Mixer() {
-  const [mix, setMix] = useState({ Rain: 40, Wind: 20, Fire: 50, Birds: 15 });
-  const rows = [
-    { key: "Rain" as const, icon: CloudRain },
-    { key: "Wind" as const, icon: Wind },
-    { key: "Fire" as const, icon: Flame },
-    { key: "Birds" as const, icon: Bird },
+  const audio = useAudio();
+  const rows: { id: SoundId; label: string; icon: typeof Waves }[] = [
+    { id: "rain",      label: "Rain",      icon: CloudRain },
+    { id: "wind",      label: "Wind",      icon: Wind },
+    { id: "fireplace", label: "Fire",      icon: Flame },
+    { id: "birds",     label: "Birds",     icon: Bird },
+    { id: "ocean",     label: "Ocean",     icon: Waves },
   ];
   return (
     <section className="px-4 pt-32">
@@ -229,30 +239,56 @@ function Mixer() {
             subtitle="Combine sounds like a producer. Save your mix, open it in one tap tomorrow."
             align="left"
           />
-          <Link to="/register" className="mt-8 inline-flex btn-primary px-6 py-3 rounded-full text-sm font-semibold items-center gap-2">
-            Try the mixer <ArrowRight className="h-4 w-4" />
-          </Link>
+          <div className="mt-8 flex flex-wrap gap-3">
+            <button
+              onClick={() => audio.loadPlaylist([
+                { id: "rain", volume: 55 }, { id: "fireplace", volume: 45 }, { id: "wind", volume: 20 },
+              ])}
+              className="inline-flex btn-primary px-6 py-3 rounded-full text-sm font-semibold items-center gap-2"
+            >
+              Play a demo mix <ArrowRight className="h-4 w-4" />
+            </button>
+            <button
+              onClick={() => audio.stopAll()}
+              className="btn-ghost px-6 py-3 rounded-full text-sm font-medium"
+            >
+              Reset
+            </button>
+          </div>
         </div>
-        <div className="glass-card rounded-[32px] p-8">
-          {rows.map(({ key, icon: Icon }) => (
-            <div key={key} className="py-4 first:pt-0 last:pb-0 border-b border-white/50 last:border-0">
-              <div className="flex items-center justify-between gap-4">
-                <div className="flex items-center gap-3 min-w-0">
-                  <div className="grid place-items-center h-10 w-10 rounded-xl bg-gradient-to-br from-sky-mist to-brand-soft shrink-0">
-                    <Icon className="h-4 w-4 text-ink" />
+        <div className="glass-card rounded-[32px] p-6 sm:p-8">
+          {rows.map(({ id, label, icon: Icon }) => {
+            const active = id in audio.active;
+            const value = active ? audio.active[id] : 0;
+            return (
+              <div key={id} className="py-4 first:pt-0 last:pb-0 border-b border-white/50 last:border-0">
+                <div className="flex items-center justify-between gap-4">
+                  <div className="flex items-center gap-3 min-w-0">
+                    <button
+                      onClick={() => audio.toggleTrack(id, 55)}
+                      aria-pressed={active}
+                      aria-label={`Toggle ${label}`}
+                      className={`grid place-items-center h-10 w-10 rounded-xl shrink-0 transition ${active ? "btn-primary" : "bg-gradient-to-br from-sky-mist to-brand-soft"}`}
+                    >
+                      <Icon className={`h-4 w-4 ${active ? "" : "text-ink"}`} />
+                    </button>
+                    <div className="font-medium truncate">{label}</div>
                   </div>
-                  <div className="font-medium">{key}</div>
+                  <div className="text-sm text-ink-soft tabular-nums shrink-0">{value}%</div>
                 </div>
-                <div className="text-sm text-ink-soft tabular-nums">{mix[key]}%</div>
+                <input
+                  type="range" min={0} max={100} value={value}
+                  onChange={(e) => {
+                    const v = Number(e.target.value);
+                    if (v === 0) audio.stopTrack(id);
+                    else audio.setTrackVolume(id, v);
+                  }}
+                  className="mt-3 w-full accent-[color:var(--brand)]"
+                  aria-label={`${label} volume`}
+                />
               </div>
-              <input
-                type="range" min={0} max={100} value={mix[key]}
-                onChange={(e) => setMix({ ...mix, [key]: Number(e.target.value) })}
-                className="mt-3 w-full accent-[#87c8ff]"
-                aria-label={`${key} volume`}
-              />
-            </div>
-          ))}
+            );
+          })}
         </div>
       </div>
     </section>
