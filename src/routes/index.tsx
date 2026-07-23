@@ -91,9 +91,9 @@ function Hero() {
         <div className="relative mt-20 max-w-5xl mx-auto">
           <div className="glass-card rounded-[36px] p-6 sm:p-10">
             <div className="grid gap-4 sm:grid-cols-3">
-              <PreviewSoundCard icon={CloudRain} title="Gentle Rain" mood="Focus" playing />
-              <PreviewSoundCard icon={Waves} title="Ocean Waves" mood="Calm" />
-              <PreviewSoundCard icon={Flame} title="Fireplace" mood="Sleep" />
+              <PreviewSoundCard icon={CloudRain} title="Gentle Rain" mood="Focus" soundId="rain" />
+              <PreviewSoundCard icon={Waves} title="Ocean Waves" mood="Calm" soundId="ocean" />
+              <PreviewSoundCard icon={Flame} title="Fireplace" mood="Sleep" soundId="fireplace" />
             </div>
           </div>
           <div className="hidden md:block absolute -top-8 -left-10 glass-card rounded-2xl px-5 py-4 animate-float-slow">
