@@ -3,6 +3,7 @@ import {
   useCallback, type ReactNode,
 } from "react";
 import { SOUND_BY_ID, SOUND_CATALOG, type SoundDef, type SoundId } from "./catalog";
+import { getSoundBuffer } from "./synth";
 
 type ActiveTracks = Record<SoundId, number>; // id -> 0..100 volume
 
@@ -41,39 +42,6 @@ interface AudioApi extends AudioState {
 }
 
 const Ctx = createContext<AudioApi | null>(null);
-
-/** Generate a looping noise buffer for white/pink/brown noise tracks. */
-function makeNoiseBuffer(ctx: AudioContext, kind: "white" | "pink" | "brown", seconds = 3) {
-  const length = ctx.sampleRate * seconds;
-  const buf = ctx.createBuffer(2, length, ctx.sampleRate);
-  for (let ch = 0; ch < 2; ch++) {
-    const data = buf.getChannelData(ch);
-    if (kind === "white") {
-      for (let i = 0; i < length; i++) data[i] = Math.random() * 2 - 1;
-    } else if (kind === "pink") {
-      let b0 = 0, b1 = 0, b2 = 0, b3 = 0, b4 = 0, b5 = 0, b6 = 0;
-      for (let i = 0; i < length; i++) {
-        const w = Math.random() * 2 - 1;
-        b0 = 0.99886 * b0 + w * 0.0555179;
-        b1 = 0.99332 * b1 + w * 0.0750759;
-        b2 = 0.96900 * b2 + w * 0.1538520;
-        b3 = 0.86650 * b3 + w * 0.3104856;
-        b4 = 0.55000 * b4 + w * 0.5329522;
-        b5 = -0.7616 * b5 - w * 0.0168980;
-        data[i] = (b0 + b1 + b2 + b3 + b4 + b5 + b6 + w * 0.5362) * 0.11;
-        b6 = w * 0.115926;
-      }
-    } else {
-      let last = 0;
-      for (let i = 0; i < length; i++) {
-        const w = Math.random() * 2 - 1;
-        last = (last + 0.02 * w) / 1.02;
-        data[i] = last * 3.5;
-      }
-    }
-  }
-  return buf;
-}
 
 type Handle =
   | { kind: "el"; el: HTMLAudioElement; gain: GainNode; source: MediaElementAudioSourceNode }
@@ -119,32 +87,30 @@ export function AudioProvider({ children }: { children: ReactNode }) {
     gain.gain.value = 0;
     gain.connect(master);
 
-    // Noise tracks: synthesize
-    if (!sound.url) {
-      const kind = sound.id.startsWith("pink") ? "pink" : sound.id.startsWith("brown") ? "brown" : "white";
-      const src = ctx.createBufferSource();
-      src.buffer = makeNoiseBuffer(ctx, kind);
-      src.loop = true;
-      src.connect(gain);
-      try { src.start(0); } catch { /* already started */ }
-      // fade in
-      const target = (volume / 100);
-      gain.gain.linearRampToValueAtTime(target, ctx.currentTime + 1.5);
-      return { kind: "buf", src, gain };
+    const target = volume / 100;
+
+    // Prefer a real recording when one is provided (S3 / R2 / Supabase).
+    if (sound.url) {
+      const el = new Audio();
+      el.src = sound.url;
+      el.loop = true;
+      el.crossOrigin = "anonymous";
+      el.preload = "auto";
+      el.play().catch(() => { /* will retry on user gesture */ });
+      const source = ctx.createMediaElementSource(el);
+      source.connect(gain);
+      gain.gain.linearRampToValueAtTime(target, ctx.currentTime + 1.8);
+      return { kind: "el", el, gain, source };
     }
 
-    // URL tracks: HTMLAudioElement, looped, routed through Web Audio for mixing
-    const el = new Audio();
-    el.src = sound.url;
-    el.loop = true;
-    el.crossOrigin = "anonymous";
-    el.preload = "auto";
-    el.play().catch(() => { /* will retry on user gesture */ });
-    const source = ctx.createMediaElementSource(el);
-    source.connect(gain);
-    const target = (volume / 100);
-    gain.gain.linearRampToValueAtTime(target, ctx.currentTime + 1.8);
-    return { kind: "el", el, gain, source };
+    // Default path: procedural synthesis (works everywhere, no network).
+    const src = ctx.createBufferSource();
+    src.buffer = getSoundBuffer(ctx, sound.synth);
+    src.loop = true;
+    src.connect(gain);
+    try { src.start(0); } catch { /* already started */ }
+    gain.gain.linearRampToValueAtTime(target, ctx.currentTime + 1.5);
+    return { kind: "buf", src, gain };
   }, [ensureCtx]);
 
   const disposeHandle = useCallback((id: SoundId) => {

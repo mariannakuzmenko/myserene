@@ -3,6 +3,7 @@ import {
   CloudRain, Waves, Trees, Flame, Cloud, Wind, Bird, Music, Coffee,
   Mountain, Moon, Droplets, Zap, Leaf,
 } from "lucide-react";
+import type { SynthKind } from "./synth";
 
 /**
  * Sound catalog. URLs point at the public Google Actions ambient
@@ -21,12 +22,13 @@ export interface SoundDef {
   icon: LucideIcon;
   grad: string;
   image: string;
-  url: string;
+  /** Procedural synthesis recipe (always defined; used unless `url` is set). */
+  synth: SynthKind;
+  /** Optional remote audio (S3 / R2 / Supabase Storage). Takes precedence over `synth`. */
+  url?: string;
   /** hex tint used by the immersive scene when this sound is active */
   tint: string;
 }
-
-const G = "https://actions.google.com/sounds/v1";
 
 // Cinematic imagery per sound (Unsplash CDN)
 const IMG = {
@@ -51,27 +53,27 @@ const IMG = {
 };
 
 export const SOUND_CATALOG: SoundDef[] = [
-  { id: "rain",         title: "Rain",           cat: "Rain",    duration: "∞", icon: CloudRain, grad: "from-sky-mist to-brand-soft", image: IMG.rain,      url: `${G}/ambiences/rain_on_roof.ogg`,             tint: "#6c8fb0" },
-  { id: "heavy-rain",   title: "Heavy Rain",     cat: "Rain",    duration: "∞", icon: CloudRain, grad: "from-brand-soft to-brand",    image: IMG.heavyRain, url: `${G}/weather/heavy_rain.ogg`,                 tint: "#4b6c88" },
-  { id: "rain-window",  title: "Rain on Window", cat: "Rain",    duration: "∞", icon: Droplets,  grad: "from-sky-ice to-sky-mist",    image: IMG.window,    url: `${G}/ambiences/rain_on_roof.ogg`,             tint: "#7a9cba" },
-  { id: "forest",       title: "Forest",         cat: "Nature",  duration: "∞", icon: Trees,     grad: "from-sky-ice to-sky-mist",    image: IMG.forest,    url: `${G}/ambiences/forest_ambience.ogg`,          tint: "#3d7a52" },
-  { id: "birds",        title: "Birds",          cat: "Nature",  duration: "∞", icon: Bird,      grad: "from-sky-mist to-brand-soft", image: IMG.birds,     url: `${G}/animals/birds_chirping.ogg`,             tint: "#7bb069" },
-  { id: "ocean",        title: "Ocean",          cat: "Water",   duration: "∞", icon: Waves,     grad: "from-brand-soft to-brand",    image: IMG.ocean,     url: `${G}/water/ocean_waves.ogg`,                  tint: "#1f6a8a" },
-  { id: "beach",        title: "Beach Waves",    cat: "Water",   duration: "∞", icon: Waves,     grad: "from-brand-soft to-brand",    image: IMG.beach,     url: `${G}/water/ocean_waves.ogg`,                  tint: "#e0a86e" },
-  { id: "waterfall",    title: "Waterfall",      cat: "Water",   duration: "∞", icon: Waves,     grad: "from-sky-ice to-sky-mist",    image: IMG.waterfall, url: `${G}/water/waterfall.ogg`,                    tint: "#2c8fa8" },
-  { id: "river",        title: "River",          cat: "Water",   duration: "∞", icon: Waves,     grad: "from-brand-soft to-brand",    image: IMG.river,     url: `${G}/water/creek_water_flowing.ogg`,          tint: "#4bb0b4" },
-  { id: "wind",         title: "Wind",           cat: "Weather", duration: "∞", icon: Wind,      grad: "from-sky-ice to-sky-mist",    image: IMG.wind,      url: `${G}/weather/wind_blowing.ogg`,               tint: "#8fadb8" },
-  { id: "storm",        title: "Thunderstorm",   cat: "Weather", duration: "∞", icon: Cloud,     grad: "from-brand-soft to-brand",    image: IMG.storm,     url: `${G}/weather/heavy_thunderstorm.ogg`,         tint: "#2f3d55" },
-  { id: "fireplace",    title: "Fireplace",      cat: "Cozy",    duration: "∞", icon: Flame,     grad: "from-sky-mist to-brand-soft", image: IMG.fire,      url: `${G}/nature/campfire.ogg`,                    tint: "#d17a2a" },
-  { id: "night-forest", title: "Night Forest",   cat: "Sleep",   duration: "∞", icon: Moon,      grad: "from-sky-mist to-brand-soft", image: IMG.night,     url: `${G}/ambiences/forest_ambience.ogg`,          tint: "#1a2540" },
-  { id: "white-noise",  title: "White Noise",    cat: "Focus",   duration: "∞", icon: Music,     grad: "from-sky-ice to-sky-mist",    image: IMG.noise,     url: "",                                            tint: "#9aa4ab" },
-  { id: "pink-noise",   title: "Pink Noise",     cat: "Focus",   duration: "∞", icon: Music,     grad: "from-brand-soft to-brand",    image: IMG.noise,     url: "",                                            tint: "#c98aa4" },
-  { id: "brown-noise",  title: "Brown Noise",    cat: "Focus",   duration: "∞", icon: Music,     grad: "from-sky-mist to-brand-soft", image: IMG.noise,     url: "",                                            tint: "#8a6a52" },
-  { id: "meditation",   title: "Meditation",     cat: "Meditation", duration: "45m", icon: Leaf, grad: "from-sky-ice to-sky-mist",    image: IMG.meditation,url: `${G}/ambiences/forest_ambience.ogg`,          tint: "#4ba58a" },
-  { id: "deep-sleep",   title: "Deep Sleep",     cat: "Sleep",   duration: "9h", icon: Moon,     grad: "from-brand-soft to-brand",    image: IMG.sleep,     url: `${G}/ambiences/rain_on_roof.ogg`,             tint: "#2a3860" },
-  { id: "focus",        title: "Focus",          cat: "Focus",   duration: "∞", icon: Zap,       grad: "from-sky-mist to-brand-soft", image: IMG.focus,     url: "",                                            tint: "#6a8fbb" },
-  { id: "zen-garden",   title: "Zen Garden",     cat: "Meditation", duration: "∞", icon: Mountain, grad: "from-sky-ice to-sky-mist",  image: IMG.zen,       url: `${G}/water/creek_water_flowing.ogg`,          tint: "#7aa872" },
-  { id: "cafe",         title: "Cafe",           cat: "Ambient", duration: "4h", icon: Coffee,   grad: "from-sky-ice to-sky-mist",    image: IMG.focus,     url: `${G}/ambiences/coffee_shop.ogg`,              tint: "#a67a52" },
+  { id: "rain",         title: "Rain",           cat: "Rain",    duration: "∞", icon: CloudRain, grad: "from-sky-mist to-brand-soft", image: IMG.rain,      synth: "rain-light",  tint: "#6c8fb0" },
+  { id: "heavy-rain",   title: "Heavy Rain",     cat: "Rain",    duration: "∞", icon: CloudRain, grad: "from-brand-soft to-brand",    image: IMG.heavyRain, synth: "rain-heavy",  tint: "#4b6c88" },
+  { id: "rain-window",  title: "Rain on Window", cat: "Rain",    duration: "∞", icon: Droplets,  grad: "from-sky-ice to-sky-mist",    image: IMG.window,    synth: "rain-window", tint: "#7a9cba" },
+  { id: "forest",       title: "Forest",         cat: "Nature",  duration: "∞", icon: Trees,     grad: "from-sky-ice to-sky-mist",    image: IMG.forest,    synth: "forest",      tint: "#3d7a52" },
+  { id: "birds",        title: "Birds",          cat: "Nature",  duration: "∞", icon: Bird,      grad: "from-sky-mist to-brand-soft", image: IMG.birds,     synth: "birds",       tint: "#7bb069" },
+  { id: "ocean",        title: "Ocean",          cat: "Water",   duration: "∞", icon: Waves,     grad: "from-brand-soft to-brand",    image: IMG.ocean,     synth: "ocean",       tint: "#1f6a8a" },
+  { id: "beach",        title: "Beach Waves",    cat: "Water",   duration: "∞", icon: Waves,     grad: "from-brand-soft to-brand",    image: IMG.beach,     synth: "beach",       tint: "#e0a86e" },
+  { id: "waterfall",    title: "Waterfall",      cat: "Water",   duration: "∞", icon: Waves,     grad: "from-sky-ice to-sky-mist",    image: IMG.waterfall, synth: "waterfall",   tint: "#2c8fa8" },
+  { id: "river",        title: "River",          cat: "Water",   duration: "∞", icon: Waves,     grad: "from-brand-soft to-brand",    image: IMG.river,     synth: "river",       tint: "#4bb0b4" },
+  { id: "wind",         title: "Wind",           cat: "Weather", duration: "∞", icon: Wind,      grad: "from-sky-ice to-sky-mist",    image: IMG.wind,      synth: "wind",        tint: "#8fadb8" },
+  { id: "storm",        title: "Thunderstorm",   cat: "Weather", duration: "∞", icon: Cloud,     grad: "from-brand-soft to-brand",    image: IMG.storm,     synth: "storm",       tint: "#2f3d55" },
+  { id: "fireplace",    title: "Fireplace",      cat: "Cozy",    duration: "∞", icon: Flame,     grad: "from-sky-mist to-brand-soft", image: IMG.fire,      synth: "fire",        tint: "#d17a2a" },
+  { id: "night-forest", title: "Night Forest",   cat: "Sleep",   duration: "∞", icon: Moon,      grad: "from-sky-mist to-brand-soft", image: IMG.night,     synth: "night-forest",tint: "#1a2540" },
+  { id: "white-noise",  title: "White Noise",    cat: "Focus",   duration: "∞", icon: Music,     grad: "from-sky-ice to-sky-mist",    image: IMG.noise,     synth: "white",       tint: "#9aa4ab" },
+  { id: "pink-noise",   title: "Pink Noise",     cat: "Focus",   duration: "∞", icon: Music,     grad: "from-brand-soft to-brand",    image: IMG.noise,     synth: "pink",        tint: "#c98aa4" },
+  { id: "brown-noise",  title: "Brown Noise",    cat: "Focus",   duration: "∞", icon: Music,     grad: "from-sky-mist to-brand-soft", image: IMG.noise,     synth: "brown",       tint: "#8a6a52" },
+  { id: "meditation",   title: "Meditation",     cat: "Meditation", duration: "45m", icon: Leaf, grad: "from-sky-ice to-sky-mist",    image: IMG.meditation,synth: "meditation",  tint: "#4ba58a" },
+  { id: "deep-sleep",   title: "Deep Sleep",     cat: "Sleep",   duration: "9h", icon: Moon,     grad: "from-brand-soft to-brand",    image: IMG.sleep,     synth: "sleep",       tint: "#2a3860" },
+  { id: "focus",        title: "Focus",          cat: "Focus",   duration: "∞", icon: Zap,       grad: "from-sky-mist to-brand-soft", image: IMG.focus,     synth: "focus",       tint: "#6a8fbb" },
+  { id: "zen-garden",   title: "Zen Garden",     cat: "Meditation", duration: "∞", icon: Mountain, grad: "from-sky-ice to-sky-mist",  image: IMG.zen,       synth: "zen",         tint: "#7aa872" },
+  { id: "cafe",         title: "Cafe",           cat: "Ambient", duration: "4h", icon: Coffee,   grad: "from-sky-ice to-sky-mist",    image: IMG.focus,     synth: "cafe",        tint: "#a67a52" },
 ];
 
 export const SOUND_BY_ID: Record<SoundId, SoundDef> = Object.fromEntries(
