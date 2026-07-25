@@ -85,6 +85,14 @@ export function FloatingAudioPlayer() {
 function ExpandedPanel() {
   const a = useAudio();
   const activeIds = Object.keys(a.active);
+  const [mixName, setMixName] = useState("");
+  const [showTimer, setShowTimer] = useState(false);
+  const [showMixes, setShowMixes] = useState(false);
+
+  const timerActive = a.sleepTimerEndsAt !== null;
+  const remaining = a.sleepTimerRemaining;
+  const mmss = `${Math.floor(remaining / 60)}:${String(remaining % 60).padStart(2, "0")}`;
+
   return (
     <div className="glass-card rounded-3xl mt-2 p-4 sm:p-5 animate-rise">
       {/* Master row */}
@@ -114,6 +122,115 @@ function ExpandedPanel() {
           <Sparkles className="h-4 w-4" />
         </button>
       </div>
+
+      {/* Toolbar: sleep timer / saved mixes */}
+      <div className="mt-3 flex flex-wrap items-center gap-2">
+        <button
+          onClick={() => { setShowTimer((v) => !v); setShowMixes(false); }}
+          className={`inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-medium transition ${timerActive ? "btn-primary" : "glass hover:bg-white/60"}`}
+        >
+          <Timer className="h-3.5 w-3.5" />
+          {timerActive ? `Sleep in ${mmss}` : "Sleep timer"}
+        </button>
+        <button
+          onClick={() => { setShowMixes((v) => !v); setShowTimer(false); }}
+          className={`inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-medium transition ${showMixes ? "btn-primary" : "glass hover:bg-white/60"}`}
+        >
+          <ListMusic className="h-3.5 w-3.5" />
+          My mixes {a.savedMixes.length > 0 && <span className="opacity-70">· {a.savedMixes.length}</span>}
+        </button>
+        {activeIds.length > 0 && (
+          <form
+            className="flex items-center gap-1 glass rounded-full pl-3 pr-1 py-1"
+            onSubmit={(e) => {
+              e.preventDefault();
+              if (!mixName.trim()) return;
+              a.saveCurrentMix(mixName);
+              setMixName("");
+            }}
+          >
+            <input
+              value={mixName}
+              onChange={(e) => setMixName(e.target.value)}
+              placeholder="Name this mix"
+              className="bg-transparent text-xs outline-none w-32 sm:w-40 placeholder:text-ink-soft/70"
+              aria-label="Mix name"
+            />
+            <button type="submit" className="grid place-items-center h-7 w-7 rounded-full btn-primary" aria-label="Save mix">
+              <Save className="h-3.5 w-3.5" />
+            </button>
+          </form>
+        )}
+      </div>
+
+      {showTimer && (
+        <div className="mt-3 glass rounded-2xl p-3 animate-rise">
+          <div className="text-xs uppercase tracking-widest text-ink-soft mb-2">Fade audio out in…</div>
+          <div className="flex flex-wrap gap-2">
+            {[15, 30, 45, 60, 90, 120].map((min) => (
+              <button
+                key={min}
+                onClick={() => a.startSleepTimer(min)}
+                className="rounded-full glass px-3 py-1.5 text-xs hover:bg-white/60"
+              >
+                {min < 60 ? `${min} min` : `${min / 60} h`}
+              </button>
+            ))}
+            {timerActive && (
+              <button
+                onClick={a.cancelSleepTimer}
+                className="rounded-full btn-ghost px-3 py-1.5 text-xs"
+              >
+                Cancel · {mmss}
+              </button>
+            )}
+          </div>
+          <p className="mt-2 text-[11px] text-ink-soft">Volume gently fades during the final minute, then stops.</p>
+        </div>
+      )}
+
+      {showMixes && (
+        <div className="mt-3 glass rounded-2xl p-3 animate-rise max-h-64 overflow-y-auto">
+          {a.savedMixes.length === 0 ? (
+            <p className="text-xs text-ink-soft text-center py-4">
+              No saved mixes yet. Build a mix and name it above to save it.
+            </p>
+          ) : (
+            <ul className="space-y-2">
+              {a.savedMixes.map((m) => (
+                <li key={m.id} className="flex items-center gap-2 glass rounded-xl px-3 py-2">
+                  <button
+                    onClick={() => a.toggleFavoriteMix(m.id)}
+                    className="grid place-items-center h-8 w-8 rounded-full hover:bg-white/60"
+                    aria-label="Favorite"
+                  >
+                    <Star className={`h-3.5 w-3.5 ${m.favorite ? "fill-current text-brand" : "text-ink-soft"}`} />
+                  </button>
+                  <div className="min-w-0 flex-1">
+                    <div className="text-sm font-medium truncate">{m.name}</div>
+                    <div className="text-[11px] text-ink-soft truncate">
+                      {m.tracks.map((t) => SOUND_BY_ID[t.id]?.title ?? t.id).join(" · ")}
+                    </div>
+                  </div>
+                  <button
+                    onClick={() => a.loadMix(m.id)}
+                    className="rounded-full btn-primary px-3 py-1.5 text-[11px] font-semibold"
+                  >
+                    Play
+                  </button>
+                  <button
+                    onClick={() => a.deleteMix(m.id)}
+                    className="grid place-items-center h-8 w-8 rounded-full hover:bg-white/60"
+                    aria-label="Delete"
+                  >
+                    <Trash2 className="h-3.5 w-3.5 text-ink-soft" />
+                  </button>
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
+      )}
 
       {/* Active tracks list */}
       {activeIds.length > 0 ? (
