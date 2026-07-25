@@ -7,6 +7,16 @@ import { getSoundBuffer } from "./synth";
 
 type ActiveTracks = Record<SoundId, number>; // id -> 0..100 volume
 
+export interface SavedMix {
+  id: string;
+  name: string;
+  tracks: { id: SoundId; volume: number }[];
+  createdAt: number;
+  favorite?: boolean;
+}
+
+const MIX_STORAGE_KEY = "serene:saved-mixes:v1";
+
 interface AudioState {
   active: ActiveTracks;              // tracks in the current mix
   playing: boolean;                  // master play state
@@ -16,6 +26,9 @@ interface AudioState {
   shuffle: boolean;
   focusedId: SoundId | null;         // "primary" track (used for mini player art)
   immersive: boolean;                // breathing/immersive mode
+  sleepTimerEndsAt: number | null;   // epoch ms when timer stops audio
+  sleepTimerRemaining: number;       // seconds left (updates each second)
+  savedMixes: SavedMix[];
 }
 
 interface AudioApi extends AudioState {
@@ -39,6 +52,13 @@ interface AudioApi extends AudioState {
   exitImmersive: () => void;
   getTint: () => string;
   getFocused: () => SoundDef | null;
+  startSleepTimer: (minutes: number) => void;
+  cancelSleepTimer: () => void;
+  saveCurrentMix: (name: string) => SavedMix | null;
+  deleteMix: (id: string) => void;
+  renameMix: (id: string, name: string) => void;
+  toggleFavoriteMix: (id: string) => void;
+  loadMix: (id: string) => void;
 }
 
 const Ctx = createContext<AudioApi | null>(null);
@@ -56,6 +76,22 @@ export function AudioProvider({ children }: { children: ReactNode }) {
   const [shuffle, setShuffle] = useState(false);
   const [focusedId, setFocusedId] = useState<SoundId | null>(null);
   const [immersive, setImmersive] = useState(false);
+  const [sleepTimerEndsAt, setSleepTimerEndsAt] = useState<number | null>(null);
+  const [sleepTimerRemaining, setSleepTimerRemaining] = useState(0);
+  const [savedMixes, setSavedMixes] = useState<SavedMix[]>([]);
+
+  // hydrate saved mixes from localStorage
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    try {
+      const raw = window.localStorage.getItem(MIX_STORAGE_KEY);
+      if (raw) setSavedMixes(JSON.parse(raw));
+    } catch { /* ignore */ }
+  }, []);
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    try { window.localStorage.setItem(MIX_STORAGE_KEY, JSON.stringify(savedMixes)); } catch { /* ignore */ }
+  }, [savedMixes]);
 
   // Refs for Web Audio machinery (persist across renders)
   const ctxRef = useRef<AudioContext | null>(null);
@@ -247,19 +283,98 @@ export function AudioProvider({ children }: { children: ReactNode }) {
   }, [active, playTrackSolo]);
   const exitImmersive = useCallback(() => setImmersive(false), []);
 
+  // Sleep timer: tick every second; fade last 60s; stop at end.
+  const cancelSleepTimer = useCallback(() => {
+    setSleepTimerEndsAt(null);
+    setSleepTimerRemaining(0);
+    // restore master volume (was ramping down)
+    const m = masterGainRef.current;
+    const ctx = ctxRef.current;
+    if (m && ctx) {
+      m.gain.cancelScheduledValues(ctx.currentTime);
+      m.gain.linearRampToValueAtTime(muted || !playing ? 0 : masterVolume / 100, ctx.currentTime + 0.4);
+    }
+  }, [muted, playing, masterVolume]);
+
+  const startSleepTimer = useCallback((minutes: number) => {
+    const endsAt = Date.now() + Math.max(1, minutes) * 60 * 1000;
+    setSleepTimerEndsAt(endsAt);
+    setSleepTimerRemaining(Math.round((endsAt - Date.now()) / 1000));
+  }, []);
+
+  useEffect(() => {
+    if (!sleepTimerEndsAt) return;
+    const tick = () => {
+      const remaining = Math.max(0, Math.round((sleepTimerEndsAt - Date.now()) / 1000));
+      setSleepTimerRemaining(remaining);
+      // start volume fade during last 60s
+      const m = masterGainRef.current;
+      const ctx = ctxRef.current;
+      if (m && ctx && remaining <= 60 && remaining > 0) {
+        const factor = remaining / 60;
+        const target = (muted ? 0 : masterVolume / 100) * factor;
+        m.gain.cancelScheduledValues(ctx.currentTime);
+        m.gain.linearRampToValueAtTime(target, ctx.currentTime + 1.0);
+      }
+      if (remaining <= 0) {
+        // stop everything gracefully
+        setActive({});
+        setSleepTimerEndsAt(null);
+        setSleepTimerRemaining(0);
+      }
+    };
+    tick();
+    const id = setInterval(tick, 1000);
+    return () => clearInterval(id);
+  }, [sleepTimerEndsAt, masterVolume, muted]);
+
+  // ---- Saved mixes ----
+  const saveCurrentMix = useCallback((name: string) => {
+    const tracks = Object.entries(active).map(([id, volume]) => ({ id, volume: volume as number }));
+    if (tracks.length === 0) return null;
+    const mix: SavedMix = {
+      id: `mix_${Date.now().toString(36)}`,
+      name: name.trim() || "Untitled mix",
+      tracks,
+      createdAt: Date.now(),
+    };
+    setSavedMixes((prev) => [mix, ...prev]);
+    return mix;
+  }, [active]);
+  const deleteMix = useCallback((id: string) =>
+    setSavedMixes((prev) => prev.filter((m) => m.id !== id)), []);
+  const renameMix = useCallback((id: string, name: string) =>
+    setSavedMixes((prev) => prev.map((m) => (m.id === id ? { ...m, name } : m))), []);
+  const toggleFavoriteMix = useCallback((id: string) =>
+    setSavedMixes((prev) => prev.map((m) => (m.id === id ? { ...m, favorite: !m.favorite } : m))), []);
+  const loadMix = useCallback((id: string) => {
+    const mix = savedMixes.find((m) => m.id === id);
+    if (!mix) return;
+    const map: ActiveTracks = {};
+    mix.tracks.forEach((t) => { map[t.id] = t.volume; });
+    setActive(map);
+    setFocusedId(mix.tracks[0]?.id ?? null);
+  }, [savedMixes]);
+
   const getFocused = useCallback(() => (focusedId ? SOUND_BY_ID[focusedId] ?? null : null), [focusedId]);
   const getTint = useCallback(() => (focusedId ? SOUND_BY_ID[focusedId]?.tint ?? "#7fd5df" : "#7fd5df"), [focusedId]);
 
   const api = useMemo<AudioApi>(() => ({
     active, playing, masterVolume, muted, loop, shuffle, focusedId, immersive,
+    sleepTimerEndsAt, sleepTimerRemaining, savedMixes,
     toggleTrack, playTrackSolo, stopTrack, stopAll, setTrackVolume,
     setMasterVolume, setMuted, toggleMute, play, pause, toggle, next, prev,
     setLoop, setShuffle, loadPlaylist, startImmersive, exitImmersive,
     getFocused, getTint,
+    startSleepTimer, cancelSleepTimer,
+    saveCurrentMix, deleteMix, renameMix, toggleFavoriteMix, loadMix,
   }), [active, playing, masterVolume, muted, loop, shuffle, focusedId, immersive,
+      sleepTimerEndsAt, sleepTimerRemaining, savedMixes,
       toggleTrack, playTrackSolo, stopTrack, stopAll, setTrackVolume,
       setMasterVolume, toggleMute, play, pause, toggle, next, prev,
-      loadPlaylist, startImmersive, exitImmersive, getFocused, getTint]);
+      loadPlaylist, startImmersive, exitImmersive, getFocused, getTint,
+      startSleepTimer, cancelSleepTimer,
+      saveCurrentMix, deleteMix, renameMix, toggleFavoriteMix, loadMix]);
 
   return <Ctx.Provider value={api}>{children}</Ctx.Provider>;
 }
