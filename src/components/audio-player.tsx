@@ -2,6 +2,7 @@ import { useState } from "react";
 import {
   Play, Pause, SkipBack, SkipForward, Volume2, VolumeX,
   Shuffle, Repeat, ChevronUp, ChevronDown, X, Sparkles, Waves,
+  Timer, Save, Star, Trash2, ListMusic,
 } from "lucide-react";
 import { useAudio } from "@/lib/audio/audio-provider";
 import { SOUND_BY_ID } from "@/lib/audio/catalog";
