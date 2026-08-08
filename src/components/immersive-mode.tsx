@@ -1,6 +1,141 @@
 import { useEffect, useState } from "react";
 import { X, Volume2, VolumeX, Pause, Play } from "lucide-react";
 import { useAudio } from "@/lib/audio/audio-provider";
+import type { SoundDef } from "@/lib/audio/catalog";
+
+type Env = "rain" | "ocean" | "forest" | "fire" | "night" | "zen";
+
+/** Map the focused sound onto a visual environment. */
+function envFor(sound: SoundDef | null): Env {
+  const k = sound?.synth ?? "";
+  if (k.startsWith("rain") || k === "storm" || k === "rain-window") return "rain";
+  if (["ocean", "beach", "calm-sea", "ocean-sunset", "stormy-ocean", "waterfall", "river", "stream"].includes(k)) return "ocean";
+  if (["forest", "deep-forest", "bamboo", "birds", "birds-morning", "wind", "mountain-wind"].includes(k)) return "forest";
+  if (["fire", "campfire", "crackling-fire", "cozy-cabin"].includes(k)) return "fire";
+  if (["night-forest", "sleep", "delta"].includes(k)) return "night";
+  return "zen";
+}
+
+/**
+ * LivingEnvironment — soft, GPU-friendly layers that react to the sound
+ * currently in focus and cross-fade whenever it changes.
+ */
+function LivingEnvironment({ env, tint }: { env: Env; tint: string }) {
+  return (
+    <div aria-hidden className="absolute inset-0 overflow-hidden pointer-events-none transition-opacity duration-1000">
+      {env === "rain" && (
+        <>
+          {Array.from({ length: 60 }).map((_, i) => (
+            <span
+              key={i}
+              className="absolute w-px rounded-full bg-white/45"
+              style={{
+                left: `${(i * 17) % 100}%`,
+                height: `${20 + ((i * 7) % 40)}px`,
+                animation: `rainfall ${0.9 + ((i * 13) % 9) / 10}s linear ${(i % 12) * 0.12}s infinite`,
+              }}
+            />
+          ))}
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(180,205,225,0.35),transparent_65%)]" />
+          <div className="absolute inset-0 animate-drift bg-[radial-gradient(circle_at_20%_30%,rgba(255,255,255,0.25),transparent_55%)]" />
+        </>
+      )}
+
+      {env === "ocean" && (
+        <>
+          {[0, 1, 2].map((i) => (
+            <div
+              key={i}
+              className="absolute left-[-10%] right-[-10%] rounded-[50%] bg-white/12"
+              style={{
+                bottom: `${-6 + i * 7}%`,
+                height: `${26 + i * 8}vh`,
+                animation: `wave-roll ${9 + i * 3}s ease-in-out ${i * 1.2}s infinite`,
+              }}
+            />
+          ))}
+          <div className="absolute inset-x-0 top-0 h-1/2 opacity-60"
+            style={{ background: "linear-gradient(180deg, rgba(255,255,255,0.35), transparent)" }} />
+        </>
+      )}
+
+      {env === "forest" && (
+        <>
+          <div className="absolute inset-0" style={{ animation: "ray-sweep 14s ease-in-out infinite",
+            background: "linear-gradient(100deg, transparent 20%, rgba(255,255,255,0.35) 34%, transparent 46%, rgba(255,255,255,0.22) 62%, transparent 76%)" }} />
+          {Array.from({ length: 16 }).map((_, i) => (
+            <span
+              key={i}
+              className="absolute rounded-[60%] bg-white/50"
+              style={{
+                left: `${(i * 31) % 100}%`,
+                width: 8 + (i % 4) * 3,
+                height: 5 + (i % 3) * 2,
+                animation: `leaf-sway ${16 + (i % 7) * 2}s linear ${(i % 9) * 1.4}s infinite`,
+              }}
+            />
+          ))}
+        </>
+      )}
+
+      {env === "fire" && (
+        <>
+          <div className="absolute left-1/2 bottom-[-14vh] h-[60vh] w-[60vh] -translate-x-1/2 rounded-full blur-3xl"
+            style={{ background: `radial-gradient(circle, ${tint}cc, transparent 70%)`, animation: "glow-flicker 3.2s ease-in-out infinite" }} />
+          {Array.from({ length: 26 }).map((_, i) => (
+            <span
+              key={i}
+              className="absolute bottom-0 rounded-full"
+              style={{
+                left: `${35 + ((i * 13) % 30)}%`,
+                width: 3 + (i % 3),
+                height: 3 + (i % 3),
+                background: "rgba(255,196,120,0.9)",
+                boxShadow: "0 0 10px rgba(255,170,80,0.9)",
+                animation: `ember ${7 + (i % 6)}s linear ${(i % 10) * 0.8}s infinite`,
+              }}
+            />
+          ))}
+        </>
+      )}
+
+      {env === "night" && (
+        <>
+          {Array.from({ length: 46 }).map((_, i) => (
+            <span key={i} className="absolute h-1 w-1 rounded-full bg-white animate-twinkle"
+              style={{ left: `${(i * 37) % 100}%`, top: `${(i * 23) % 70}%`, animationDelay: `${(i * 0.31) % 4}s` }} />
+          ))}
+          {Array.from({ length: 10 }).map((_, i) => (
+            <span key={`ff-${i}`} className="absolute h-1.5 w-1.5 rounded-full"
+              style={{
+                left: `${(i * 41) % 100}%`,
+                background: "rgba(200,255,180,0.95)",
+                boxShadow: "0 0 12px rgba(180,255,160,0.9)",
+                animation: `particle ${18 + i * 2}s linear ${i * 1.7}s infinite`,
+              }} />
+          ))}
+          <div className="absolute right-[12%] top-[10%] h-24 w-24 rounded-full bg-white/70 blur-[2px] opacity-80" />
+        </>
+      )}
+
+      {env === "zen" && (
+        <>
+          <div className="absolute inset-0 animate-breathe"
+            style={{ background: `radial-gradient(circle at 50% 45%, ${tint}55, transparent 60%)` }} />
+          {Array.from({ length: 14 }).map((_, i) => (
+            <span key={i} className="absolute rounded-full bg-white/60"
+              style={{
+                left: `${(i * 53) % 100}%`,
+                width: 3 + (i % 4),
+                height: 3 + (i % 4),
+                animation: `particle ${18 + (i % 8) * 2}s linear ${(i % 7) * 1.6}s infinite`,
+              }} />
+          ))}
+        </>
+      )}
+    </div>
+  );
+}
 
 export function ImmersiveMode() {
   const a = useAudio();
@@ -8,6 +143,7 @@ export function ImmersiveMode() {
   const [elapsed, setElapsed] = useState(0);
   const focused = a.getFocused();
   const tint = a.getTint();
+  const env = envFor(focused);
 
   useEffect(() => {
     if (!a.immersive) return;
@@ -64,6 +200,7 @@ export function ImmersiveMode() {
       style={{ background: bg, backgroundSize: "cover", backgroundPosition: "center" }}
     >
       <div className="absolute inset-0 backdrop-blur-2xl bg-black/20" />
+      <LivingEnvironment key={env} env={env} tint={tint} />
 
       {/* Top bar */}
       <div className="relative flex items-center justify-between px-4 sm:px-8 pt-6"
