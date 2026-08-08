@@ -16,6 +16,8 @@ export interface SavedMix {
 }
 
 const MIX_STORAGE_KEY = "serene:saved-mixes:v1";
+const FAV_STORAGE_KEY = "serene:favorites:v1";
+const RECENT_STORAGE_KEY = "serene:recent:v1";
 
 interface AudioState {
   active: ActiveTracks;              // tracks in the current mix
@@ -29,6 +31,8 @@ interface AudioState {
   sleepTimerEndsAt: number | null;   // epoch ms when timer stops audio
   sleepTimerRemaining: number;       // seconds left (updates each second)
   savedMixes: SavedMix[];
+  favorites: SoundId[];
+  recent: SoundId[];
 }
 
 interface AudioApi extends AudioState {
@@ -59,6 +63,8 @@ interface AudioApi extends AudioState {
   renameMix: (id: string, name: string) => void;
   toggleFavoriteMix: (id: string) => void;
   loadMix: (id: string) => void;
+  toggleFavorite: (id: SoundId) => void;
+  isFavorite: (id: SoundId) => boolean;
 }
 
 const Ctx = createContext<AudioApi | null>(null);
@@ -79,6 +85,8 @@ export function AudioProvider({ children }: { children: ReactNode }) {
   const [sleepTimerEndsAt, setSleepTimerEndsAt] = useState<number | null>(null);
   const [sleepTimerRemaining, setSleepTimerRemaining] = useState(0);
   const [savedMixes, setSavedMixes] = useState<SavedMix[]>([]);
+  const [favorites, setFavorites] = useState<SoundId[]>([]);
+  const [recent, setRecent] = useState<SoundId[]>([]);
 
   // hydrate saved mixes from localStorage
   useEffect(() => {
@@ -92,6 +100,30 @@ export function AudioProvider({ children }: { children: ReactNode }) {
     if (typeof window === "undefined") return;
     try { window.localStorage.setItem(MIX_STORAGE_KEY, JSON.stringify(savedMixes)); } catch { /* ignore */ }
   }, [savedMixes]);
+
+  // hydrate favorites + recently played
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    try {
+      const f = window.localStorage.getItem(FAV_STORAGE_KEY);
+      if (f) setFavorites(JSON.parse(f));
+      const r = window.localStorage.getItem(RECENT_STORAGE_KEY);
+      if (r) setRecent(JSON.parse(r));
+    } catch { /* ignore */ }
+  }, []);
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    try { window.localStorage.setItem(FAV_STORAGE_KEY, JSON.stringify(favorites)); } catch { /* ignore */ }
+  }, [favorites]);
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    try { window.localStorage.setItem(RECENT_STORAGE_KEY, JSON.stringify(recent)); } catch { /* ignore */ }
+  }, [recent]);
+
+  const remember = useCallback((ids: SoundId[]) => {
+    if (ids.length === 0) return;
+    setRecent((prev) => [...ids, ...prev.filter((p) => !ids.includes(p))].slice(0, 12));
+  }, []);
 
   // Refs for Web Audio machinery (persist across renders)
   const ctxRef = useRef<AudioContext | null>(null);
@@ -218,15 +250,17 @@ export function AudioProvider({ children }: { children: ReactNode }) {
         const { [id]: _drop, ...rest } = prev;
         return rest;
       }
+      remember([id]);
       return { ...prev, [id]: initialVolume };
     });
     setFocusedId(id);
-  }, []);
+  }, [remember]);
 
   const playTrackSolo = useCallback((id: SoundId) => {
     setActive({ [id]: 70 });
     setFocusedId(id);
-  }, []);
+    remember([id]);
+  }, [remember]);
 
   const stopTrack = useCallback((id: SoundId) => {
     setActive((prev) => { const { [id]: _drop, ...rest } = prev; return rest; });
@@ -274,7 +308,8 @@ export function AudioProvider({ children }: { children: ReactNode }) {
     tracks.forEach((t) => { map[t.id] = t.volume; });
     setActive(map);
     setFocusedId(tracks[0]?.id ?? null);
-  }, []);
+    remember(tracks.map((t) => t.id));
+  }, [remember]);
 
   const startImmersive = useCallback((id?: SoundId) => {
     if (id) playTrackSolo(id);
@@ -359,22 +394,28 @@ export function AudioProvider({ children }: { children: ReactNode }) {
   const getFocused = useCallback(() => (focusedId ? SOUND_BY_ID[focusedId] ?? null : null), [focusedId]);
   const getTint = useCallback(() => (focusedId ? SOUND_BY_ID[focusedId]?.tint ?? "#7fd5df" : "#7fd5df"), [focusedId]);
 
+  const toggleFavorite = useCallback((id: SoundId) =>
+    setFavorites((prev) => (prev.includes(id) ? prev.filter((f) => f !== id) : [id, ...prev])), []);
+  const isFavorite = useCallback((id: SoundId) => favorites.includes(id), [favorites]);
+
   const api = useMemo<AudioApi>(() => ({
     active, playing, masterVolume, muted, loop, shuffle, focusedId, immersive,
-    sleepTimerEndsAt, sleepTimerRemaining, savedMixes,
+    sleepTimerEndsAt, sleepTimerRemaining, savedMixes, favorites, recent,
     toggleTrack, playTrackSolo, stopTrack, stopAll, setTrackVolume,
     setMasterVolume, setMuted, toggleMute, play, pause, toggle, next, prev,
     setLoop, setShuffle, loadPlaylist, startImmersive, exitImmersive,
     getFocused, getTint,
     startSleepTimer, cancelSleepTimer,
     saveCurrentMix, deleteMix, renameMix, toggleFavoriteMix, loadMix,
+    toggleFavorite, isFavorite,
   }), [active, playing, masterVolume, muted, loop, shuffle, focusedId, immersive,
-      sleepTimerEndsAt, sleepTimerRemaining, savedMixes,
+      sleepTimerEndsAt, sleepTimerRemaining, savedMixes, favorites, recent,
       toggleTrack, playTrackSolo, stopTrack, stopAll, setTrackVolume,
       setMasterVolume, toggleMute, play, pause, toggle, next, prev,
       loadPlaylist, startImmersive, exitImmersive, getFocused, getTint,
       startSleepTimer, cancelSleepTimer,
-      saveCurrentMix, deleteMix, renameMix, toggleFavoriteMix, loadMix]);
+      saveCurrentMix, deleteMix, renameMix, toggleFavoriteMix, loadMix,
+      toggleFavorite, isFavorite]);
 
   return <Ctx.Provider value={api}>{children}</Ctx.Provider>;
 }

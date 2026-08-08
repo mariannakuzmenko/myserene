@@ -8,6 +8,7 @@ const NAV = [
   { to: "/sounds", label: "Sound Library" },
   { to: "/meditation", label: "Meditation" },
   { to: "/sleep", label: "Sleep" },
+  { to: "/frequencies", label: "Frequencies" },
   { to: "/pricing", label: "Pricing" },
   { to: "/blog", label: "Blog" },
   { to: "/about", label: "About" },
@@ -17,7 +18,10 @@ const NAV = [
 export function Header() {
   const [open, setOpen] = useState(false);
   return (
-    <header className="sticky top-0 z-50 pt-4 px-4">
+    <header
+      className="sticky top-0 z-50 px-4 pb-2"
+      style={{ paddingTop: "max(1rem, env(safe-area-inset-top))" }}
+    >
       <div className="mx-auto max-w-7xl glass rounded-full px-4 sm:px-6 py-3 flex items-center justify-between">
         <Link to="/" className="flex items-center gap-2 shrink-0">
           <span className="grid place-items-center h-9 w-9 rounded-full bg-gradient-to-br from-brand-soft to-brand text-primary-foreground">
@@ -25,13 +29,13 @@ export function Header() {
           </span>
           <span className="font-semibold text-lg tracking-tight">Serene</span>
         </Link>
-        <nav className="hidden lg:flex items-center gap-1">
+        <nav className="hidden lg:flex items-center gap-0.5 xl:gap-1">
           {NAV.slice(1, 7).map((n) => (
             <Link
               key={n.to}
               to={n.to}
-              className="px-3 py-2 text-sm text-ink-soft hover:text-ink rounded-full transition-colors hover:bg-white/60"
-              activeProps={{ className: "px-3 py-2 text-sm text-ink rounded-full bg-white/60" }}
+              className="px-2.5 xl:px-3 py-2 text-sm text-ink-soft hover:text-ink rounded-full transition-colors hover:bg-white/60 whitespace-nowrap"
+              activeProps={{ className: "px-2.5 xl:px-3 py-2 text-sm text-ink rounded-full bg-white/60 whitespace-nowrap" }}
             >
               {n.label}
             </Link>
@@ -46,15 +50,16 @@ export function Header() {
           </Link>
         </div>
         <button
-          className="lg:hidden md:hidden grid place-items-center h-10 w-10 rounded-full glass"
+          className="lg:hidden grid place-items-center h-10 w-10 rounded-full glass shrink-0"
           onClick={() => setOpen((v) => !v)}
-          aria-label="Menu"
+          aria-label={open ? "Close menu" : "Open menu"}
+          aria-expanded={open}
         >
           {open ? <X className="h-4 w-4" /> : <Menu className="h-4 w-4" />}
         </button>
       </div>
       {open && (
-        <div className="lg:hidden mx-auto max-w-7xl mt-2 glass-card rounded-3xl p-4 animate-rise">
+        <div className="lg:hidden mx-auto max-w-7xl mt-2 glass-card rounded-3xl p-4 animate-rise max-h-[70vh] overflow-y-auto">
           <div className="flex flex-col gap-1">
             {NAV.map((n) => (
               <Link
@@ -232,7 +237,7 @@ export function PageShell({ children }: { children: React.ReactNode }) {
       <LoadingVeil />
       <AuroraBg />
       <Header />
-      <main className="animate-rise pb-32 sm:pb-24">{children}</main>
+      <main className="animate-rise pt-6 sm:pt-10 lg:pt-12 pb-36 sm:pb-28">{children}</main>
       <Footer />
     </div>
   );
