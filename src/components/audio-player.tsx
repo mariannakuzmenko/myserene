@@ -88,6 +88,7 @@ function ExpandedPanel() {
   const [mixName, setMixName] = useState("");
   const [showTimer, setShowTimer] = useState(false);
   const [showMixes, setShowMixes] = useState(false);
+  const [custom, setCustom] = useState("");
 
   const timerActive = a.sleepTimerEndsAt !== null;
   const remaining = a.sleepTimerRemaining;
@@ -185,6 +186,26 @@ function ExpandedPanel() {
               </button>
             )}
           </div>
+          <form
+            className="mt-2 flex items-center gap-1 glass rounded-full pl-3 pr-1 py-1 w-fit"
+            onSubmit={(e) => {
+              e.preventDefault();
+              const min = Number(custom);
+              if (!Number.isFinite(min) || min <= 0) return;
+              a.startSleepTimer(Math.min(720, Math.round(min)));
+              setCustom("");
+            }}
+          >
+            <input
+              value={custom}
+              onChange={(e) => setCustom(e.target.value)}
+              inputMode="numeric"
+              placeholder="Custom min"
+              aria-label="Custom sleep timer in minutes"
+              className="bg-transparent text-xs outline-none w-20 placeholder:text-ink-soft/70"
+            />
+            <button type="submit" className="rounded-full btn-primary px-3 py-1 text-[11px] font-semibold">Set</button>
+          </form>
           <p className="mt-2 text-[11px] text-ink-soft">Volume gently fades during the final minute, then stops.</p>
         </div>
       )}

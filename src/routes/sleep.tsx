@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { Moon, Star, CloudRain, Waves, BookOpen, ArrowRight, Play, Pause, Music, Wind, Flame, Mountain, Timer } from "lucide-react";
+import { Moon, Heart, CloudRain, Waves, ArrowRight, Play, Pause, Music, Flame, Mountain, Timer, Piano, Trees } from "lucide-react";
 import { PageShell, SectionHeading, Scene, NATURE } from "@/components/site-chrome";
 import { useAudio } from "@/lib/audio/audio-provider";
 import type { SoundId } from "@/lib/audio/catalog";
@@ -53,13 +53,13 @@ const PROGRAMS: SleepProgram[] = [
     icon: Music, title: "Sleep Music", category: "Sleep Music", by: "Composed by Nils", len: "8 h loop",
     minutes: 480,
     image: "https://images.unsplash.com/photo-1445228949218-ae1ad83b0d19?auto=format&fit=crop&w=1600&q=70",
-    mix: [{ id: "meditation", volume: 55 }, { id: "brown-noise", volume: 20 }],
+    mix: [{ id: "soft-ambient", volume: 55 }, { id: "brown-noise", volume: 20 }],
   },
   {
-    icon: BookOpen, title: "The Lighthouse", category: "Sleep Stories", by: "Narrated by Ava L.", len: "32 min",
-    minutes: 32,
+    icon: Waves, title: "Peaceful Night", category: "Peaceful Night", by: "Distant surf & breeze", len: "8 h",
+    minutes: 480,
     image: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1600&q=70",
-    mix: [{ id: "ocean", volume: 55 }, { id: "wind", volume: 25 }],
+    mix: [{ id: "calm-sea", volume: 55 }, { id: "wind", volume: 25 }],
   },
   {
     icon: CloudRain, title: "Rain for Sleep", category: "Rain for Sleep", by: "Heavy rain, no traffic", len: "9 h",
@@ -98,6 +98,12 @@ const PROGRAMS: SleepProgram[] = [
     mix: [{ id: "pink-noise", volume: 65 }],
   },
   {
+    icon: Trees, title: "Green Noise", category: "Brown Noise", by: "Mid-band hush", len: "∞",
+    minutes: 480,
+    image: "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&w=1600&q=70",
+    mix: [{ id: "green-noise", volume: 65 }],
+  },
+  {
     icon: Flame, title: "Fireplace Sleep", category: "Fireplace Sleep", by: "Crackling logs", len: "9 h",
     minutes: 480,
     image: "https://images.unsplash.com/photo-1493889104449-378abb43ad1a?auto=format&fit=crop&w=1600&q=70",
@@ -110,14 +116,18 @@ const PROGRAMS: SleepProgram[] = [
     mix: [{ id: "wind", volume: 45 }, { id: "night-forest", volume: 35 }],
   },
   {
-    icon: Music, title: "Gentle Piano", category: "Gentle Piano", by: "Meditation drone", len: "60 min",
+    icon: Piano, title: "Gentle Piano", category: "Gentle Piano", by: "Sparse piano & air", len: "60 min",
     minutes: 60,
     image: "https://images.unsplash.com/photo-1506126613408-eca07ce68773?auto=format&fit=crop&w=1600&q=70",
-    mix: [{ id: "meditation", volume: 65 }],
+    mix: [{ id: "piano", volume: 60 }, { id: "drone", volume: 25 }],
   },
 ];
 
-const CATEGORIES = ["All", "Deep Sleep", "Fall Asleep Fast", "Power Nap", "Sleep Music", "Sleep Stories"] as const;
+const CATEGORIES = [
+  "All", "Deep Sleep", "Fall Asleep Fast", "Power Nap", "Sleep Music",
+  "Rain for Sleep", "Ocean for Sleep", "Night Forest", "Brown Noise",
+  "White Noise", "Pink Noise", "Fireplace Sleep", "Gentle Piano", "Peaceful Night",
+] as const;
 type Category = (typeof CATEGORIES)[number];
 
 function SleepPage() {
@@ -161,25 +171,38 @@ function SleepPage() {
           {list.map((p) => {
             const active = isActive(p);
             return (
-              <article key={p.title} className="glass-card rounded-3xl overflow-hidden transition-all hover:-translate-y-1 group flex flex-col">
-                <div className="relative h-40 overflow-hidden">
+              <article key={p.title} className="glass-card rounded-3xl overflow-hidden transition-all hover:-translate-y-1 group flex h-full flex-col">
+                <div className="relative aspect-[16/10] overflow-hidden">
                   <img
                     src={p.image}
-                    alt={p.title}
+                    alt={`${p.title} — sleep soundscape`}
                     loading="lazy"
+                    decoding="async"
                     className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-black/15 to-transparent" />
-                  <div className="absolute top-3 left-3 glass rounded-full px-3 py-1 text-[10px] uppercase tracking-widest text-ink">
-                    {p.category}
-                  </div>
-                  <div className="absolute top-3 right-3 grid place-items-center h-9 w-9 rounded-2xl bg-white/80 backdrop-blur">
-                    <p.icon className="h-4 w-4 text-ink" />
+                  <div className="absolute inset-0 p-4 flex items-start justify-between gap-3">
+                    <span className="glass rounded-full px-3 py-1 text-[10px] uppercase tracking-widest text-ink">
+                      {p.category}
+                    </span>
+                    <div className="flex items-center gap-2 shrink-0">
+                      <button
+                        onClick={() => audio.toggleFavorite(p.mix[0].id)}
+                        aria-label={audio.isFavorite(p.mix[0].id) ? `Remove ${p.title} from favorites` : `Add ${p.title} to favorites`}
+                        aria-pressed={audio.isFavorite(p.mix[0].id)}
+                        className="grid place-items-center h-9 w-9 rounded-full glass transition hover:scale-105"
+                      >
+                        <Heart className={`h-4 w-4 ${audio.isFavorite(p.mix[0].id) ? "fill-red-400 text-red-400" : "text-ink-soft"}`} />
+                      </button>
+                      <span className="grid place-items-center h-9 w-9 rounded-full bg-white/80 backdrop-blur">
+                        <p.icon className="h-4 w-4 text-ink" />
+                      </span>
+                    </div>
                   </div>
                 </div>
                 <div className="p-5 flex-1 flex items-center justify-between gap-3">
                   <div className="min-w-0">
-                    <div className="text-lg font-semibold truncate">{p.title}</div>
+                    <div className="text-base sm:text-lg font-semibold truncate">{p.title}</div>
                     <div className="text-xs text-ink-soft mt-0.5 truncate">{p.by} · {p.len}</div>
                   </div>
                   <button

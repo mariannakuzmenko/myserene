@@ -16,6 +16,7 @@ import { Route as RegisterRouteImport } from './routes/register'
 import { Route as PricingRouteImport } from './routes/pricing'
 import { Route as MeditationRouteImport } from './routes/meditation'
 import { Route as LoginRouteImport } from './routes/login'
+import { Route as FrequenciesRouteImport } from './routes/frequencies'
 import { Route as FeaturesRouteImport } from './routes/features'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as BlogRouteImport } from './routes/blog'
@@ -57,6 +58,11 @@ const LoginRoute = LoginRouteImport.update({
   path: '/login',
   getParentRoute: () => rootRouteImport,
 } as any)
+const FrequenciesRoute = FrequenciesRouteImport.update({
+  id: '/frequencies',
+  path: '/frequencies',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const FeaturesRoute = FeaturesRouteImport.update({
   id: '/features',
   path: '/features',
@@ -89,6 +95,7 @@ export interface FileRoutesByFullPath {
   '/blog': typeof BlogRoute
   '/contact': typeof ContactRoute
   '/features': typeof FeaturesRoute
+  '/frequencies': typeof FrequenciesRoute
   '/login': typeof LoginRoute
   '/meditation': typeof MeditationRoute
   '/pricing': typeof PricingRoute
@@ -103,6 +110,7 @@ export interface FileRoutesByTo {
   '/blog': typeof BlogRoute
   '/contact': typeof ContactRoute
   '/features': typeof FeaturesRoute
+  '/frequencies': typeof FrequenciesRoute
   '/login': typeof LoginRoute
   '/meditation': typeof MeditationRoute
   '/pricing': typeof PricingRoute
@@ -118,6 +126,7 @@ export interface FileRoutesById {
   '/blog': typeof BlogRoute
   '/contact': typeof ContactRoute
   '/features': typeof FeaturesRoute
+  '/frequencies': typeof FrequenciesRoute
   '/login': typeof LoginRoute
   '/meditation': typeof MeditationRoute
   '/pricing': typeof PricingRoute
@@ -134,6 +143,7 @@ export interface FileRouteTypes {
     | '/blog'
     | '/contact'
     | '/features'
+    | '/frequencies'
     | '/login'
     | '/meditation'
     | '/pricing'
@@ -148,6 +158,7 @@ export interface FileRouteTypes {
     | '/blog'
     | '/contact'
     | '/features'
+    | '/frequencies'
     | '/login'
     | '/meditation'
     | '/pricing'
@@ -162,6 +173,7 @@ export interface FileRouteTypes {
     | '/blog'
     | '/contact'
     | '/features'
+    | '/frequencies'
     | '/login'
     | '/meditation'
     | '/pricing'
@@ -177,6 +189,7 @@ export interface RootRouteChildren {
   BlogRoute: typeof BlogRoute
   ContactRoute: typeof ContactRoute
   FeaturesRoute: typeof FeaturesRoute
+  FrequenciesRoute: typeof FrequenciesRoute
   LoginRoute: typeof LoginRoute
   MeditationRoute: typeof MeditationRoute
   PricingRoute: typeof PricingRoute
@@ -237,6 +250,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LoginRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/frequencies': {
+      id: '/frequencies'
+      path: '/frequencies'
+      fullPath: '/frequencies'
+      preLoaderRoute: typeof FrequenciesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/features': {
       id: '/features'
       path: '/features'
@@ -281,6 +301,7 @@ const rootRouteChildren: RootRouteChildren = {
   BlogRoute: BlogRoute,
   ContactRoute: ContactRoute,
   FeaturesRoute: FeaturesRoute,
+  FrequenciesRoute: FrequenciesRoute,
   LoginRoute: LoginRoute,
   MeditationRoute: MeditationRoute,
   PricingRoute: PricingRoute,
