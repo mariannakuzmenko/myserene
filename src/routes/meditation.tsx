@@ -100,8 +100,6 @@ function MeditationPage() {
     audio.play();
   };
 
-  const timerTotal = 0;
-
   return (
     <PageShell>
       <Scene image={NATURE.mist} className="px-4 pt-20 pb-16 rounded-b-[48px]" minHeight="55vh">
