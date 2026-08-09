@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { FALLBACK_IMAGE } from "@/lib/images";
 
 /**
@@ -18,15 +18,22 @@ export function SmartImage({
 }) {
   const [current, setCurrent] = useState(src || FALLBACK_IMAGE);
   const [loaded, setLoaded] = useState(false);
+  const ref = useRef<HTMLImageElement>(null);
 
   useEffect(() => {
     setCurrent(src || FALLBACK_IMAGE);
     setLoaded(false);
   }, [src]);
 
+  // Cached images can finish before hydration attaches onLoad — check directly.
+  useEffect(() => {
+    if (ref.current?.complete) setLoaded(true);
+  }, [current]);
+
   return (
     <div className={`absolute inset-0 overflow-hidden bg-gradient-to-br from-sky-ice to-sky-mist ${wrapperClassName}`}>
       <img
+        ref={ref}
         src={current}
         alt={alt}
         loading="lazy"
