@@ -25,9 +25,13 @@ export function SmartImage({
     setLoaded(false);
   }, [src]);
 
-  // Cached images can finish before hydration attaches onLoad — check directly.
+  // Cached/SSR images can finish before hydration attaches onLoad — poll once.
   useEffect(() => {
-    if (ref.current?.complete) setLoaded(true);
+    const el = ref.current;
+    if (!el) return;
+    if (el.complete) { setLoaded(true); return; }
+    const t = setInterval(() => { if (el.complete) { setLoaded(true); clearInterval(t); } }, 200);
+    return () => clearInterval(t);
   }, [current]);
 
   return (
