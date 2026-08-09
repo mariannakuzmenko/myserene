@@ -5,6 +5,7 @@ import {
   Sunrise, Activity, Radio, Sparkles,
 } from "lucide-react";
 import type { SynthKind } from "./synth";
+import { IMG as P } from "@/lib/images";
 
 /**
  * Sound catalog. URLs point at the public Google Actions ambient
