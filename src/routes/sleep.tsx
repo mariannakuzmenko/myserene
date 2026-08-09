@@ -36,13 +36,13 @@ const PROGRAMS: SleepProgram[] = [
   {
     icon: Moon, title: "Deep Sleep", category: "Deep Sleep", by: "9 h loop", len: "9 h",
     minutes: 480,
-    image: IMG.sleep,
+    image: IMG.moonlight,
     mix: [{ id: "deep-sleep", volume: 55 }, { id: "wind", volume: 20 }],
   },
   {
     icon: Waves, title: "Fall Asleep Fast", category: "Fall Asleep Fast", by: "20 min", len: "20 min",
     minutes: 20,
-    image: IMG.moonlight,
+    image: IMG.starryNight,
     mix: [{ id: "ocean", volume: 55 }, { id: "rain", volume: 25 }],
   },
   {
@@ -54,7 +54,7 @@ const PROGRAMS: SleepProgram[] = [
   {
     icon: Music, title: "Sleep Music", category: "Sleep Music", by: "Composed by Nils", len: "8 h loop",
     minutes: 480,
-    image: IMG.ambientMusic,
+    image: IMG.auroraLake,
     mix: [{ id: "soft-ambient", volume: 55 }, { id: "brown-noise", volume: 20 }],
   },
   {
