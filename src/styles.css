@@ -205,8 +205,9 @@ html.tod-morning { --aurora-a:#fde3c4; --aurora-b:#d7f0d9; --aurora-c:#cfe8f7; }
 html.tod-day     { --aurora-a:#d7f5e6; --aurora-b:#d2f0f4; --aurora-c:#eaf9ef; }
 html.tod-sunset  { --aurora-a:#fcd0a6; --aurora-b:#f5b7c4; --aurora-c:#c9e3f0; }
 html.tod-night   {
-  --background:#08181f; --foreground:#e6f4ee; --ink:#e6f4ee; --ink-soft:#9db6ac;
-  --border: rgba(255,255,255,0.08); --muted:#0f2029;
+  --background:#08181f; --foreground:#f1faf5; --ink:#f1faf5; --ink-soft:#c4dad0;
+  --muted-foreground:#c4dad0;
+  --border: rgba(255,255,255,0.16); --muted:#0f2029;
   --aurora-a:#0b2b3a; --aurora-b:#0c1f2f; --aurora-c:#132a3e;
 }
 html.tod-night body { background:#08181f; }
@@ -218,13 +219,23 @@ html.tod-night .bg-aurora {
     #061319;
 }
 html.tod-night .glass {
-  background: linear-gradient(135deg, rgba(255,255,255,0.09), rgba(255,255,255,0.04));
-  border-color: rgba(255,255,255,0.14);
+  background: linear-gradient(135deg, rgba(12,34,30,0.72), rgba(12,34,30,0.55));
+  border-color: rgba(255,255,255,0.2);
+  color: #f1faf5;
 }
 html.tod-night .glass-card {
-  background: linear-gradient(140deg, rgba(255,255,255,0.09), rgba(255,255,255,0.04));
-  border-color: rgba(255,255,255,0.14);
-  color: #e6f4ee;
+  background: linear-gradient(140deg, rgba(12,34,30,0.8), rgba(12,34,30,0.62));
+  border-color: rgba(255,255,255,0.2);
+  color: #f1faf5;
+}
+html.tod-night .btn-ghost {
+  background: rgba(255,255,255,0.12);
+  color: #f1faf5;
+  border-color: rgba(255,255,255,0.22);
+}
+/* Scene overlays need more lift at night so headings stay readable */
+html.tod-night .scene > .scene-overlay {
+  background: linear-gradient(180deg, rgba(4,18,24,0.72) 0%, rgba(4,18,24,0.55) 50%, rgba(4,18,24,0.85) 100%);
 }
 
 @keyframes float-slow {
