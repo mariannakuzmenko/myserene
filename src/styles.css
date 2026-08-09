@@ -369,7 +369,8 @@ html.tod-night .scene > .scene-overlay {
 .scene > .scene-overlay {
   position: absolute; inset: 0; z-index: -1;
   background:
-    linear-gradient(180deg, rgba(255,255,255,0.55) 0%, rgba(255,255,255,0.25) 45%, rgba(255,255,255,0.8) 100%);
+    radial-gradient(120% 80% at 50% 22%, rgba(255,255,255,0.88) 0%, rgba(255,255,255,0.4) 55%, transparent 100%),
+    linear-gradient(180deg, rgba(255,255,255,0.6) 0%, rgba(255,255,255,0.32) 45%, rgba(255,255,255,0.85) 100%);
 }
 .scene-dark > .scene-overlay {
   background:
