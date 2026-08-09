@@ -148,7 +148,7 @@ export const SOUND_CATALOG: SoundDef[] = [
 
   // ---------------- Relaxation frequencies ----------------
   { id: "alpha",      title: "Alpha Range",     cat: "Frequencies", duration: "∞", icon: Activity, grad: "from-sky-ice to-sky-mist",   image: IMG2.calmLake, synth: "alpha",      tint: "#5f9ec4" },
-  { id: "theta",      title: "Theta Range",     cat: "Frequencies", duration: "∞", icon: Activity, grad: "from-sky-mist to-brand-soft",image: IMG2.mistForest, synth: "theta",    tint: "#6f7fb8" },
+  { id: "theta",      title: "Theta Range",     cat: "Frequencies", duration: "∞", icon: Activity, grad: "from-sky-mist to-brand-soft",image: IMG2.aurora, synth: "theta",    tint: "#6f7fb8" },
   { id: "delta",      title: "Delta Range",     cat: "Frequencies", duration: "∞", icon: Activity, grad: "from-brand-soft to-brand",   image: IMG2.moonlight,     synth: "delta",      tint: "#3a4470" },
   { id: "binaural",   title: "Binaural Beats",  cat: "Frequencies", duration: "∞", icon: Radio,    grad: "from-sky-ice to-sky-mist",   image: IMG2.quietRoom, synth: "binaural",  tint: "#7f9ab8" },
   { id: "isochronic", title: "Isochronic Tones",cat: "Frequencies", duration: "∞", icon: Radio,    grad: "from-sky-mist to-brand-soft",image: IMG2.lakeReflection,     synth: "isochronic", tint: "#8f8fb8" },
