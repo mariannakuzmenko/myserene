@@ -60,7 +60,7 @@ const IMG = {
   starry: P.starryNight,
   noise: P.hush,
   meditation: P.meditation,
-  sleep: P.sleep,
+  sleep: P.softBedroom,
   focus: P.focus,
   zen: P.zenGarden,
 };
