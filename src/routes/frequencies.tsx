@@ -59,7 +59,7 @@ function FrequenciesPage() {
                   <h3 className="text-lg font-semibold leading-tight">{f.title}</h3>
                   <p className="mt-2 text-sm text-ink-soft leading-relaxed">{f.blurb}</p>
                   {f.note && (
-                    <p className="mt-3 flex gap-2 text-xs text-ink-soft/90 leading-relaxed">
+                    <p className="mt-3 flex gap-2 text-xs text-ink-soft leading-relaxed">
                       {f.id === "binaural"
                         ? <Headphones className="h-3.5 w-3.5 mt-0.5 shrink-0" />
                         : <Info className="h-3.5 w-3.5 mt-0.5 shrink-0" />}

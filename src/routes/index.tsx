@@ -396,7 +396,7 @@ function CtaBand() {
           <h2 className="text-4xl sm:text-6xl font-medium leading-tight text-white">
             Your peaceful place<br />begins here.
           </h2>
-          <p className="mt-5 text-lg text-white/80 max-w-xl mx-auto">
+          <p className="mt-5 text-lg text-white/95 font-medium max-w-xl mx-auto">
             Seven days free. No card required. Cancel any time.
           </p>
           <div className="mt-8 flex flex-wrap justify-center gap-3">
@@ -407,7 +407,7 @@ function CtaBand() {
               See pricing
             </Link>
           </div>
-          <div className="mt-8 flex flex-wrap justify-center gap-6 text-xs text-white/70">
+          <div className="mt-8 flex flex-wrap justify-center gap-6 text-xs font-medium text-white/90">
             {["No ads, ever","Cancel anytime","Sync across devices"].map((t) => (
               <span key={t} className="inline-flex items-center gap-1.5"><Check className="h-3.5 w-3.5 text-mint" />{t}</span>
             ))}
