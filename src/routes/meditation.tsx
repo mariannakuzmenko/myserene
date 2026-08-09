@@ -42,7 +42,7 @@ const SESSIONS: Session[] = [
   {
     icon: Brain, title: "Deep Focus", len: "15 min", minutes: 15, tag: "Work",
     desc: "Steady rain and brown noise for a quiet, productive hour.",
-    image: IMG.desk,
+    image: IMG.mistWoodland,
     mix: [{ id: "rain", volume: 60 }, { id: "brown-noise", volume: 20 }],
   },
   {
@@ -84,7 +84,7 @@ const SESSIONS: Session[] = [
   {
     icon: Brain, title: "Focus Flow", len: "25 min", minutes: 25, tag: "Deep work",
     desc: "Pink noise and a cafe murmur — brain-friendly.",
-    image: IMG.focusFlow,
+    image: IMG.alpineMorning,
     mix: [{ id: "pink-noise", volume: 45 }, { id: "cafe", volume: 30 }],
   },
 ];
