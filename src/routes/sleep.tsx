@@ -4,6 +4,8 @@ import { PageShell, SectionHeading, Scene, NATURE } from "@/components/site-chro
 import { useAudio } from "@/lib/audio/audio-provider";
 import type { SoundId } from "@/lib/audio/catalog";
 import { useMemo, useState } from "react";
+import { IMG } from "@/lib/images";
+import { SmartImage } from "@/components/smart-image";
 
 export const Route = createFileRoute("/sleep")({
   head: () => ({
@@ -34,91 +36,91 @@ const PROGRAMS: SleepProgram[] = [
   {
     icon: Moon, title: "Deep Sleep", category: "Deep Sleep", by: "9 h loop", len: "9 h",
     minutes: 480,
-    image: "https://images.unsplash.com/photo-1520206183501-b80df61043c2?auto=format&fit=crop&w=1600&q=70",
+    image: IMG.sleep,
     mix: [{ id: "deep-sleep", volume: 55 }, { id: "wind", volume: 20 }],
   },
   {
     icon: Waves, title: "Fall Asleep Fast", category: "Fall Asleep Fast", by: "20 min", len: "20 min",
     minutes: 20,
-    image: "https://images.unsplash.com/photo-1502680390469-be75c86b636f?auto=format&fit=crop&w=1600&q=70",
+    image: IMG.moonlight,
     mix: [{ id: "ocean", volume: 55 }, { id: "rain", volume: 25 }],
   },
   {
     icon: Timer, title: "Power Nap", category: "Power Nap", by: "20 min", len: "20 min",
     minutes: 20,
-    image: "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&w=1600&q=70",
+    image: IMG.softBedroom,
     mix: [{ id: "rain", volume: 55 }],
   },
   {
     icon: Music, title: "Sleep Music", category: "Sleep Music", by: "Composed by Nils", len: "8 h loop",
     minutes: 480,
-    image: "https://images.unsplash.com/photo-1445228949218-ae1ad83b0d19?auto=format&fit=crop&w=1600&q=70",
+    image: IMG.ambientMusic,
     mix: [{ id: "soft-ambient", volume: 55 }, { id: "brown-noise", volume: 20 }],
   },
   {
     icon: Waves, title: "Peaceful Night", category: "Peaceful Night", by: "Distant surf & breeze", len: "8 h",
     minutes: 480,
-    image: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1600&q=70",
+    image: IMG.nightOcean,
     mix: [{ id: "calm-sea", volume: 55 }, { id: "wind", volume: 25 }],
   },
   {
     icon: CloudRain, title: "Rain for Sleep", category: "Rain for Sleep", by: "Heavy rain, no traffic", len: "9 h",
     minutes: 480,
-    image: "https://images.unsplash.com/photo-1428592953211-077101b2021b?auto=format&fit=crop&w=1600&q=70",
+    image: IMG.heavyRain,
     mix: [{ id: "heavy-rain", volume: 65 }, { id: "wind", volume: 20 }],
   },
   {
     icon: Waves, title: "Ocean for Sleep", category: "Ocean for Sleep", by: "Distant surf", len: "9 h",
     minutes: 480,
-    image: "https://images.unsplash.com/photo-1439405326854-014607f694d7?auto=format&fit=crop&w=1600&q=70",
+    image: IMG.oceanSunset,
     mix: [{ id: "ocean", volume: 65 }],
   },
   {
     icon: Moon, title: "Night Forest", category: "Night Forest", by: "Crickets & owl", len: "8 h",
     minutes: 480,
-    image: "https://images.unsplash.com/photo-1419242902214-272b3f66ee7a?auto=format&fit=crop&w=1600&q=70",
+    image: IMG.nightForest,
     mix: [{ id: "night-forest", volume: 65 }, { id: "wind", volume: 15 }],
   },
   {
     icon: Music, title: "Brown Noise", category: "Brown Noise", by: "Deep, warm", len: "∞",
     minutes: 480,
-    image: "https://images.unsplash.com/photo-1518281420975-50db6e5d0a97?auto=format&fit=crop&w=1600&q=70",
+    image: IMG.brownHush,
     mix: [{ id: "brown-noise", volume: 70 }],
   },
   {
     icon: Music, title: "White Noise", category: "White Noise", by: "Even hush", len: "∞",
     minutes: 480,
-    image: "https://images.unsplash.com/photo-1518281420975-50db6e5d0a97?auto=format&fit=crop&w=1600&q=70",
+    image: IMG.whiteHush,
     mix: [{ id: "white-noise", volume: 65 }],
   },
   {
     icon: Music, title: "Pink Noise", category: "Pink Noise", by: "Softer than white", len: "∞",
     minutes: 480,
-    image: "https://images.unsplash.com/photo-1502472584811-0a2f2feb8968?auto=format&fit=crop&w=1600&q=70",
+    image: IMG.pinkHush,
     mix: [{ id: "pink-noise", volume: 65 }],
   },
   {
     icon: Trees, title: "Green Noise", category: "Brown Noise", by: "Mid-band hush", len: "∞",
     minutes: 480,
-    image: "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&w=1600&q=70",
+    image: IMG.greenValley,
     mix: [{ id: "green-noise", volume: 65 }],
   },
   {
     icon: Flame, title: "Fireplace Sleep", category: "Fireplace Sleep", by: "Crackling logs", len: "9 h",
     minutes: 480,
-    image: "https://images.unsplash.com/photo-1493889104449-378abb43ad1a?auto=format&fit=crop&w=1600&q=70",
+    image: IMG.fireplace,
     mix: [{ id: "fireplace", volume: 65 }, { id: "wind", volume: 15 }],
   },
   {
     icon: Mountain, title: "Mountain Night", category: "Mountain Night", by: "Alpine hush", len: "8 h",
     minutes: 480,
-    image: "https://images.unsplash.com/photo-1454496522488-7a8e488e8606?auto=format&fit=crop&w=1600&q=70",
+    image: IMG.mountainNight,
     mix: [{ id: "wind", volume: 45 }, { id: "night-forest", volume: 35 }],
   },
   {
     icon: Piano, title: "Gentle Piano", category: "Gentle Piano", by: "Sparse piano & air", len: "60 min",
     minutes: 60,
-    image: "https://images.unsplash.com/photo-1506126613408-eca07ce68773?auto=format&fit=crop&w=1600&q=70",
+    image: IMG.pianoKeys,
     mix: [{ id: "piano", volume: 60 }, { id: "drone", volume: 25 }],
   },
 ];
@@ -173,16 +175,14 @@ function SleepPage() {
             return (
               <article key={p.title} className="glass-card rounded-3xl overflow-hidden transition-all hover:-translate-y-1 group flex h-full flex-col">
                 <div className="relative aspect-[16/10] overflow-hidden">
-                  <img
+                  <SmartImage
                     src={p.image}
                     alt={`${p.title} — sleep soundscape`}
-                    loading="lazy"
-                    decoding="async"
-                    className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
+                    className="transition-transform duration-700 group-hover:scale-105"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-black/15 to-transparent" />
-                  <div className="absolute inset-0 p-4 flex items-start justify-between gap-3">
-                    <span className="glass rounded-full px-3 py-1 text-[10px] uppercase tracking-widest text-ink">
+                  <div className="absolute inset-0 scrim-bottom" />
+                  <div className="absolute inset-0 p-3 sm:p-4 flex items-start justify-between gap-3">
+                    <span className="glass rounded-full px-3 py-1 text-[10px] font-semibold uppercase tracking-widest text-ink">
                       {p.category}
                     </span>
                     <div className="flex items-center gap-2 shrink-0">
@@ -190,11 +190,11 @@ function SleepPage() {
                         onClick={() => audio.toggleFavorite(p.mix[0].id)}
                         aria-label={audio.isFavorite(p.mix[0].id) ? `Remove ${p.title} from favorites` : `Add ${p.title} to favorites`}
                         aria-pressed={audio.isFavorite(p.mix[0].id)}
-                        className="grid place-items-center h-9 w-9 rounded-full glass transition hover:scale-105"
+                        className="grid place-items-center h-11 w-11 rounded-full glass transition hover:scale-105"
                       >
-                        <Heart className={`h-4 w-4 ${audio.isFavorite(p.mix[0].id) ? "fill-red-400 text-red-400" : "text-ink-soft"}`} />
+                        <Heart className={`h-4 w-4 ${audio.isFavorite(p.mix[0].id) ? "fill-red-500 text-red-500" : "text-ink"}`} />
                       </button>
-                      <span className="grid place-items-center h-9 w-9 rounded-full bg-white/80 backdrop-blur">
+                      <span className="grid place-items-center h-11 w-11 rounded-full bg-white/90 backdrop-blur">
                         <p.icon className="h-4 w-4 text-ink" />
                       </span>
                     </div>
@@ -202,8 +202,8 @@ function SleepPage() {
                 </div>
                 <div className="p-5 flex-1 flex items-center justify-between gap-3">
                   <div className="min-w-0">
-                    <div className="text-base sm:text-lg font-semibold truncate">{p.title}</div>
-                    <div className="text-xs text-ink-soft mt-0.5 truncate">{p.by} · {p.len}</div>
+                    <div className="text-base sm:text-lg font-semibold text-ink truncate">{p.title}</div>
+                    <div className="text-xs font-medium text-ink-soft mt-0.5 truncate">{p.by} · {p.len}</div>
                   </div>
                   <button
                     onClick={() => (active ? audio.stopAll() : playProgram(p))}

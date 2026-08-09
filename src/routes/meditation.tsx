@@ -4,6 +4,8 @@ import { PageShell, SectionHeading, Scene, NATURE } from "@/components/site-chro
 import { useAudio } from "@/lib/audio/audio-provider";
 import type { SoundId } from "@/lib/audio/catalog";
 import { useMemo } from "react";
+import { IMG } from "@/lib/images";
+import { SmartImage } from "@/components/smart-image";
 
 export const Route = createFileRoute("/meditation")({
   head: () => ({
@@ -34,55 +36,55 @@ const SESSIONS: Session[] = [
   {
     icon: Sunrise, title: "Morning Reset", len: "10 min", minutes: 10, tag: "Start the day",
     desc: "Wake gently with warm birdsong and a soft forest breeze.",
-    image: "https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?auto=format&fit=crop&w=1600&q=70",
+    image: IMG.sunriseForest,
     mix: [{ id: "morning-birds", volume: 55 }, { id: "forest", volume: 35 }],
   },
   {
     icon: Brain, title: "Deep Focus", len: "15 min", minutes: 15, tag: "Work",
     desc: "Steady rain and brown noise for a quiet, productive hour.",
-    image: "https://images.unsplash.com/photo-1483058712412-4245e9b90334?auto=format&fit=crop&w=1600&q=70",
+    image: IMG.desk,
     mix: [{ id: "rain", volume: 60 }, { id: "brown-noise", volume: 20 }],
   },
   {
     icon: Wind, title: "Anxiety Ease", len: "8 min", minutes: 8, tag: "Anytime",
     desc: "Waterfall and breeze to soften a racing mind.",
-    image: "https://images.unsplash.com/photo-1432405972618-c60b0225b8f9?auto=format&fit=crop&w=1600&q=70",
+    image: IMG.waterfall,
     mix: [{ id: "waterfall", volume: 55 }, { id: "wind", volume: 25 }],
   },
   {
     icon: Heart, title: "Gratitude", len: "5 min", minutes: 5, tag: "Evening",
     desc: "A slow meditation drone with distant birds.",
-    image: "https://images.unsplash.com/photo-1506126613408-eca07ce68773?auto=format&fit=crop&w=1600&q=70",
+    image: IMG.duskField,
     mix: [{ id: "drone", volume: 60 }, { id: "singing-bowls", volume: 30 }],
   },
   {
     icon: Sun, title: "Midday Pause", len: "3 min", minutes: 3, tag: "Break",
     desc: "Three minutes of gentle river to reset attention.",
-    image: "https://images.unsplash.com/photo-1470770841072-f978cf4d019e?auto=format&fit=crop&w=1600&q=70",
+    image: IMG.stream,
     mix: [{ id: "river", volume: 60 }],
   },
   {
     icon: Moon, title: "Body Scan", len: "20 min", minutes: 20, tag: "Before bed",
     desc: "Nightfall in the forest — perfect to settle the body.",
-    image: "https://images.unsplash.com/photo-1419242902214-272b3f66ee7a?auto=format&fit=crop&w=1600&q=70",
+    image: IMG.nightForest,
     mix: [{ id: "night-forest", volume: 60 }, { id: "wind", volume: 20 }],
   },
   {
     icon: Sparkles, title: "Zen Garden", len: "12 min", minutes: 12, tag: "Meditation",
     desc: "Bamboo, trickling water and mountain quiet.",
-    image: "https://images.unsplash.com/photo-1528183429752-a97d0bf99b5a?auto=format&fit=crop&w=1600&q=70",
+    image: IMG.zenGarden,
     mix: [{ id: "zen-garden", volume: 55 }, { id: "bamboo", volume: 30 }, { id: "wind-chimes", volume: 20 }],
   },
   {
     icon: Heart, title: "Loving Kindness", len: "10 min", minutes: 10, tag: "Compassion",
     desc: "Warm ocean waves at dawn.",
-    image: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1600&q=70",
+    image: IMG.dawnSea,
     mix: [{ id: "ocean", volume: 60 }, { id: "birds", volume: 15 }],
   },
   {
     icon: Brain, title: "Focus Flow", len: "25 min", minutes: 25, tag: "Deep work",
     desc: "Pink noise and a cafe murmur — brain-friendly.",
-    image: "https://images.unsplash.com/photo-1445116572660-236099ec97a0?auto=format&fit=crop&w=1600&q=70",
+    image: IMG.focusFlow,
     mix: [{ id: "pink-noise", volume: 45 }, { id: "cafe", volume: 30 }],
   },
 ];
@@ -120,16 +122,14 @@ function MeditationPage() {
             return (
               <article key={s.title} className="glass-card rounded-3xl overflow-hidden transition-all hover:-translate-y-1 group flex h-full flex-col">
                 <div className="relative aspect-[16/10] overflow-hidden">
-                  <img
+                  <SmartImage
                     src={s.image}
                     alt={`${s.title} — guided meditation`}
-                    loading="lazy"
-                    decoding="async"
-                    className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
+                    className="transition-transform duration-700 group-hover:scale-105"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-black/10 to-transparent" />
-                  <div className="absolute inset-0 p-4 flex items-start justify-between gap-3">
-                    <span className="glass rounded-full px-3 py-1 text-[10px] uppercase tracking-widest text-ink">
+                  <div className="absolute inset-0 scrim-bottom" />
+                  <div className="absolute inset-0 p-3 sm:p-4 flex items-start justify-between gap-3">
+                    <span className="glass rounded-full px-3 py-1 text-[10px] font-semibold uppercase tracking-widest text-ink">
                       {s.tag}
                     </span>
                     <div className="flex items-center gap-2 shrink-0">
@@ -137,25 +137,25 @@ function MeditationPage() {
                         onClick={() => audio.toggleFavorite(s.mix[0].id)}
                         aria-label={fav ? `Remove ${s.title} from favorites` : `Add ${s.title} to favorites`}
                         aria-pressed={fav}
-                        className="grid place-items-center h-9 w-9 rounded-full glass transition hover:scale-105"
+                        className="grid place-items-center h-11 w-11 rounded-full glass transition hover:scale-105"
                       >
-                        <Heart className={`h-4 w-4 ${fav ? "fill-red-400 text-red-400" : "text-ink-soft"}`} />
+                        <Heart className={`h-4 w-4 ${fav ? "fill-red-500 text-red-500" : "text-ink"}`} />
                       </button>
-                      <span className="grid place-items-center h-9 w-9 rounded-full bg-white/80 backdrop-blur">
+                      <span className="grid place-items-center h-11 w-11 rounded-full bg-white/90 backdrop-blur">
                         <s.icon className="h-4 w-4 text-ink" />
                       </span>
                     </div>
                   </div>
                 </div>
                 <div className="p-5 flex-1 flex flex-col">
-                  <h3 className="text-lg font-semibold leading-tight">{s.title}</h3>
-                  <p className="mt-1 text-sm text-ink-soft leading-relaxed">{s.desc}</p>
+                  <h3 className="text-lg font-semibold text-ink leading-tight">{s.title}</h3>
+                  <p className="mt-1.5 text-sm font-medium text-ink-soft leading-relaxed">{s.desc}</p>
                   <div className="mt-4 h-1.5 rounded-full bg-white/60 overflow-hidden">
                     <div className="h-full rounded-full bg-gradient-to-r from-brand-soft to-brand transition-all duration-1000"
                       style={{ width: `${progress}%` }} />
                   </div>
                   <div className="mt-4 flex items-center justify-between gap-3">
-                    <span className="text-xs text-ink-soft">{s.len}</span>
+                    <span className="text-xs font-semibold text-ink-soft">{s.len}</span>
                     <div className="flex items-center gap-2">
                       <button
                         onClick={() => audio.startSleepTimer(s.minutes)}
