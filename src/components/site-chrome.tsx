@@ -1,6 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { Menu, X, Waves, Instagram, Twitter, Youtube } from "lucide-react";
+import { HERO } from "@/lib/images";
 
 const NAV = [
   { to: "/", label: "Home" },
@@ -34,8 +35,8 @@ export function Header() {
             <Link
               key={n.to}
               to={n.to}
-              className="px-2.5 xl:px-3 py-2 text-sm text-ink-soft hover:text-ink rounded-full transition-colors hover:bg-white/60 whitespace-nowrap"
-              activeProps={{ className: "px-2.5 xl:px-3 py-2 text-sm text-ink rounded-full bg-white/60 whitespace-nowrap" }}
+              className="px-2.5 xl:px-3 py-2 text-sm font-medium text-ink/80 hover:text-ink rounded-full transition-colors hover:bg-white/70 whitespace-nowrap"
+              activeProps={{ className: "px-2.5 xl:px-3 py-2 text-sm font-semibold text-ink rounded-full bg-white/75 whitespace-nowrap" }}
             >
               {n.label}
             </Link>
@@ -66,8 +67,8 @@ export function Header() {
                 key={n.to}
                 to={n.to}
                 onClick={() => setOpen(false)}
-                className="px-4 py-3 rounded-2xl text-ink-soft hover:text-ink hover:bg-white/60"
-                activeProps={{ className: "px-4 py-3 rounded-2xl text-ink bg-white/60" }}
+                className="px-4 py-3 rounded-2xl text-base font-medium text-ink/85 hover:text-ink hover:bg-white/70"
+                activeProps={{ className: "px-4 py-3 rounded-2xl text-base font-semibold text-ink bg-white/75" }}
               >
                 {n.label}
               </Link>
@@ -237,7 +238,7 @@ export function PageShell({ children }: { children: React.ReactNode }) {
       <LoadingVeil />
       <AuroraBg />
       <Header />
-      <main className="animate-rise pt-6 sm:pt-10 lg:pt-12 pb-36 sm:pb-28">{children}</main>
+      <main className="animate-rise pt-10 sm:pt-14 lg:pt-20 pb-36 sm:pb-28">{children}</main>
       <Footer />
     </div>
   );
@@ -269,18 +270,21 @@ export function Scene({
   );
 }
 
-/** Curated nature imagery (Unsplash) for reusable scenes. */
+/** Curated nature imagery for reusable scenes — verified photo collection. */
 export const NATURE = {
-  sunrise: "https://images.unsplash.com/photo-1503803548695-c2a7b4a5b875?auto=format&fit=crop&w=2400&q=80",
-  ocean: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=2400&q=80",
-  forest: "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&w=2400&q=80",
-  waterfall: "https://images.unsplash.com/photo-1432405972618-c60b0225b8f9?auto=format&fit=crop&w=2400&q=80",
-  lake: "https://images.unsplash.com/photo-1470770841072-f978cf4d019e?auto=format&fit=crop&w=2400&q=80",
-  bamboo: "https://images.unsplash.com/photo-1441325193581-b6dc9a1a6adb?auto=format&fit=crop&w=2400&q=80",
-  beachSunset: "https://images.unsplash.com/photo-1502680390469-be75c86b636f?auto=format&fit=crop&w=2400&q=80",
-  night: "https://images.unsplash.com/photo-1419242902214-272b3f66ee7a?auto=format&fit=crop&w=2400&q=80",
-  mist: "https://images.unsplash.com/photo-1418065460487-3e41a6c84dc5?auto=format&fit=crop&w=2400&q=80",
-  mountains: "https://images.unsplash.com/photo-1454496522488-7a8e488e8606?auto=format&fit=crop&w=2400&q=80",
+  sunrise: HERO.sunrise,
+  ocean: HERO.ocean,
+  forest: HERO.sunlitForest,
+  waterfall: HERO.waterfall,
+  lake: HERO.mountainLake,
+  bamboo: HERO.bamboo,
+  beachSunset: HERO.oceanSunset,
+  night: HERO.starryNight,
+  mist: HERO.deepForest,
+  mountains: HERO.alpineMorning,
+  zen: HERO.zenGarden,
+  meadow: HERO.meadow,
+  aurora: HERO.aurora,
 };
 
 export function SectionHeading({ eyebrow, title, subtitle, align = "center" }: {
@@ -289,16 +293,16 @@ export function SectionHeading({ eyebrow, title, subtitle, align = "center" }: {
   return (
     <div className={`max-w-3xl ${align === "center" ? "mx-auto text-center" : ""}`}>
       {eyebrow && (
-        <span className="inline-flex items-center gap-2 glass rounded-full px-4 py-1.5 text-xs font-medium text-ink-soft">
+        <span className="inline-flex items-center gap-2 glass rounded-full px-4 py-1.5 text-xs font-semibold uppercase tracking-wider text-ink">
           <span className="h-1.5 w-1.5 rounded-full bg-brand animate-shimmer" />
           {eyebrow}
         </span>
       )}
-      <h2 className="mt-5 text-4xl sm:text-5xl md:text-6xl font-medium text-ink leading-[1.05]">
+      <h2 className="mt-5 text-4xl sm:text-5xl md:text-6xl font-semibold text-ink leading-[1.05]">
         {title}
       </h2>
       {subtitle && (
-        <p className="mt-5 text-lg text-ink-soft leading-relaxed">{subtitle}</p>
+        <p className="mt-5 text-lg text-ink/80 font-medium leading-relaxed">{subtitle}</p>
       )}
     </div>
   );

@@ -3,6 +3,7 @@ import { Play, Pause, Headphones, Activity, Info } from "lucide-react";
 import { PageShell, SectionHeading, Scene, NATURE } from "@/components/site-chrome";
 import { useAudio } from "@/lib/audio/audio-provider";
 import { FREQUENCIES, SOUND_BY_ID } from "@/lib/audio/catalog";
+import { SmartImage } from "@/components/smart-image";
 
 export const Route = createFileRoute("/frequencies")({
   head: () => ({
@@ -40,26 +41,24 @@ function FrequenciesPage() {
             return (
               <article key={f.id} className="glass-card rounded-3xl overflow-hidden flex h-full flex-col transition-all hover:-translate-y-1 group">
                 <div className="relative aspect-[16/10] overflow-hidden">
-                  <img
+                  <SmartImage
                     src={sound?.image}
                     alt={`${f.title} — calming frequency experience`}
-                    loading="lazy"
-                    decoding="async"
-                    className="absolute inset-0 h-full w-full object-cover transition-transform duration-[1200ms] group-hover:scale-105"
+                    className="transition-transform duration-[1200ms] group-hover:scale-105"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/45 via-black/10 to-transparent" />
-                  <div className="absolute inset-0 p-4 flex items-start justify-between">
-                    <span className="glass rounded-full px-3 py-1 text-[10px] uppercase tracking-widest">{f.range}</span>
+                  <div className="absolute inset-0 scrim-bottom" />
+                  <div className="absolute inset-0 p-3 sm:p-4 flex items-start justify-between">
+                    <span className="glass rounded-full px-3 py-1 text-[10px] font-semibold uppercase tracking-widest text-ink">{f.range}</span>
                     <span className="grid place-items-center h-9 w-9 rounded-full glass">
-                      <Activity className="h-4 w-4 text-ink-soft" />
+                      <Activity className="h-4 w-4 text-ink" />
                     </span>
                   </div>
                 </div>
                 <div className="p-5 flex flex-1 flex-col">
-                  <h3 className="text-lg font-semibold leading-tight">{f.title}</h3>
-                  <p className="mt-2 text-sm text-ink-soft leading-relaxed">{f.blurb}</p>
+                  <h3 className="text-lg font-semibold text-ink leading-tight">{f.title}</h3>
+                  <p className="mt-2 text-sm font-medium text-ink-soft leading-relaxed">{f.blurb}</p>
                   {f.note && (
-                    <p className="mt-3 flex gap-2 text-xs text-ink-soft/90 leading-relaxed">
+                    <p className="mt-3 flex gap-2 text-xs text-ink-soft leading-relaxed">
                       {f.id === "binaural"
                         ? <Headphones className="h-3.5 w-3.5 mt-0.5 shrink-0" />
                         : <Info className="h-3.5 w-3.5 mt-0.5 shrink-0" />}
@@ -67,7 +66,7 @@ function FrequenciesPage() {
                     </p>
                   )}
                   <div className="mt-5 pt-4 border-t border-white/50 flex items-center justify-between gap-3">
-                    <span className="text-xs text-ink-soft">{playing ? "Playing" : "Continuous loop"}</span>
+                    <span className="text-xs font-semibold text-ink-soft">{playing ? "Playing" : "Continuous loop"}</span>
                     <button
                       onClick={() => audio.toggleTrack(f.id, 55)}
                       className="grid place-items-center h-11 w-11 rounded-full btn-primary shrink-0"
