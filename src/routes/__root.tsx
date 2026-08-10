@@ -76,7 +76,12 @@ function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
 }
 
 export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()({
-  head: () => ({
+  head: () => {
+    // Host-agnostic social preview: set VITE_SITE_URL in production for a fully
+    // absolute URL; otherwise the path resolves against the deployed origin.
+    const siteUrl = (import.meta.env["VITE_SITE_URL"] as string | undefined)?.replace(/\/$/, "") ?? "";
+    const ogImage = `${siteUrl}/images/og-cover.jpg`;
+    return {
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
@@ -90,8 +95,8 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { name: "twitter:card", content: "summary_large_image" },
       { name: "twitter:title", content: "Serene — Breathe. Relax. Feel better." },
       { name: "twitter:description", content: "A premium relaxation platform. Nature sounds, guided meditation and deep sleep for a calmer, clearer mind." },
-      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/b29b92b8-a6ee-4e6a-b2d8-a83a3a38c277/id-preview-13900f3c--2e33c0b0-da65-494e-99a2-9b0c0fd4c415.lovable.app-1784790657252.png" },
-      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/b29b92b8-a6ee-4e6a-b2d8-a83a3a38c277/id-preview-13900f3c--2e33c0b0-da65-494e-99a2-9b0c0fd4c415.lovable.app-1784790657252.png" },
+      { property: "og:image", content: ogImage },
+      { name: "twitter:image", content: ogImage },
     ],
     links: [
       {
@@ -103,7 +108,8 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
       { rel: "stylesheet", href: "https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600&display=swap" },
     ],
-  }),
+    };
+  },
   shellComponent: RootShell,
   component: RootComponent,
   notFoundComponent: NotFoundComponent,

@@ -4,6 +4,7 @@ import {
 } from "react";
 import { SOUND_BY_ID, SOUND_CATALOG, type SoundDef, type SoundId } from "./catalog";
 import { getSoundBuffer } from "./synth";
+import { setBackgroundAudioActive, getBackgroundAudioElement } from "./background-audio";
 
 type ActiveTracks = Record<SoundId, number>; // id -> 0..100 volume
 
@@ -132,6 +133,9 @@ export function AudioProvider({ children }: { children: ReactNode }) {
 
   const ensureCtx = useCallback(() => {
     if (typeof window === "undefined") return null;
+    // Called from user gestures — claim the media session while we still have
+    // transient activation so iOS grants Lock Screen controls + background play.
+    setBackgroundAudioActive(true);
     if (!ctxRef.current) {
       const AC = window.AudioContext ?? (window as any).webkitAudioContext;
       if (!AC) return null;
@@ -245,6 +249,7 @@ export function AudioProvider({ children }: { children: ReactNode }) {
   }, [active]);
 
   const toggleTrack = useCallback((id: SoundId, initialVolume = 60) => {
+    ensureCtx();
     setActive((prev) => {
       if (id in prev) {
         const { [id]: _drop, ...rest } = prev;
@@ -254,13 +259,14 @@ export function AudioProvider({ children }: { children: ReactNode }) {
       return { ...prev, [id]: initialVolume };
     });
     setFocusedId(id);
-  }, [remember]);
+  }, [remember, ensureCtx]);
 
   const playTrackSolo = useCallback((id: SoundId) => {
+    ensureCtx();
     setActive({ [id]: 70 });
     setFocusedId(id);
     remember([id]);
-  }, [remember]);
+  }, [remember, ensureCtx]);
 
   const stopTrack = useCallback((id: SoundId) => {
     setActive((prev) => { const { [id]: _drop, ...rest } = prev; return rest; });
@@ -304,12 +310,13 @@ export function AudioProvider({ children }: { children: ReactNode }) {
   const prev = useCallback(() => nextPrev(-1), [nextPrev]);
 
   const loadPlaylist = useCallback((tracks: { id: SoundId; volume: number }[]) => {
+    ensureCtx();
     const map: ActiveTracks = {};
     tracks.forEach((t) => { map[t.id] = t.volume; });
     setActive(map);
     setFocusedId(tracks[0]?.id ?? null);
     remember(tracks.map((t) => t.id));
-  }, [remember]);
+  }, [remember, ensureCtx]);
 
   const startImmersive = useCallback((id?: SoundId) => {
     if (id) playTrackSolo(id);
@@ -393,6 +400,75 @@ export function AudioProvider({ children }: { children: ReactNode }) {
 
   const getFocused = useCallback(() => (focusedId ? SOUND_BY_ID[focusedId] ?? null : null), [focusedId]);
   const getTint = useCallback(() => (focusedId ? SOUND_BY_ID[focusedId]?.tint ?? "#7fd5df" : "#7fd5df"), [focusedId]);
+
+  // ---- iOS background playback: keep one media element as session anchor ----
+  useEffect(() => {
+    const shouldRun = playing && Object.keys(active).length > 0;
+    setBackgroundAudioActive(shouldRun);
+  }, [playing, active]);
+
+  // Re-arm the audio session when Safari brings the tab back to the front.
+  useEffect(() => {
+    if (typeof document === "undefined") return;
+    const onVisible = () => {
+      if (document.visibilityState !== "visible") return;
+      if (!playing || Object.keys(active).length === 0) return;
+      const ctx = ctxRef.current;
+      if (ctx && ctx.state === "suspended") ctx.resume().catch(() => {});
+      setBackgroundAudioActive(true);
+    };
+    document.addEventListener("visibilitychange", onVisible);
+    return () => document.removeEventListener("visibilitychange", onVisible);
+  }, [playing, active]);
+
+  // ---- Media Session: Lock Screen / Control Center metadata + transport ----
+  useEffect(() => {
+    if (typeof navigator === "undefined" || !("mediaSession" in navigator)) return;
+    const ms = navigator.mediaSession;
+    const focused = focusedId ? SOUND_BY_ID[focusedId] : null;
+    const ids = Object.keys(active);
+    const artwork = focused?.image ?? "/images/fireplace-cabin.jpg";
+    const absolute = artwork.startsWith("http")
+      ? artwork
+      : `${window.location.origin}${artwork}`;
+
+    try {
+      ms.metadata = new MediaMetadata({
+        title: focused?.title ?? "Serene",
+        artist: "MySerene",
+        album: ids.length > 1 ? `Mix · ${ids.length} sounds` : `${focused?.cat ?? "Nature"} Sounds`,
+        artwork: [
+          { src: absolute, sizes: "512x512", type: "image/jpeg" },
+          { src: absolute, sizes: "256x256", type: "image/jpeg" },
+          { src: absolute, sizes: "96x96", type: "image/jpeg" },
+        ],
+      });
+    } catch { /* MediaMetadata unsupported */ }
+
+    ms.playbackState = playing && ids.length > 0 ? "playing" : "paused";
+  }, [focusedId, active, playing]);
+
+  useEffect(() => {
+    if (typeof navigator === "undefined" || !("mediaSession" in navigator)) return;
+    const ms = navigator.mediaSession;
+    const setAction = (action: MediaSessionAction, handler: (() => void) | null) => {
+      try { ms.setActionHandler(action, handler as never); } catch { /* unsupported action */ }
+    };
+    setAction("play", () => { ensureCtx(); setPlaying(true); getBackgroundAudioElement()?.play().catch(() => {}); });
+    setAction("pause", () => setPlaying(false));
+    setAction("stop", () => { setActive({}); setPlaying(false); });
+    setAction("nexttrack", () => nextPrev(1));
+    setAction("previoustrack", () => nextPrev(-1));
+    // Ambient soundscapes are endless loops, so there is no timeline to seek.
+    // The handlers are registered (so iOS renders a consistent transport) but
+    // intentionally do nothing rather than fake a position change.
+    setAction("seekbackward", () => {});
+    setAction("seekforward", () => {});
+    return () => {
+      (["play", "pause", "stop", "nexttrack", "previoustrack", "seekbackward", "seekforward"] as MediaSessionAction[])
+        .forEach((a) => setAction(a, null));
+    };
+  }, [ensureCtx, nextPrev]);
 
   const toggleFavorite = useCallback((id: SoundId) =>
     setFavorites((prev) => (prev.includes(id) ? prev.filter((f) => f !== id) : [id, ...prev])), []);

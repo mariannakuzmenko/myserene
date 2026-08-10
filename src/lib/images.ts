@@ -31,14 +31,14 @@ const ID = {
   // Water
   waterfall: "1432405972618-c60b0225b8f9",
   river: "1508233620467-f79f1e317a05",
-  stream: "1470770841072-f978cf4d019e",
+  stream: "1439853949127-fa647821eba0",
   ocean: "1507525428034-b723cf961d3e",
   calmSea: "1499002238440-d264edd596ec",
   oceanSunset: "1439405326854-014607f694d7",
   stormyOcean: "1500674425229-f692875b0ab7",
-  beach: "1502680390469-be75c86b636f",
+  beach: "1519046904884-53103b34b206",
   turquoise: "1493246507139-91e8fad9978e",
-  nightOcean: "1476820865390-c52aeebb9891",
+  nightOcean: "1534447677768-be436bb09401",
   // Rain & weather
   rain: "1493314894560-5c412a56c17c",
   heavyRain: "1428592953211-077101b2021b",
@@ -89,20 +89,36 @@ const ID = {
   // Sleep
   sleep: "1519681393784-d120267933ba",
   duskField: "1508739773434-c26b3d09e071",
-  dawnSea: "1470115636492-6d2b56f9146d",
+  dawnSea: "1505144808419-1957a94ca61e",
   goldenHour: "1516214104703-d870798883c5",
   sunrise: "1503803548695-c2a7b4a5b875",
 } as const;
 
 export type ImageKey = keyof typeof ID;
 
+/**
+ * Locally hosted photography (served from /public/images) for scenes where a
+ * remote stock photo was inaccurate or unsuitable for a sleep/relaxation
+ * product. These paths are production-safe on any static host (incl. Netlify).
+ */
+const LOCAL: Partial<Record<ImageKey, string>> = {
+  fireplace: "/images/fireplace-cabin.jpg",
+  campfire: "/images/campfire-night.jpg",
+  cracklingFire: "/images/crackling-logs.jpg",
+  cozyCabin: "/images/cozy-cabin.jpg",
+  quietRoom: "/images/quiet-room.jpg",
+  windChimes: "/images/wind-chimes.jpg",
+  bamboo: "/images/bamboo-forest.jpg",
+  bambooPath: "/images/bamboo-forest.jpg",
+};
+
 export const IMG: Record<ImageKey, string> = Object.fromEntries(
-  (Object.keys(ID) as ImageKey[]).map((k) => [k, photo(ID[k])]),
+  (Object.keys(ID) as ImageKey[]).map((k) => [k, LOCAL[k] ?? photo(ID[k])]),
 ) as Record<ImageKey, string>;
 
 /** Wide/hero variants for full-bleed scenes. */
 export const HERO: Record<ImageKey, string> = Object.fromEntries(
-  (Object.keys(ID) as ImageKey[]).map((k) => [k, photo(ID[k], 2400, 82)]),
+  (Object.keys(ID) as ImageKey[]).map((k) => [k, LOCAL[k] ?? photo(ID[k], 2400, 82)]),
 ) as Record<ImageKey, string>;
 
 /** Shown when any remote image fails to load — never an empty container. */
