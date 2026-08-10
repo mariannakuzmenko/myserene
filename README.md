@@ -27,3 +27,26 @@ npm run dev
 - TypeScript
 - React
 - Tailwind CSS
+
+## Deploying to Netlify
+
+1. Connect the repo on Netlify — `netlify.toml` already sets the build
+   (`npm run build`), the publish dir (`dist/client`) and `NITRO_PRESET=netlify`,
+   which makes Nitro emit the SSR handler as a Netlify function.
+2. Optional: set `VITE_SITE_URL=https://your-domain` so social preview images
+   use a fully absolute URL. See `.env.example`; no secrets are required.
+3. Routing: the Netlify preset generates its own catch-all to the SSR handler,
+   so deep links and refreshes work. Do not add a `_redirects` catch-all — it
+   would shadow SSR.
+
+## Audio & background playback
+
+Ambient audio is generated procedurally in the browser (Web Audio API), so
+there are no audio files to host and nothing can 404. Mixing and per-track
+volume run through the Web Audio graph; a single hidden, near-silent
+`HTMLAudioElement` anchors the platform media session so iOS shows Lock Screen
+/ Control Center controls and keeps playing when Safari is backgrounded.
+Supported Media Session actions: play, pause, stop, nexttrack, previoustrack.
+Seek actions are registered but inert — soundscapes are endless loops with no
+timeline. iOS can still drop the audio session under memory pressure or when
+another app takes audio focus; playback re-arms on the next foreground/gesture.

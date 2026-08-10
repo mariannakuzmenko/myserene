@@ -1,0 +1,21 @@
+# Netlify deployment for this TanStack Start (SSR) app.
+#
+# The build runs Nitro with the official Netlify preset, which emits:
+#   dist/client                      -> static assets (published)
+#   .netlify/functions-internal/...  -> the SSR handler
+#   plus its own redirect rules that route every unmatched path to SSR,
+#   so page refreshes and deep links never 404. Do not add a catch-all
+#   redirect here: it would shadow the SSR handler and break server rendering.
+
+[build]
+  command = "npm run build"
+  publish = "dist/client"
+
+[build.environment]
+  NODE_VERSION = "22"
+  NITRO_PRESET = "netlify"
+
+[[headers]]
+  for = "/images/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
