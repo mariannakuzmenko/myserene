@@ -31,13 +31,27 @@ npm run dev
 ## Deploying to Netlify
 
 1. Connect the repo on Netlify — `netlify.toml` already sets the build
-   (`npm run build`), the publish dir (`dist/client`) and `NITRO_PRESET=netlify`,
-   which makes Nitro emit the SSR handler as a Netlify function.
+   (`npm run build`), the publish dir (`dist`) and `NITRO_PRESET=netlify`,
+   which makes Nitro emit the SSR handler as an internal Netlify Function
+   (`.netlify/functions-internal/server`) registered for `/*`.
 2. Optional: set `VITE_SITE_URL=https://your-domain` so social preview images
    use a fully absolute URL. See `.env.example`; no secrets are required.
-3. Routing: the Netlify preset generates its own catch-all to the SSR handler,
-   so deep links and refreshes work. Do not add a `_redirects` catch-all — it
-   would shadow SSR.
+3. Routing: the SSR function is registered with `path = "/*"` and
+   `preferStatic = true`, so static files win and every other path (including
+   deep links and refreshes) is server-rendered. Do not add a `_redirects`
+   catch-all or `public/_redirects` — it would shadow SSR.
+
+## Local development (VS Code)
+
+```sh
+npm install     # package-lock.json is committed
+npm run dev     # http://localhost:5173
+npm run build   # production build (Cloudflare/Node default, Netlify on CI)
+npx tsc --noEmit  # TypeScript check
+npm run lint
+```
+
+No environment variables are required; see `.env.example` for the optional ones.
 
 ## Audio & background playback
 
