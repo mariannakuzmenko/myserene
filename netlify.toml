@@ -1,15 +1,19 @@
 # Netlify deployment for this TanStack Start (SSR) app.
 #
-# The build runs Nitro with the official Netlify preset, which emits:
-#   dist/client                      -> static assets (published)
-#   .netlify/functions-internal/...  -> the SSR handler
-#   plus its own redirect rules that route every unmatched path to SSR,
-#   so page refreshes and deep links never 404. Do not add a catch-all
-#   redirect here: it would shadow the SSR handler and break server rendering.
+# `npm run build` runs Vite + Nitro with the Netlify preset (NITRO_PRESET below),
+# which emits:
+#   dist/                            -> static assets + _headers (published)
+#   .netlify/functions-internal/...  -> the SSR handler, a Netlify Function v2
+#                                       registered with `path = "/*"` and
+#                                       `preferStatic = true`.
+#
+# Because the SSR function already claims every path, deep links and page
+# refreshes are served by SSR and never 404. Do NOT add a catch-all redirect
+# or a `public/_redirects` file here — it would shadow the SSR handler.
 
 [build]
   command = "npm run build"
-  publish = "dist/client"
+  publish = "dist"
 
 [build.environment]
   NODE_VERSION = "22"
