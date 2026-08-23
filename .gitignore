@@ -30,3 +30,9 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Netlify build output
+.netlify/
+
+# TypeScript incremental build info
+*.tsbuildinfo
