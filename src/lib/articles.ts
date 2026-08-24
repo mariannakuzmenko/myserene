@@ -179,7 +179,7 @@ export const ARTICLES: Article[] = [
     read: "5 min read",
     intro: "What meditation actually is, in plain language, plus a five-minute practice to start with.",
     image: HERO.zenGarden,
-    card: IMG.zen,
+    card: IMG.zenGarden,
     sections: [
       {
         paragraphs: [
