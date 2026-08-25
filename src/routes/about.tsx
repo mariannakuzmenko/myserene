@@ -104,7 +104,7 @@ function AboutPage() {
       {/* Personal story */}
       <section className="px-4 pt-16">
         <div className="mx-auto max-w-6xl">
-          <Scene image={NATURE.forest} minHeight="clamp(0px, 0vh, 0px)" className="rounded-[32px] overflow-hidden">
+          <Scene image={NATURE.forest} className="rounded-[32px] overflow-hidden">
             <div className="relative z-10 p-6 sm:p-12 md:p-16">
               <h2 className="text-3xl sm:text-4xl font-semibold text-ink leading-tight">
                 Why I Created MySerene
