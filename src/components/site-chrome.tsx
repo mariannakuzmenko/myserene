@@ -28,7 +28,7 @@ export function Header() {
           <span className="grid place-items-center h-9 w-9 rounded-full bg-gradient-to-br from-brand-soft to-brand text-primary-foreground">
             <Waves className="h-4 w-4" strokeWidth={2.5} />
           </span>
-          <span className="font-semibold text-lg tracking-tight">Serene</span>
+          <span className="font-semibold text-lg tracking-tight">MySerene</span>
         </Link>
         <nav className="hidden lg:flex items-center gap-0.5 xl:gap-1">
           {NAV.slice(1, 7).map((n) => (
@@ -94,7 +94,7 @@ export function Footer() {
               <span className="grid place-items-center h-9 w-9 rounded-full bg-gradient-to-br from-brand-soft to-brand">
                 <Waves className="h-4 w-4 text-primary-foreground" strokeWidth={2.5} />
               </span>
-              <span className="font-semibold text-lg">Serene</span>
+              <span className="font-semibold text-lg">MySerene</span>
             </div>
             <p className="mt-4 text-sm text-ink-soft max-w-sm leading-relaxed">
               A calmer state of mind, on demand. Nature sounds, guided meditations and deep sleep — designed for modern life.
@@ -121,7 +121,7 @@ export function Footer() {
           ]} />
         </div>
         <div className="mt-10 pt-6 border-t border-white/60 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <p className="text-xs text-ink-soft">© {new Date().getFullYear()} Serene. All rights reserved.</p>
+          <p className="text-xs text-ink-soft">© {new Date().getFullYear()} MySerene. All rights reserved.</p>
           <div className="flex items-center gap-2">
             {[Instagram, Twitter, Youtube].map((Icon, i) => (
               <a key={i} href="#" aria-label="social" className="grid place-items-center h-9 w-9 rounded-full glass hover:scale-110 transition-transform">

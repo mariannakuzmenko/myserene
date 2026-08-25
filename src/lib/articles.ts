@@ -219,7 +219,7 @@ export const ARTICLES: Article[] = [
     read: "4 min read",
     intro: "A short guide to the deepest of the coloured noises, and how it differs from white and pink.",
     image: HERO.deepForest,
-    card: IMG.brownHush,
+    card: IMG.deepForest,
     sections: [
       {
         paragraphs: [
@@ -257,7 +257,7 @@ export const ARTICLES: Article[] = [
     read: "5 min read",
     intro: "A practical comparison of five familiar soundscapes, and the moments each one tends to suit.",
     image: HERO.mountainLake,
-    card: IMG.calmLake,
+    card: IMG.mountainLake,
     sections: [
       {
         paragraphs: [
