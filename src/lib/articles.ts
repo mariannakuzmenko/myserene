@@ -17,7 +17,7 @@ export type Article = {
   card: string;
   sections: ArticleSection[];
   relatedSounds: string[];
-  relatedExperience?: { label: string; to: string };
+  relatedExperience?: { label: string; to: "/sounds" | "/meditation" | "/sleep" | "/frequencies" };
 };
 
 export const ARTICLES: Article[] = [
