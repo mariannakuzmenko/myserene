@@ -90,53 +90,36 @@ function AboutPage() {
         </div>
       </section>
 
-      {/* Independent product intro */}
-      <section className="px-4 pt-14">
-        <div className="mx-auto max-w-3xl glass-card rounded-[32px] p-6 sm:p-10 space-y-5">
-          <p className="text-lg text-ink leading-relaxed">
-            MySerene is an independent product, created and maintained by one person: a programmer
-            and teacher who understands how difficult it can be to stay focused and productive
-            while dealing with stress, mental overload and constant distractions.
-          </p>
-          <p className="text-base text-ink/85 leading-relaxed">
-            It started from a simple personal idea. Sometimes you don't need a complicated solution.
-            You just need a few minutes of the right atmosphere, a calming sound, a moment to
-            breathe, and a way to reset your mind. The goal of MySerene is to make that process
-            simple and accessible — a place to quickly calm down, reset your attention and return
-            to your work with a clearer mind.
-          </p>
-          <p className="text-base text-ink/85 leading-relaxed">
-            As both a programmer and a teacher, the creator wanted to combine technology with
-            something very human: the ability to pause, breathe and regain focus.
-          </p>
-        </div>
-      </section>
-
-      {/* Personal story */}
+      {/* My Story */}
       <section className="px-4 pt-16">
         <div className="mx-auto max-w-6xl">
           <Scene image={NATURE.forest} className="rounded-[32px] overflow-hidden">
             <div className="relative z-10 p-6 sm:p-12 md:p-16">
               <h2 className="text-3xl sm:text-4xl font-semibold text-ink leading-tight">
-                Why I Created MySerene
+                My Story
               </h2>
               <div className="mt-6 max-w-2xl space-y-5 text-base sm:text-lg text-ink leading-[1.85]">
                 <p>
-                  I created MySerene because I wanted something simple. As a programmer and
-                  teacher, I know how easy it is to become overwhelmed by tasks, notifications,
-                  deadlines and constant mental noise.
+                  I created MySerene because I wanted a simple way to calm my mind, reset my
+                  attention and return to the things that matter.
                 </p>
                 <p>
-                  Sometimes I don't need another productivity tool. I need a few quiet minutes to
-                  reset.
+                  As a programmer and a teacher, I know how easy it is to become overwhelmed by
+                  work, responsibilities, deadlines and constant distractions. And I'm also a
+                  mother of three. Life can be wonderfully full — but it can also be loud.
                 </p>
                 <p>
-                  I wanted a place where I could open the browser, choose a sound or meditation,
-                  take a breath and quickly return to what matters. That idea became MySerene.
+                  Sometimes I simply need a few minutes to breathe, slow down and reset. Then I
+                  realised my family needed those moments too. That's where the idea for MySerene
+                  began.
+                </p>
+                <p>
+                  I wanted a place where I could open an app, choose a peaceful sound, take a few
+                  minutes to breathe or meditate, and feel a little more grounded.
                 </p>
                 <p className="glass rounded-3xl px-5 py-4 font-semibold border-l-4 border-brand">
-                  It is designed around a simple belief: a calmer mind can make space for better
-                  work, better focus and better moments.
+                  Something simple. Something beautiful. Something that works for me, for my
+                  family, and for anyone who needs a quiet moment during a busy day.
                 </p>
               </div>
             </div>
@@ -144,19 +127,47 @@ function AboutPage() {
         </div>
       </section>
 
-      {/* Mission */}
+      {/* Created for Real Life */}
+      <section className="px-4 pt-16">
+        <div className="mx-auto max-w-3xl glass-card rounded-[32px] p-6 sm:p-10">
+          <h2 className="text-3xl sm:text-4xl font-semibold text-ink leading-tight">
+            Created for Real Life
+          </h2>
+          <div className="mt-5 space-y-4 text-base sm:text-lg text-ink/90 leading-relaxed">
+            <p>
+              I didn't build MySerene for a perfect, quiet day. I built it for ordinary ones — the
+              busy mornings, the long afternoons, the evenings when everyone in the house is finally
+              still.
+            </p>
+            <p>
+              It's made for the whole family, and for whatever kind of pause you need right now.
+            </p>
+          </div>
+          <div className="mt-7 flex flex-wrap gap-2.5">
+            {MOMENTS.map((m) => (
+              <span
+                key={m}
+                className="rounded-full bg-white/75 px-3.5 py-2 text-xs sm:text-sm font-semibold text-ink"
+              >
+                {m}
+              </span>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* My Mission */}
       <section className="px-4 pt-16">
         <div className="mx-auto max-w-3xl text-center">
           <span className="inline-flex items-center gap-2 glass rounded-full px-4 py-1.5 text-[11px] font-semibold uppercase tracking-widest text-ink">
-            Our Mission
+            My Mission
           </span>
           <p className="mt-6 text-xl sm:text-2xl md:text-3xl font-semibold text-ink leading-[1.35]">
-            MySerene exists to make moments of calm easier to find.
+            I want to make it easier to find a moment of calm whenever you need one.
           </p>
           <p className="mt-5 text-base sm:text-lg text-ink/85 leading-relaxed">
-            Whether you need five minutes between tasks, a peaceful environment for focused work, a
-            meditation session, or gentle sounds to help you wind down at night, MySerene is
-            designed to give you a simple space to reset.
+            Whether you have five minutes or an entire evening, I want MySerene to give you a
+            peaceful space to pause, breathe, focus and recharge.
           </p>
         </div>
       </section>
