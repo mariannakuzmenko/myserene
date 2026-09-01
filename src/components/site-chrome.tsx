@@ -102,11 +102,9 @@ export function Footer() {
       <div className="mx-auto max-w-7xl glass-card rounded-[36px] p-8 sm:p-12">
         <div className="grid gap-10 md:grid-cols-[1.4fr_1fr_1fr_1fr]">
           <div>
-            <div className="flex items-center gap-2">
-              <span className="grid place-items-center h-9 w-9 rounded-full bg-gradient-to-br from-brand-soft to-brand">
-                <Waves className="h-4 w-4 text-primary-foreground" strokeWidth={2.5} />
-              </span>
-              <span className="font-semibold text-lg">MySerene</span>
+            <div className="flex items-center gap-2.5">
+              <Logo className="h-10" />
+              <span className="font-bold text-xl tracking-tight text-ink">MySerene</span>
             </div>
             <p className="mt-4 text-sm text-ink-soft max-w-sm leading-relaxed">
               A calmer state of mind, on demand. Nature sounds, guided meditations and deep sleep — designed for modern life.
