@@ -1,7 +1,21 @@
 import { Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import { Menu, X, Waves, Instagram, Twitter, Youtube } from "lucide-react";
+import { Menu, X, Instagram, Twitter, Youtube } from "lucide-react";
 import { HERO } from "@/lib/images";
+import logoMark from "@/assets/logo-mark.png";
+
+/** Brand mark — emerald droplet. Slightly larger, darker and higher contrast. */
+export function Logo({ className = "" }: { className?: string }) {
+  return (
+    <img
+      src={logoMark}
+      alt=""
+      width={529}
+      height={737}
+      className={`w-auto drop-shadow-[0_1px_3px_rgba(0,0,0,0.18)] ${className}`}
+    />
+  );
+}
 
 const NAV = [
   { to: "/", label: "Home" },
@@ -24,11 +38,9 @@ export function Header() {
       style={{ paddingTop: "max(1rem, env(safe-area-inset-top))" }}
     >
       <div className="mx-auto max-w-7xl glass rounded-full px-4 sm:px-6 py-3 flex items-center justify-between">
-        <Link to="/" className="flex items-center gap-2 shrink-0">
-          <span className="grid place-items-center h-9 w-9 rounded-full bg-gradient-to-br from-brand-soft to-brand text-primary-foreground">
-            <Waves className="h-4 w-4" strokeWidth={2.5} />
-          </span>
-          <span className="font-semibold text-lg tracking-tight">MySerene</span>
+        <Link to="/" className="flex items-center gap-2.5 shrink-0">
+          <Logo className="h-9 sm:h-10" />
+          <span className="font-bold text-xl sm:text-[22px] tracking-tight text-ink">MySerene</span>
         </Link>
         <nav className="hidden lg:flex items-center gap-0.5 xl:gap-1">
           {NAV.slice(1, 7).map((n) => (
@@ -90,11 +102,9 @@ export function Footer() {
       <div className="mx-auto max-w-7xl glass-card rounded-[36px] p-8 sm:p-12">
         <div className="grid gap-10 md:grid-cols-[1.4fr_1fr_1fr_1fr]">
           <div>
-            <div className="flex items-center gap-2">
-              <span className="grid place-items-center h-9 w-9 rounded-full bg-gradient-to-br from-brand-soft to-brand">
-                <Waves className="h-4 w-4 text-primary-foreground" strokeWidth={2.5} />
-              </span>
-              <span className="font-semibold text-lg">MySerene</span>
+            <div className="flex items-center gap-2.5">
+              <Logo className="h-10" />
+              <span className="font-bold text-xl tracking-tight text-ink">MySerene</span>
             </div>
             <p className="mt-4 text-sm text-ink-soft max-w-sm leading-relaxed">
               A calmer state of mind, on demand. Nature sounds, guided meditations and deep sleep — designed for modern life.
