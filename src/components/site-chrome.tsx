@@ -1,7 +1,21 @@
 import { Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import { Menu, X, Waves, Instagram, Twitter, Youtube } from "lucide-react";
+import { Menu, X, Instagram, Twitter, Youtube } from "lucide-react";
 import { HERO } from "@/lib/images";
+import logoMark from "@/assets/logo-mark.png";
+
+/** Brand mark — emerald droplet. Slightly larger, darker and higher contrast. */
+export function Logo({ className = "" }: { className?: string }) {
+  return (
+    <img
+      src={logoMark}
+      alt=""
+      width={529}
+      height={737}
+      className={`w-auto drop-shadow-[0_1px_3px_rgba(0,0,0,0.18)] ${className}`}
+    />
+  );
+}
 
 const NAV = [
   { to: "/", label: "Home" },
