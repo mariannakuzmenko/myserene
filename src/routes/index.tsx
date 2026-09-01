@@ -1,4 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { useState } from "react";
 import {
   Play, Pause, Sparkles, Moon, Wind, Flame, CloudRain, Trees,
   Waves, Bird, Cloud, Music, Brain, Timer, Star, Heart,
@@ -150,19 +151,6 @@ function PreviewSoundCard({ icon: Icon, title, mood, soundId }: {
         <div className={`h-full bg-gradient-to-r from-brand-soft to-brand ${p ? "w-2/3 animate-shimmer" : "w-1/4"}`} />
       </div>
     </div>
-  );
-}
-
-function TrustBar() {
-  const items = ["Featured in Wellness Weekly", "4.9 on the App Store", "Trusted by 2M+ dreamers", "Editor's Choice 2025"];
-  return (
-    <section className="px-4">
-      <div className="mx-auto max-w-6xl glass rounded-full px-6 py-4 grid grid-cols-2 md:grid-cols-4 gap-3 text-center">
-        {items.map((i) => (
-          <div key={i} className="text-xs sm:text-sm text-ink-soft font-medium">{i}</div>
-        ))}
-      </div>
-    </section>
   );
 }
 
@@ -345,15 +333,15 @@ function PhoneMock({ className = "", title, mood, icon: Icon }: {
 }
 
 const TESTIMONIALS = [
-  { name: "Ava Lindqvist", role: "Designer, Stockholm", quote: "I fall asleep before the first story ends. Serene replaced three apps for me." },
+  { name: "Ava Lindqvist", role: "Designer, Stockholm", quote: "I fall asleep before the first story ends. MySerene replaced three apps for me." },
   { name: "Marcus Chen", role: "Founder, Singapore", quote: "The mixer is quietly genius. My focus sessions have never been calmer." },
-  { name: "Sofia Rey", role: "Therapist, Barcelona", quote: "I recommend Serene to clients weekly. It feels premium without ever being loud." },
+  { name: "Sofia Rey", role: "Therapist, Barcelona", quote: "I recommend MySerene to clients weekly. It feels premium without ever being loud." },
 ];
 
 function Testimonials() {
   return (
     <section className="px-4 pt-32">
-      <SectionHeading eyebrow="Loved by 2M+ people" title="A calmer life, in their words." />
+      <SectionHeading eyebrow="In their words" title="A calmer life, in their words." />
       <div className="mt-14 mx-auto max-w-6xl grid gap-4 md:grid-cols-3">
         {TESTIMONIALS.map((t) => (
           <figure key={t.name} className="glass-card rounded-3xl p-7">
