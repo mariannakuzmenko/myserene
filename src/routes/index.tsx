@@ -24,7 +24,7 @@ export const Route = createFileRoute("/")({
       children: JSON.stringify({
         "@context": "https://schema.org",
         "@type": "SoftwareApplication",
-        name: "Serene",
+        name: "MySerene",
         applicationCategory: "HealthApplication",
         operatingSystem: "iOS, Android, Web",
         offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
@@ -38,7 +38,6 @@ function HomePage() {
   return (
     <PageShell>
       <Hero />
-      <TrustBar />
       <Features />
       <SoundPreview />
       <Mixer />
