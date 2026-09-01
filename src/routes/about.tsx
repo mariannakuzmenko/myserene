@@ -83,7 +83,7 @@ function AboutPage() {
                 About MySerene
               </h1>
               <p className="mt-5 text-lg sm:text-xl text-ink font-medium leading-relaxed">
-                Designed to help you find calm, focus and balance — whenever you need it.
+                I built MySerene to help you find calm, focus and balance — whenever you need it.
               </p>
             </div>
           </Scene>
