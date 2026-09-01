@@ -9,7 +9,7 @@ export const Route = createFileRoute("/about")({
       {
         name: "description",
         content:
-          "MySerene is an independent product made by a programmer and teacher, designed to help you find calm, focus and balance whenever you need it.",
+          "I'm a programmer, teacher and mother of three, and I built MySerene as a simple place to breathe, reset and find focus during a busy day.",
       },
       { property: "og:title", content: "About MySerene" },
       {
