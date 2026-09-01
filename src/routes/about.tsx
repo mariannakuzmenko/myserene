@@ -29,23 +29,34 @@ const PURPOSE = [
   {
     icon: Wind,
     title: "Relax",
-    body: "Create a calm environment when your mind feels overloaded.",
+    body: "A calm environment for the moments when your mind feels overloaded.",
   },
   {
     icon: Focus,
     title: "Focus",
-    body: "Build an atmosphere that helps you concentrate on the task in front of you.",
+    body: "An atmosphere that helps you settle into the task in front of you.",
   },
   {
     icon: Leaf,
     title: "Meditate",
-    body: "Use guided and ambient experiences to create space for reflection and breathing.",
+    body: "Gentle guided and ambient sessions that make space to breathe.",
   },
   {
     icon: Moon,
     title: "Sleep",
-    body: "Create peaceful nighttime environments with relaxing sounds and sleep timers.",
+    body: "Peaceful nighttime sounds and a sleep timer for winding down.",
   },
+];
+
+const MOMENTS = [
+  "Before work",
+  "Between meetings",
+  "After a stressful moment",
+  "During a short break",
+  "Before studying",
+  "In the evening",
+  "Before sleep",
+  "During quiet family moments",
 ];
 
 const STEPS = [
