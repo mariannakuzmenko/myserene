@@ -50,43 +50,66 @@ function HomePage() {
 
 function Hero() {
   const audio = useAudio();
+  const [videoOk, setVideoOk] = useState(true);
   return (
-    <Scene image={NATURE.sunrise} className="px-4 pt-16 sm:pt-24 pb-24 rounded-b-[48px]" minHeight="90vh">
+    <section
+      className="relative mx-4 overflow-hidden rounded-[40px] px-4 pt-16 pb-20 sm:pt-24 sm:pb-24"
+      style={{ minHeight: "min(88vh, 900px)" }}
+    >
+      {/* Cinematic background: slow looping video, static nature image fallback */}
+      <div aria-hidden className="absolute inset-0 -z-10">
+        <img
+          src="/images/hero-calm-poster.jpg"
+          alt=""
+          className="absolute inset-0 h-full w-full object-cover"
+        />
+        {videoOk && (
+          <video
+            className="absolute inset-0 h-full w-full object-cover"
+            src="/videos/hero-calm.mp4"
+            poster="/images/hero-calm-poster.jpg"
+            autoPlay
+            loop
+            muted
+            playsInline
+            preload="metadata"
+            onError={() => setVideoOk(false)}
+          />
+        )}
+        <div className="absolute inset-0 bg-gradient-to-b from-white/75 via-white/45 to-white/80" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(255,255,255,0.55),transparent_65%)]" />
+      </div>
+
       <div className="mx-auto max-w-6xl text-center relative">
-        {/* Breathing halo behind headline */}
-        <div aria-hidden className="pointer-events-none absolute left-1/2 top-24 -translate-x-1/2 h-[360px] w-[360px] rounded-full bg-gradient-to-br from-white/60 to-mint/40 blur-3xl animate-breathe" />
-        <span className="inline-flex items-center gap-2 glass rounded-full px-4 py-1.5 text-xs font-medium text-ink-soft animate-rise">
+        <span className="inline-flex items-center gap-2 glass rounded-full px-4 py-1.5 text-xs font-semibold text-ink animate-rise">
           <Sparkles className="h-3.5 w-3.5 text-brand" />
-          Now with adaptive soundscapes
+          Relax. Breathe. Focus. Sleep.
         </span>
-        <h1 className="relative mt-8 text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-medium text-ink leading-[1.02] tracking-tight animate-rise">
-          Breathe. Relax.
+        <h1 className="relative mt-8 text-4xl sm:text-6xl md:text-7xl font-semibold text-ink leading-[1.05] tracking-tight animate-rise">
+          Find Your Moment
           <br />
           <span className="text-gradient-nature italic" style={{ fontFamily: "Fraunces, serif" }}>
-            Feel better.
+            of Calm
           </span>
         </h1>
-        <p className="relative mt-6 max-w-2xl mx-auto text-base sm:text-lg md:text-xl text-ink-soft leading-relaxed animate-rise px-2">
-          Your peaceful place, always in your pocket. Nature sounds, guided meditations
-          and sleep stories — designed to quiet the mind in seconds.
+        <p className="relative mt-6 max-w-2xl mx-auto text-base sm:text-lg md:text-xl text-ink font-medium leading-relaxed animate-rise px-2">
+          Immersive sounds, meditation and peaceful environments designed to help you
+          reset and find your focus.
         </p>
         <div className="relative mt-10 flex flex-wrap items-center justify-center gap-3 animate-rise">
           <button
             onClick={() => audio.startImmersive("rain")}
-            className="btn-primary px-7 py-3.5 rounded-full text-sm font-semibold inline-flex items-center gap-2"
+            className="btn-primary px-7 py-3.5 rounded-full text-sm font-semibold inline-flex items-center gap-2 shadow-[0_10px_30px_-10px_rgba(16,110,80,0.55)] transition-shadow hover:shadow-[0_14px_40px_-10px_rgba(16,110,80,0.7)]"
           >
             <Sparkles className="h-4 w-4" /> Start Relaxation
           </button>
-          <Link to="/sounds" className="btn-ghost px-7 py-3.5 rounded-full text-sm font-medium inline-flex items-center gap-2">
-            <Play className="h-4 w-4 fill-current" /> Explore sounds
-          </Link>
-          <Link to="/register" className="btn-ghost px-7 py-3.5 rounded-full text-sm font-medium inline-flex items-center gap-2">
-            Start free <ArrowRight className="h-4 w-4" />
+          <Link to="/sounds" className="btn-ghost px-7 py-3.5 rounded-full text-sm font-semibold inline-flex items-center gap-2">
+            <Play className="h-4 w-4 fill-current" /> Explore Sounds
           </Link>
         </div>
 
-        {/* floating preview cards */}
-        <div className="relative mt-20 max-w-5xl mx-auto">
+        {/* Quick-start soundscapes */}
+        <div className="relative mt-16 max-w-5xl mx-auto">
           <div className="glass-card rounded-[36px] p-6 sm:p-10">
             <div className="grid gap-4 sm:grid-cols-3">
               <PreviewSoundCard icon={CloudRain} title="Gentle Rain" mood="Focus" soundId="rain" />
@@ -94,31 +117,9 @@ function Hero() {
               <PreviewSoundCard icon={Flame} title="Fireplace" mood="Sleep" soundId="fireplace" />
             </div>
           </div>
-          <div className="hidden md:block absolute -top-8 -left-10 glass-card rounded-2xl px-5 py-4 animate-float-slow">
-            <div className="flex items-center gap-3">
-              <div className="grid place-items-center h-10 w-10 rounded-xl bg-gradient-to-br from-mint to-emerald">
-                <Moon className="h-4 w-4 text-primary-foreground" />
-              </div>
-              <div className="text-left">
-                <div className="text-xs text-ink-soft">Tonight</div>
-                <div className="text-sm font-semibold">Deep sleep, 8h 12m</div>
-              </div>
-            </div>
-          </div>
-          <div className="hidden md:block absolute -bottom-8 -right-8 glass-card rounded-2xl px-5 py-4 animate-float-slower">
-            <div className="flex items-center gap-3">
-              <div className="grid place-items-center h-10 w-10 rounded-xl bg-gradient-to-br from-aqua to-brand">
-                <Brain className="h-4 w-4 text-primary-foreground" />
-              </div>
-              <div className="text-left">
-                <div className="text-xs text-ink-soft">Focus streak</div>
-                <div className="text-sm font-semibold">14 sessions this week</div>
-              </div>
-            </div>
-          </div>
         </div>
       </div>
-    </Scene>
+    </section>
   );
 }
 
