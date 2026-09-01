@@ -38,11 +38,9 @@ export function Header() {
       style={{ paddingTop: "max(1rem, env(safe-area-inset-top))" }}
     >
       <div className="mx-auto max-w-7xl glass rounded-full px-4 sm:px-6 py-3 flex items-center justify-between">
-        <Link to="/" className="flex items-center gap-2 shrink-0">
-          <span className="grid place-items-center h-9 w-9 rounded-full bg-gradient-to-br from-brand-soft to-brand text-primary-foreground">
-            <Waves className="h-4 w-4" strokeWidth={2.5} />
-          </span>
-          <span className="font-semibold text-lg tracking-tight">MySerene</span>
+        <Link to="/" className="flex items-center gap-2.5 shrink-0">
+          <Logo className="h-9 sm:h-10" />
+          <span className="font-bold text-xl sm:text-[22px] tracking-tight text-ink">MySerene</span>
         </Link>
         <nav className="hidden lg:flex items-center gap-0.5 xl:gap-1">
           {NAV.slice(1, 7).map((n) => (
