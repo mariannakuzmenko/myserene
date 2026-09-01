@@ -12,10 +12,10 @@ import type { SoundId } from "@/lib/audio/catalog";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Serene — Breathe. Relax. Feel better." },
-      { name: "description", content: "A premium relaxation platform. Nature sounds, guided meditation and deep sleep for a calmer, clearer mind." },
-      { property: "og:title", content: "Serene — Breathe. Relax. Feel better." },
-      { property: "og:description", content: "A premium relaxation platform. Nature sounds, guided meditation and deep sleep for a calmer, clearer mind." },
+      { title: "MySerene — Find Your Moment of Calm" },
+      { name: "description", content: "Immersive sounds, meditation and peaceful environments designed to help you reset and find your focus. Relax. Breathe. Focus. Sleep." },
+      { property: "og:title", content: "MySerene — Find Your Moment of Calm" },
+      { property: "og:description", content: "Immersive sounds, meditation and peaceful environments designed to help you reset and find your focus." },
       { property: "og:url", content: "/" },
     ],
     links: [{ rel: "canonical", href: "/" }],
