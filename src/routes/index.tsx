@@ -67,7 +67,6 @@ function Hero() {
         {videoOk && (
           <video
             className="absolute inset-0 h-full w-full object-cover"
-            src="/videos/hero-calm.mp4"
             poster="/images/hero-calm-poster.jpg"
             autoPlay
             loop
@@ -75,7 +74,10 @@ function Hero() {
             playsInline
             preload="metadata"
             onError={() => setVideoOk(false)}
-          />
+          >
+            <source src="/videos/hero-calm.webm" type="video/webm" />
+            <source src="/videos/hero-calm.mp4" type="video/mp4" />
+          </video>
         )}
         <div className="absolute inset-0 bg-gradient-to-b from-white/75 via-white/45 to-white/80" />
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(255,255,255,0.55),transparent_65%)]" />
