@@ -92,7 +92,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { property: "og:description", content: "MySerene is a calming digital space for relaxation, meditation, focus and sleep, with immersive sounds and peaceful environments designed to help you reset and find your focus." },
       { property: "og:type", content: "website" },
       { property: "og:site_name", content: "MySerene" },
-      { name: "theme-color", content: "#87C8FF" },
+      { name: "theme-color", content: "#0E7C5A" },
       { name: "apple-mobile-web-app-title", content: "MySerene" },
       { name: "apple-mobile-web-app-capable", content: "yes" },
       { name: "apple-mobile-web-app-status-bar-style", content: "default" },
