@@ -196,13 +196,13 @@ function AboutPage() {
           </h2>
           <div className="mt-6 space-y-4 max-w-2xl mx-auto text-base sm:text-lg text-ink/85 leading-relaxed">
             <p>
-              MySerene is intentionally simple. There are no streaks to protect, no scores to chase
-              and no dashboard of numbers to interpret. Every screen tries to do one thing: help you
-              settle, and then get out of the way.
+              I kept MySerene intentionally simple. There are no streaks to protect, no scores to
+              chase and no dashboard of numbers to interpret. Every screen tries to do one thing:
+              help you settle, and then get out of the way.
             </p>
             <p>
-              Complexity is easy to add and hard to live with. So the experience stays short and
-              quiet, and follows the same small rhythm each time.
+              Complexity is easy to add and hard to live with. So I keep the experience short and
+              quiet, following the same small rhythm each time.
             </p>
           </div>
           <div className="mt-10 flex flex-wrap justify-center gap-2.5">
@@ -224,8 +224,13 @@ function AboutPage() {
         <div className="mx-auto max-w-4xl glass-card rounded-[32px] p-6 sm:p-10 md:p-12">
           <div className="grid gap-8 sm:grid-cols-[auto_1fr] sm:items-center">
             <div className="mx-auto sm:mx-0">
-              {/* Replace the div below with <img src="/images/founder.jpg" ... /> when a real photo is available. */}
-              <div className="grid place-items-center h-32 w-32 sm:h-36 sm:w-36 rounded-[28px] bg-gradient-to-br from-brand-soft to-brand shadow-[0_18px_40px_-18px_rgba(0,0,0,0.35)]">
+              {/*
+                Founder photo placeholder. To use a real photo, drop it at
+                public/images/founder.jpg and replace this div with:
+                <img src="/images/founder.jpg" alt="Founder of MySerene" width={288} height={288}
+                     className="h-32 w-32 sm:h-36 sm:w-36 rounded-[28px] object-cover shadow-[0_18px_40px_-18px_rgba(0,0,0,0.35)]" />
+              */}
+              <div className="grid place-items-center h-32 w-32 sm:h-36 sm:w-36 rounded-[28px] bg-gradient-to-br from-brand to-emerald shadow-[0_18px_40px_-18px_rgba(0,0,0,0.35)]">
                 <span className="text-4xl font-semibold text-primary-foreground tracking-tight">MS</span>
               </div>
             </div>
@@ -234,18 +239,18 @@ function AboutPage() {
                 Founder &amp; Creator
               </div>
               <h2 className="mt-2 text-2xl sm:text-3xl font-semibold text-ink leading-tight">
-                The person behind MySerene
+                Hi — I'm the person behind MySerene
               </h2>
               <div className="mt-4 flex flex-wrap justify-center sm:justify-start gap-2">
-                {["Programmer", "Teacher", "Creator of MySerene"].map((t) => (
+                {["Programmer", "Teacher", "Mother of three", "Creator of MySerene"].map((t) => (
                   <span key={t} className="rounded-full bg-white/70 px-3 py-1.5 text-xs font-semibold text-ink">
                     {t}
                   </span>
                 ))}
               </div>
               <p className="mt-5 text-base text-ink/85 leading-relaxed">
-                MySerene is built and looked after by one person, in the time between teaching and
-                writing code — which is exactly the kind of day it was made for.
+                I build and look after MySerene myself, in the time between teaching, writing code
+                and family life — which is exactly the kind of day I made it for.
               </p>
             </div>
           </div>
