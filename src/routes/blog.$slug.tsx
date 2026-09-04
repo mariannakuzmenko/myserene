@@ -13,12 +13,13 @@ export const Route = createFileRoute("/blog/$slug")({
   head: ({ params, loaderData }) => {
     const a = loaderData?.article;
     const title = a ? `${a.title} — MySerene` : "Article — MySerene";
-    const description = a?.intro ?? "An article from MySerene.";
+    const description = a?.description ?? a?.intro ?? "An article from MySerene.";
     const url = `https://myserene.lovable.app/blog/${params.slug}`;
     return {
       meta: [
         { title },
         { name: "description", content: description },
+        ...(a?.keywords?.length ? [{ name: "keywords", content: a.keywords.join(", ") }] : []),
         { property: "og:title", content: title },
         { property: "og:description", content: description },
         { property: "og:type", content: "article" },
