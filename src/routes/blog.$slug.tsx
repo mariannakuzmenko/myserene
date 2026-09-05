@@ -78,13 +78,24 @@ function ArticlePage() {
       </section>
 
       <article className="px-4 pt-8">
-        <div className="mx-auto max-w-3xl glass-card rounded-[32px] p-6 sm:p-10 md:p-12">
+        <div className="mx-auto max-w-3xl">
+          <Link
+            to="/blog"
+            className="btn-ghost inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium"
+          >
+            <ArrowLeft className="h-4 w-4" /> Back to Articles
+          </Link>
+        </div>
+        <div className="mx-auto mt-5 max-w-3xl glass-card rounded-[32px] p-6 sm:p-10 md:p-12">
           <p className="text-lg sm:text-xl text-ink font-medium leading-relaxed">{article.intro}</p>
           <div className="mt-8 space-y-10">
             {article.sections.map((s, i) => (
               <section key={i} className="space-y-4">
                 {s.heading && (
                   <h2 className="text-xl sm:text-2xl font-semibold text-ink leading-snug">{s.heading}</h2>
+                )}
+                {s.subheading && (
+                  <h3 className="text-lg font-semibold text-ink leading-snug">{s.subheading}</h3>
                 )}
                 {s.paragraphs?.map((p, j) => (
                   <p key={j} className="text-base text-ink/85 leading-[1.85]">

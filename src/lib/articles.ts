@@ -607,6 +607,21 @@ export const ARTICLES: Article[] = [
         ],
       },
       {
+        heading: "Matching the sound to the moment",
+        paragraphs: [
+          "The same person often wants different rooms at different hours. Mornings tend to suit lighter, brighter scenes — forest, a stream, soft wind — because the day is still opening up and a heavy background can feel like a blanket too early.",
+          "Middle of the day, when there is work to hold on to, denser and more uniform scenes usually win: steady rain, brown noise, distant surf. There is enough happening in the task already.",
+          "Evenings invite warmth and slowness. Fireplace, rain on a window, a slow ocean at low volume. And late at night, when you want as little as possible to notice, the plainest option is often the best one.",
+        ],
+      },
+      {
+        heading: "Volume changes the scene more than you think",
+        paragraphs: [
+          "A soundscape at low volume and the same soundscape turned up are almost two different environments. Quiet rain sits in the background of a room; loud rain becomes the room, and starts asking for attention.",
+          "As a rule, set it just loud enough to soften the space and then stop. If you catch yourself listening rather than working or resting, come down a notch rather than changing scene — very often the sound was right and the level was not.",
+        ],
+      },
+      {
         heading: "A note on expectations",
         paragraphs: [
           "These are atmospheres, not treatments. No soundscape is a medical intervention, and reactions differ — the ocean that settles one person keeps another alert.",
@@ -779,6 +794,20 @@ export const ARTICLES: Article[] = [
         paragraphs: [
           "When the timer sounds, write one line about where you got to and what comes next. Tomorrow's version of you starts from that line instead of from a blank screen.",
           "Then actually break. A break spent scrolling is not much of a break; standing up, moving and looking at something distant restores more.",
+        ],
+      },
+      {
+        heading: "Choosing the length of a block",
+        paragraphs: [
+          "Twenty-five minutes is a good default when starting feels hard, because it is short enough to be obviously survivable. Forty to fifty suits work that needs a run-up — writing, code, design, anything where the first ten minutes are mostly loading context.",
+          "Match the block to your energy rather than your ambition. A tired afternoon handles two short blocks far better than one long one you abandon halfway. And stop when the timer says so at least sometimes; finishing while it still feels possible makes the next session easier to begin.",
+        ],
+      },
+      {
+        heading: "When the ritual does not work",
+        paragraphs: [
+          "Occasionally you will run every step and still feel scattered. Usually the cause is upstream: not enough sleep, an unresolved worry, or a task that is genuinely too vague to start.",
+          "If it is vagueness, spend the first block only on breaking the task into three concrete pieces — that is real work. If it is tiredness or worry, a walk or a five-minute reset will do more than forcing a second block. A ritual is a doorway, not a substitute for rest.",
         ],
       },
       {
