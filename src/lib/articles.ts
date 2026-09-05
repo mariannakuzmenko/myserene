@@ -797,6 +797,20 @@ export const ARTICLES: Article[] = [
         ],
       },
       {
+        heading: "Choosing the length of a block",
+        paragraphs: [
+          "Twenty-five minutes is a good default when starting feels hard, because it is short enough to be obviously survivable. Forty to fifty suits work that needs a run-up — writing, code, design, anything where the first ten minutes are mostly loading context.",
+          "Match the block to your energy rather than your ambition. A tired afternoon handles two short blocks far better than one long one you abandon halfway. And stop when the timer says so at least sometimes; finishing while it still feels possible makes the next session easier to begin.",
+        ],
+      },
+      {
+        heading: "When the ritual does not work",
+        paragraphs: [
+          "Occasionally you will run every step and still feel scattered. Usually the cause is upstream: not enough sleep, an unresolved worry, or a task that is genuinely too vague to start.",
+          "If it is vagueness, spend the first block only on breaking the task into three concrete pieces — that is real work. If it is tiredness or worry, a walk or a five-minute reset will do more than forcing a second block. A ritual is a doorway, not a substitute for rest.",
+        ],
+      },
+      {
         heading: "Keeping it alive",
         paragraphs: [
           "Resist the urge to improve the ritual. If you find yourself adding steps, you are building a system again. When something genuinely does not fit, remove a step rather than adding two.",
