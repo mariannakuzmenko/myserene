@@ -4,7 +4,7 @@ import { PageShell, SectionHeading } from "@/components/site-chrome";
 import { SmartImage } from "@/components/smart-image";
 import { ARTICLES } from "@/lib/articles";
 
-export const Route = createFileRoute("/blog")({
+export const Route = createFileRoute("/blog/")({
   head: () => ({
     meta: [
       { title: "Articles — MySerene" },
