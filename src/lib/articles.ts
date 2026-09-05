@@ -607,6 +607,21 @@ export const ARTICLES: Article[] = [
         ],
       },
       {
+        heading: "Matching the sound to the moment",
+        paragraphs: [
+          "The same person often wants different rooms at different hours. Mornings tend to suit lighter, brighter scenes — forest, a stream, soft wind — because the day is still opening up and a heavy background can feel like a blanket too early.",
+          "Middle of the day, when there is work to hold on to, denser and more uniform scenes usually win: steady rain, brown noise, distant surf. There is enough happening in the task already.",
+          "Evenings invite warmth and slowness. Fireplace, rain on a window, a slow ocean at low volume. And late at night, when you want as little as possible to notice, the plainest option is often the best one.",
+        ],
+      },
+      {
+        heading: "Volume changes the scene more than you think",
+        paragraphs: [
+          "A soundscape at low volume and the same soundscape turned up are almost two different environments. Quiet rain sits in the background of a room; loud rain becomes the room, and starts asking for attention.",
+          "As a rule, set it just loud enough to soften the space and then stop. If you catch yourself listening rather than working or resting, come down a notch rather than changing scene — very often the sound was right and the level was not.",
+        ],
+      },
+      {
         heading: "A note on expectations",
         paragraphs: [
           "These are atmospheres, not treatments. No soundscape is a medical intervention, and reactions differ — the ocean that settles one person keeps another alert.",
