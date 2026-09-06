@@ -47,7 +47,7 @@ export function SmartImage({
           if (current !== FALLBACK_IMAGE) setCurrent(FALLBACK_IMAGE);
           setLoaded(true);
         }}
-        className={`h-full w-full object-cover object-center transition-opacity duration-700 ${loaded ? "opacity-100" : "opacity-0"} ${className}`}
+        className={`h-full w-full object-cover object-center [filter:saturate(1.1)_contrast(1.06)] transition-opacity duration-700 ${loaded ? "opacity-100" : "opacity-0"} ${className}`}
       />
     </div>
   );
