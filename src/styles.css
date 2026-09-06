@@ -109,27 +109,29 @@
 }
 
 @utility glass {
-  background: linear-gradient(135deg, rgba(255,255,255,0.78), rgba(255,255,255,0.58));
+  background: linear-gradient(135deg, rgba(255,255,255,0.86), rgba(255,255,255,0.7));
   backdrop-filter: blur(28px) saturate(160%);
-  border: 1px solid rgba(255, 255, 255, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.9);
   color: var(--ink);
   box-shadow:
-    0 1px 0 rgba(255, 255, 255, 0.85) inset,
-    0 0 0 1px rgba(255,255,255,0.25) inset,
-    0 20px 60px -25px rgba(15, 90, 70, 0.25);
+    0 1px 0 rgba(255, 255, 255, 0.9) inset,
+    0 0 0 1px rgba(13, 74, 58, 0.06) inset,
+    0 20px 60px -25px rgba(15, 90, 70, 0.28);
 }
 
 @utility glass-card {
   position: relative;
-  background: linear-gradient(140deg, rgba(255,255,255,0.9), rgba(255,255,255,0.72));
+  background: linear-gradient(140deg, rgba(255,255,255,0.94), rgba(255,255,255,0.8));
   backdrop-filter: blur(34px) saturate(170%);
-  border: 1px solid rgba(255, 255, 255, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.95);
   color: var(--ink);
   box-shadow:
-    0 1px 0 rgba(255, 255, 255, 0.9) inset,
-    0 30px 80px -30px rgba(10, 80, 60, 0.25),
+    0 1px 0 rgba(255, 255, 255, 0.95) inset,
+    0 0 0 1px rgba(13, 74, 58, 0.06) inset,
+    0 30px 80px -30px rgba(10, 80, 60, 0.28),
     0 8px 24px -12px rgba(53, 179, 154, 0.18);
 }
+
 
 @utility glass-dark {
   background: linear-gradient(140deg, rgba(20,45,40,0.55), rgba(20,45,40,0.3));
