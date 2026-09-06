@@ -58,15 +58,15 @@ function Hero() {
       style={{ minHeight: "min(88vh, 900px)" }}
     >
       {/* Cinematic background: slow looping video, static nature image fallback */}
-      <div aria-hidden className="absolute inset-0 -z-10">
+      <div aria-hidden className="absolute inset-0 -z-10 overflow-hidden bg-[#0b201a]">
         <img
           src="/images/hero-calm-poster.jpg"
           alt=""
-          className="absolute inset-0 h-full w-full object-cover"
+          className="absolute inset-0 h-full w-full object-cover object-center scale-[1.06] [filter:saturate(1.12)_contrast(1.07)]"
         />
         {videoOk && (
           <video
-            className="absolute inset-0 h-full w-full object-cover"
+            className="absolute inset-0 h-full w-full object-cover object-center scale-[1.06] [filter:saturate(1.12)_contrast(1.07)]"
             poster="/images/hero-calm-poster.jpg"
             autoPlay
             loop
