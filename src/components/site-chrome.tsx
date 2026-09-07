@@ -63,7 +63,7 @@ export function Header() {
           </Link>
         </div>
         <button
-          className="lg:hidden grid place-items-center h-10 w-10 rounded-full glass shrink-0"
+          className="lg:hidden grid place-items-center h-10 w-10 rounded-full icon-control shrink-0"
           onClick={() => setOpen((v) => !v)}
           aria-label={open ? "Close menu" : "Open menu"}
           aria-expanded={open}
@@ -134,8 +134,8 @@ export function Footer() {
           <p className="text-xs text-ink-soft">© {new Date().getFullYear()} MySerene. All rights reserved.</p>
           <div className="flex items-center gap-2">
             {[Instagram, Twitter, Youtube].map((Icon, i) => (
-              <a key={i} href="#" aria-label="social" className="grid place-items-center h-9 w-9 rounded-full glass hover:scale-110 transition-transform">
-                <Icon className="h-4 w-4 text-ink-soft" />
+               <a key={i} href="#" aria-label="social" className="grid place-items-center h-9 w-9 rounded-full icon-control hover:scale-110 transition-transform">
+                 <Icon className="h-4 w-4" />
               </a>
             ))}
           </div>

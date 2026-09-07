@@ -30,7 +30,7 @@ export function SoundCard(s: SoundDef) {
               onClick={(e) => { e.stopPropagation(); audio.toggleFavorite(id); }}
               aria-label={fav ? `Remove ${title} from favorites` : `Add ${title} to favorites`}
               aria-pressed={fav}
-              className="pointer-events-auto grid place-items-center h-11 w-11 rounded-full glass transition hover:scale-105"
+              className="pointer-events-auto grid place-items-center h-11 w-11 rounded-full icon-control transition hover:scale-105"
             >
               <Heart className={`h-4 w-4 ${fav ? "fill-red-500 text-red-500" : "text-ink"}`} />
             </button>
