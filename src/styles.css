@@ -166,19 +166,40 @@
 }
 
 @utility btn-ghost {
-  background: rgba(255, 255, 255, 0.88);
+  background: linear-gradient(135deg, rgba(230, 247, 239, 0.94), rgba(207, 238, 224, 0.88));
   color: #0d4436;
   font-weight: 600;
-  border: 1px solid rgba(13, 68, 54, 0.14);
+  border: 1px solid rgba(13, 68, 54, 0.22);
   backdrop-filter: blur(20px);
   transition: all 300ms cubic-bezier(0.22, 1, 0.36, 1);
   & svg { color: #0d4436; }
   &:hover {
     transform: translateY(-2px) scale(1.02);
-    background: rgba(255, 255, 255, 0.96);
+    background: linear-gradient(135deg, rgba(215, 245, 231, 0.98), rgba(182, 242, 216, 0.94));
     box-shadow: 0 20px 40px -20px rgba(11, 86, 65, 0.45);
   }
 }
+
+/* High-contrast icon controls on light and photographic surfaces. */
+@utility icon-control {
+  background: linear-gradient(135deg, rgba(230, 247, 239, 0.96), rgba(207, 238, 224, 0.9));
+  color: var(--ink);
+  border: 1px solid rgba(13, 68, 54, 0.22);
+  backdrop-filter: blur(20px);
+  & svg { color: currentColor; stroke-width: 2; }
+  &:hover { background: rgba(182, 242, 216, 0.96); }
+}
+
+@utility icon-control-dark {
+  background: rgba(4, 30, 24, 0.62);
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.42);
+  backdrop-filter: blur(20px);
+  & svg { color: #ffffff; stroke-width: 2; }
+  &:hover { background: rgba(4, 30, 24, 0.78); }
+}
+
+.btn-primary svg { color: #ffffff; stroke-width: 2; }
 
 @utility bg-aurora {
   background:

@@ -137,11 +137,11 @@ function MeditationPage() {
                         onClick={() => audio.toggleFavorite(s.mix[0].id)}
                         aria-label={fav ? `Remove ${s.title} from favorites` : `Add ${s.title} to favorites`}
                         aria-pressed={fav}
-                        className="grid place-items-center h-11 w-11 rounded-full glass transition hover:scale-105"
+                        className="grid place-items-center h-11 w-11 rounded-full icon-control transition hover:scale-105"
                       >
                         <Heart className={`h-4 w-4 ${fav ? "fill-red-500 text-red-500" : "text-ink"}`} />
                       </button>
-                      <span className="grid place-items-center h-11 w-11 rounded-full bg-white/90 backdrop-blur">
+                      <span className="grid place-items-center h-11 w-11 rounded-full icon-control">
                         <s.icon className="h-4 w-4 text-ink" />
                       </span>
                     </div>
@@ -159,11 +159,11 @@ function MeditationPage() {
                     <div className="flex items-center gap-2">
                       <button
                         onClick={() => audio.startSleepTimer(s.minutes)}
-                        className="grid place-items-center h-10 w-10 rounded-full glass hover:bg-white/60"
+                        className="grid place-items-center h-10 w-10 rounded-full icon-control"
                         aria-label={`Timer ${s.len}`}
                         title={`Set ${s.len} timer`}
                       >
-                        <Timer className="h-4 w-4" />
+                        <Timer className="h-4 w-4 text-ink" />
                       </button>
                       <button
                         onClick={() => (active ? audio.stopAll() : playSession(s))}

@@ -56,22 +56,22 @@ export function FloatingAudioPlayer() {
         </div>
 
         <button onClick={a.prev} aria-label="Previous"
-          className="hidden sm:grid place-items-center h-10 w-10 rounded-full hover:bg-white/60 transition">
-          <SkipBack className="h-4 w-4" />
+          className="hidden sm:grid place-items-center h-10 w-10 rounded-full icon-control transition">
+          <SkipBack className="h-4 w-4 text-ink" />
         </button>
         <button onClick={a.toggle} aria-label={a.playing ? "Pause" : "Play"}
           className="grid place-items-center h-11 w-11 rounded-full btn-primary shrink-0">
           {a.playing ? <Pause className="h-4 w-4 fill-current" /> : <Play className="h-4 w-4 fill-current ml-0.5" />}
         </button>
         <button onClick={a.next} aria-label="Next"
-          className="hidden sm:grid place-items-center h-10 w-10 rounded-full hover:bg-white/60 transition">
-          <SkipForward className="h-4 w-4" />
+          className="hidden sm:grid place-items-center h-10 w-10 rounded-full icon-control transition">
+          <SkipForward className="h-4 w-4 text-ink" />
         </button>
 
         <button
           onClick={() => setExpanded((v) => !v)}
           aria-label={expanded ? "Collapse player" : "Expand player"}
-          className="grid place-items-center h-10 w-10 rounded-full glass shrink-0"
+          className="grid place-items-center h-10 w-10 rounded-full icon-control shrink-0"
         >
           {expanded ? <ChevronDown className="h-4 w-4" /> : <ChevronUp className="h-4 w-4" />}
         </button>
@@ -99,7 +99,7 @@ function ExpandedPanel() {
       {/* Master row */}
       <div className="flex items-center gap-3">
         <button onClick={a.toggleMute} aria-label={a.muted ? "Unmute" : "Mute"}
-          className="grid place-items-center h-10 w-10 rounded-full hover:bg-white/60">
+          className="grid place-items-center h-10 w-10 rounded-full icon-control">
           {a.muted ? <VolumeX className="h-4 w-4" /> : <Volume2 className="h-4 w-4" />}
         </button>
         <input
@@ -111,15 +111,15 @@ function ExpandedPanel() {
         <span className="text-xs text-ink-soft tabular-nums w-10 text-right">{a.masterVolume}%</span>
 
         <button onClick={() => a.setShuffle(!a.shuffle)} aria-label="Shuffle"
-          className={`grid place-items-center h-9 w-9 rounded-full transition ${a.shuffle ? "btn-primary" : "hover:bg-white/60"}`}>
+          className={`grid place-items-center h-9 w-9 rounded-full transition ${a.shuffle ? "btn-primary" : "icon-control"}`}>
           <Shuffle className="h-4 w-4" />
         </button>
         <button onClick={() => a.setLoop(!a.loop)} aria-label="Loop"
-          className={`grid place-items-center h-9 w-9 rounded-full transition ${a.loop ? "btn-primary" : "hover:bg-white/60"}`}>
+          className={`grid place-items-center h-9 w-9 rounded-full transition ${a.loop ? "btn-primary" : "icon-control"}`}>
           <Repeat className="h-4 w-4" />
         </button>
         <button onClick={() => a.startImmersive()} aria-label="Immersive mode"
-          className="grid place-items-center h-9 w-9 rounded-full glass">
+          className="grid place-items-center h-9 w-9 rounded-full icon-control">
           <Sparkles className="h-4 w-4" />
         </button>
       </div>
@@ -222,7 +222,7 @@ function ExpandedPanel() {
                 <li key={m.id} className="flex items-center gap-2 glass rounded-xl px-3 py-2">
                   <button
                     onClick={() => a.toggleFavoriteMix(m.id)}
-                    className="grid place-items-center h-8 w-8 rounded-full hover:bg-white/60"
+                    className="grid place-items-center h-8 w-8 rounded-full icon-control"
                     aria-label="Favorite"
                   >
                     <Star className={`h-3.5 w-3.5 ${m.favorite ? "fill-current text-brand" : "text-ink-soft"}`} />
@@ -241,7 +241,7 @@ function ExpandedPanel() {
                   </button>
                   <button
                     onClick={() => a.deleteMix(m.id)}
-                    className="grid place-items-center h-8 w-8 rounded-full hover:bg-white/60"
+                    className="grid place-items-center h-8 w-8 rounded-full icon-control"
                     aria-label="Delete"
                   >
                     <Trash2 className="h-3.5 w-3.5 text-ink-soft" />
@@ -277,8 +277,8 @@ function ExpandedPanel() {
                 </div>
                 <span className="text-xs text-ink-soft tabular-nums w-9 text-right">{a.active[id]}%</span>
                 <button onClick={() => a.stopTrack(id)} aria-label={`Remove ${s.title}`}
-                  className="grid place-items-center h-8 w-8 rounded-full hover:bg-white/60">
-                  <X className="h-4 w-4" />
+                   className="grid place-items-center h-8 w-8 rounded-full icon-control">
+                   <X className="h-4 w-4 text-ink" />
                 </button>
               </div>
             );

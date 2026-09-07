@@ -199,7 +199,7 @@ export function ImmersiveMode() {
       aria-label="Immersive breathing mode"
       style={{ background: bg, backgroundSize: "cover", backgroundPosition: "center" }}
     >
-      <div className="absolute inset-0 backdrop-blur-2xl bg-black/20" />
+      <div className="absolute inset-0 backdrop-blur-2xl bg-black/35" />
       <LivingEnvironment key={env} env={env} tint={tint} />
 
       {/* Top bar */}
@@ -212,7 +212,7 @@ export function ImmersiveMode() {
         <button
           onClick={a.exitImmersive}
           aria-label="Exit immersive mode"
-          className="grid place-items-center h-11 w-11 rounded-full bg-white/15 backdrop-blur-xl border border-white/25 text-white hover:bg-white/25 transition"
+           className="grid place-items-center h-11 w-11 rounded-full icon-control-dark transition"
         >
           <X className="h-4 w-4" />
         </button>
@@ -245,14 +245,14 @@ export function ImmersiveMode() {
       {/* Bottom controls */}
       <div className="absolute left-0 right-0 px-4 sm:px-8"
         style={{ bottom: "max(1.5rem, env(safe-area-inset-bottom))" }}>
-        <div className="mx-auto max-w-md rounded-3xl px-4 py-3 bg-white/12 backdrop-blur-2xl border border-white/25 flex items-center gap-3 text-white">
+         <div className="mx-auto max-w-md rounded-3xl px-4 py-3 bg-black/45 backdrop-blur-2xl border border-white/35 flex items-center gap-3 text-white">
           <button onClick={a.toggle} aria-label={a.playing ? "Pause" : "Play"}
-            className="grid place-items-center h-11 w-11 rounded-full bg-white/25 hover:bg-white/35 transition">
+             className="grid place-items-center h-11 w-11 rounded-full icon-control-dark transition">
             {a.playing ? <Pause className="h-4 w-4 fill-current" /> : <Play className="h-4 w-4 fill-current ml-0.5" />}
           </button>
           <div className="flex-1 flex items-center gap-2">
             <button onClick={a.toggleMute} aria-label={a.muted ? "Unmute" : "Mute"}
-              className="grid place-items-center h-9 w-9 rounded-full bg-white/15">
+               className="grid place-items-center h-9 w-9 rounded-full icon-control-dark">
               {a.muted ? <VolumeX className="h-4 w-4" /> : <Volume2 className="h-4 w-4" />}
             </button>
             <input

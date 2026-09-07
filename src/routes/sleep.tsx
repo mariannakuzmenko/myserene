@@ -190,11 +190,11 @@ function SleepPage() {
                         onClick={() => audio.toggleFavorite(p.mix[0].id)}
                         aria-label={audio.isFavorite(p.mix[0].id) ? `Remove ${p.title} from favorites` : `Add ${p.title} to favorites`}
                         aria-pressed={audio.isFavorite(p.mix[0].id)}
-                        className="grid place-items-center h-11 w-11 rounded-full glass transition hover:scale-105"
+                        className="grid place-items-center h-11 w-11 rounded-full icon-control transition hover:scale-105"
                       >
                         <Heart className={`h-4 w-4 ${audio.isFavorite(p.mix[0].id) ? "fill-red-500 text-red-500" : "text-ink"}`} />
                       </button>
-                      <span className="grid place-items-center h-11 w-11 rounded-full bg-white/90 backdrop-blur">
+                      <span className="grid place-items-center h-11 w-11 rounded-full icon-control">
                         <p.icon className="h-4 w-4 text-ink" />
                       </span>
                     </div>

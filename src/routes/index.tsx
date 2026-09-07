@@ -79,8 +79,8 @@ function Hero() {
             <source src="/videos/hero-calm.mp4" type="video/mp4" />
           </video>
         )}
-        <div className="absolute inset-0 bg-gradient-to-b from-white/75 via-white/45 to-white/80" />
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(255,255,255,0.55),transparent_65%)]" />
+        <div className="absolute inset-0 bg-gradient-to-b from-sky-ice/90 via-sky-mist/60 to-background/90" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(247,251,248,0.72),rgba(247,251,248,0.08)_70%)]" />
       </div>
 
       <div className="mx-auto max-w-6xl text-center relative">
@@ -393,7 +393,7 @@ function CtaBand() {
             <Link to="/register" className="btn-primary px-7 py-3.5 rounded-full text-sm font-semibold inline-flex items-center gap-2">
               Start free <ArrowRight className="h-4 w-4" />
             </Link>
-            <Link to="/pricing" className="btn-ghost px-7 py-3.5 rounded-full text-sm font-medium text-white">
+            <Link to="/pricing" className="btn-ghost px-7 py-3.5 rounded-full text-sm font-medium">
               See pricing
             </Link>
           </div>
