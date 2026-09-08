@@ -22,6 +22,7 @@ const NAV = [
   { to: "/features", label: "Features" },
   { to: "/sounds", label: "Sound Library" },
   { to: "/meditation", label: "Meditation" },
+  { to: "/jianfei", label: "Breathing" },
   { to: "/sleep", label: "Sleep" },
   { to: "/frequencies", label: "Frequencies" },
   { to: "/pricing", label: "Pricing" },
@@ -43,7 +44,7 @@ export function Header() {
           <span className="font-bold text-xl sm:text-[22px] tracking-tight text-ink">MySerene</span>
         </Link>
         <nav className="hidden lg:flex items-center gap-0.5 xl:gap-1">
-          {NAV.slice(1, 7).map((n) => (
+          {NAV.slice(1, 8).map((n) => (
             <Link
               key={n.to}
               to={n.to}
