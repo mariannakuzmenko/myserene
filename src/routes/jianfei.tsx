@@ -113,7 +113,7 @@ function Intro({ onStart }: { onStart: () => void }) {
   return (
     <div className="relative mx-auto flex min-h-full max-w-2xl flex-col justify-center px-5 py-16 text-white">
       <p className="text-[10px] uppercase tracking-[0.3em] text-white/75">Guided breathing</p>
-      <h1 className="mt-3 text-4xl sm:text-5xl font-semibold" style={{ fontFamily: "Fraunces, serif" }}>
+      <h1 className="mt-3 text-4xl sm:text-5xl font-semibold text-white" style={{ fontFamily: "Fraunces, serif" }}>
         Jianfei Breathing
       </h1>
       <p className="mt-3 max-w-md text-base text-white/85 leading-relaxed">
@@ -241,7 +241,7 @@ function JianfeiPage() {
           <div className="grid min-h-full place-items-center px-6 text-center text-white animate-fade-in">
             <div>
               <div className="text-[10px] uppercase tracking-[0.3em] text-white/70">Next</div>
-              <div className="mt-3 text-3xl font-semibold" style={{ fontFamily: "Fraunces, serif" }}>
+              <div className="mt-3 text-3xl font-semibold text-white" style={{ fontFamily: "Fraunces, serif" }}>
                 {STEPS[Math.min(STEPS.length - 1, stepIdx + 1)].glyph}{" "}
                 {STEPS[Math.min(STEPS.length - 1, stepIdx + 1)].name}
               </div>
@@ -310,7 +310,7 @@ function JianfeiPage() {
         {screen === "done" && (
           <div className="grid min-h-full place-items-center px-6 text-center text-white animate-fade-in">
             <div className="max-w-md">
-              <h2 className="text-3xl sm:text-4xl font-semibold" style={{ fontFamily: "Fraunces, serif" }}>
+              <h2 className="text-3xl sm:text-4xl font-semibold text-white" style={{ fontFamily: "Fraunces, serif" }}>
                 Practice Complete
               </h2>
               <p className="mt-3 text-base text-white/85">“Take a moment before returning to your day.”</p>
