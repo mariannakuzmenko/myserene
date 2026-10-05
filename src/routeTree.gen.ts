@@ -9,75 +9,25 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as SoundsRouteImport } from './routes/sounds'
-import { Route as SleepRouteImport } from './routes/sleep'
-import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
-import { Route as RegisterRouteImport } from './routes/register'
-import { Route as PricingRouteImport } from './routes/pricing'
-import { Route as MeditationRouteImport } from './routes/meditation'
-import { Route as LoginRouteImport } from './routes/login'
-import { Route as JianfeiRouteImport } from './routes/jianfei'
-import { Route as FrequenciesRouteImport } from './routes/frequencies'
-import { Route as FeaturesRouteImport } from './routes/features'
-import { Route as ContactRouteImport } from './routes/contact'
-import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AboutRouteImport } from './routes/about'
+import { Route as ContactRouteImport } from './routes/contact'
+import { Route as FeaturesRouteImport } from './routes/features'
+import { Route as FrequenciesRouteImport } from './routes/frequencies'
+import { Route as JianfeiRouteImport } from './routes/jianfei'
+import { Route as LoginRouteImport } from './routes/login'
+import { Route as MeditationRouteImport } from './routes/meditation'
+import { Route as PricingRouteImport } from './routes/pricing'
+import { Route as RegisterRouteImport } from './routes/register'
+import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
+import { Route as SleepRouteImport } from './routes/sleep'
+import { Route as SoundsRouteImport } from './routes/sounds'
 import { Route as BlogIndexRouteImport } from './routes/blog.index'
 import { Route as BlogSlugRouteImport } from './routes/blog.$slug'
 
-const SoundsRoute = SoundsRouteImport.update({
-  id: '/sounds',
-  path: '/sounds',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const SleepRoute = SleepRouteImport.update({
-  id: '/sleep',
-  path: '/sleep',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
-  id: '/sitemap.xml',
-  path: '/sitemap.xml',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const RegisterRoute = RegisterRouteImport.update({
-  id: '/register',
-  path: '/register',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const PricingRoute = PricingRouteImport.update({
-  id: '/pricing',
-  path: '/pricing',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const MeditationRoute = MeditationRouteImport.update({
-  id: '/meditation',
-  path: '/meditation',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const LoginRoute = LoginRouteImport.update({
-  id: '/login',
-  path: '/login',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const JianfeiRoute = JianfeiRouteImport.update({
-  id: '/jianfei',
-  path: '/jianfei',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const FrequenciesRoute = FrequenciesRouteImport.update({
-  id: '/frequencies',
-  path: '/frequencies',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const FeaturesRoute = FeaturesRouteImport.update({
-  id: '/features',
-  path: '/features',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ContactRoute = ContactRouteImport.update({
-  id: '/contact',
-  path: '/contact',
+const IndexRoute = IndexRouteImport.update({
+  id: '/',
+  path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AboutRoute = AboutRouteImport.update({
@@ -85,9 +35,59 @@ const AboutRoute = AboutRouteImport.update({
   path: '/about',
   getParentRoute: () => rootRouteImport,
 } as any)
-const IndexRoute = IndexRouteImport.update({
-  id: '/',
-  path: '/',
+const ContactRoute = ContactRouteImport.update({
+  id: '/contact',
+  path: '/contact',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FeaturesRoute = FeaturesRouteImport.update({
+  id: '/features',
+  path: '/features',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FrequenciesRoute = FrequenciesRouteImport.update({
+  id: '/frequencies',
+  path: '/frequencies',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const JianfeiRoute = JianfeiRouteImport.update({
+  id: '/jianfei',
+  path: '/jianfei',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LoginRoute = LoginRouteImport.update({
+  id: '/login',
+  path: '/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MeditationRoute = MeditationRouteImport.update({
+  id: '/meditation',
+  path: '/meditation',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PricingRoute = PricingRouteImport.update({
+  id: '/pricing',
+  path: '/pricing',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RegisterRoute = RegisterRouteImport.update({
+  id: '/register',
+  path: '/register',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
+  id: '/sitemap.xml',
+  path: '/sitemap.xml',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SleepRoute = SleepRouteImport.update({
+  id: '/sleep',
+  path: '/sleep',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SoundsRoute = SoundsRouteImport.update({
+  id: '/sounds',
+  path: '/sounds',
   getParentRoute: () => rootRouteImport,
 } as any)
 const BlogIndexRoute = BlogIndexRouteImport.update({
@@ -227,81 +227,11 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/sounds': {
-      id: '/sounds'
-      path: '/sounds'
-      fullPath: '/sounds'
-      preLoaderRoute: typeof SoundsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/sleep': {
-      id: '/sleep'
-      path: '/sleep'
-      fullPath: '/sleep'
-      preLoaderRoute: typeof SleepRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/sitemap.xml': {
-      id: '/sitemap.xml'
-      path: '/sitemap.xml'
-      fullPath: '/sitemap.xml'
-      preLoaderRoute: typeof SitemapDotxmlRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/register': {
-      id: '/register'
-      path: '/register'
-      fullPath: '/register'
-      preLoaderRoute: typeof RegisterRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/pricing': {
-      id: '/pricing'
-      path: '/pricing'
-      fullPath: '/pricing'
-      preLoaderRoute: typeof PricingRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/meditation': {
-      id: '/meditation'
-      path: '/meditation'
-      fullPath: '/meditation'
-      preLoaderRoute: typeof MeditationRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/login': {
-      id: '/login'
-      path: '/login'
-      fullPath: '/login'
-      preLoaderRoute: typeof LoginRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/jianfei': {
-      id: '/jianfei'
-      path: '/jianfei'
-      fullPath: '/jianfei'
-      preLoaderRoute: typeof JianfeiRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/frequencies': {
-      id: '/frequencies'
-      path: '/frequencies'
-      fullPath: '/frequencies'
-      preLoaderRoute: typeof FrequenciesRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/features': {
-      id: '/features'
-      path: '/features'
-      fullPath: '/features'
-      preLoaderRoute: typeof FeaturesRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/contact': {
-      id: '/contact'
-      path: '/contact'
-      fullPath: '/contact'
-      preLoaderRoute: typeof ContactRouteImport
+    '/': {
+      id: '/'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/about': {
@@ -311,11 +241,81 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AboutRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/': {
-      id: '/'
-      path: '/'
-      fullPath: '/'
-      preLoaderRoute: typeof IndexRouteImport
+    '/contact': {
+      id: '/contact'
+      path: '/contact'
+      fullPath: '/contact'
+      preLoaderRoute: typeof ContactRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/features': {
+      id: '/features'
+      path: '/features'
+      fullPath: '/features'
+      preLoaderRoute: typeof FeaturesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/frequencies': {
+      id: '/frequencies'
+      path: '/frequencies'
+      fullPath: '/frequencies'
+      preLoaderRoute: typeof FrequenciesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/jianfei': {
+      id: '/jianfei'
+      path: '/jianfei'
+      fullPath: '/jianfei'
+      preLoaderRoute: typeof JianfeiRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/login': {
+      id: '/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof LoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/meditation': {
+      id: '/meditation'
+      path: '/meditation'
+      fullPath: '/meditation'
+      preLoaderRoute: typeof MeditationRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/pricing': {
+      id: '/pricing'
+      path: '/pricing'
+      fullPath: '/pricing'
+      preLoaderRoute: typeof PricingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/register': {
+      id: '/register'
+      path: '/register'
+      fullPath: '/register'
+      preLoaderRoute: typeof RegisterRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sitemap.xml': {
+      id: '/sitemap.xml'
+      path: '/sitemap.xml'
+      fullPath: '/sitemap.xml'
+      preLoaderRoute: typeof SitemapDotxmlRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sleep': {
+      id: '/sleep'
+      path: '/sleep'
+      fullPath: '/sleep'
+      preLoaderRoute: typeof SleepRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sounds': {
+      id: '/sounds'
+      path: '/sounds'
+      fullPath: '/sounds'
+      preLoaderRoute: typeof SoundsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/blog/': {
