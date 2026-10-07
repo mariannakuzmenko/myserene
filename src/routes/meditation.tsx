@@ -104,7 +104,7 @@ function MeditationPage() {
 
   return (
     <PageShell>
-      <Scene image={NATURE.mist} className="px-4 pt-20 pb-16 rounded-b-[48px]" minHeight="55vh">
+      <Scene image={NATURE.mist} className="px-4 pt-20 pb-16" minHeight="55vh">
         <SectionHeading
           eyebrow="Guided meditation"
           title="Practice, quietly guided."

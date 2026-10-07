@@ -32,7 +32,7 @@ const F = [
 function FeaturesPage() {
   return (
     <PageShell>
-      <Scene image={NATURE.bamboo} className="px-4 pt-20 pb-16 rounded-b-[48px]" minHeight="55vh">
+      <Scene image={NATURE.bamboo} className="px-4 pt-20 pb-16" minHeight="55vh">
         <SectionHeading eyebrow="Everything Serene does" title="Ten quiet tools. One calm interface." subtitle="Designed to disappear so you can be present." />
       </Scene>
       <section className="px-4 pt-16">

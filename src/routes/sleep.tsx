@@ -150,7 +150,7 @@ function SleepPage() {
 
   return (
     <PageShell>
-      <Scene image={NATURE.beachSunset} className="px-4 pt-20 pb-16 rounded-b-[48px]" minHeight="55vh">
+      <Scene image={NATURE.beachSunset} className="px-4 pt-20 pb-16" minHeight="55vh">
         <SectionHeading
           eyebrow="Sleep"
           title="Fall asleep faster. Wake up gentler."
