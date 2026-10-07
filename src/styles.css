@@ -203,6 +203,18 @@
 
 .btn-primary svg { color: #ffffff; stroke-width: 2; }
 
+/* Sound symbols on pale tiles stay dark, regardless of time-of-day text colors. */
+@utility sound-icon {
+  color: var(--icon-on-light);
+  stroke-width: 2;
+}
+
+@utility sound-icon-on-image {
+  color: var(--icon-on-light);
+  stroke-width: 2;
+  filter: drop-shadow(0 0 2px var(--icon-on-dark)) drop-shadow(0 0 4px var(--icon-on-dark));
+}
+
 @utility bg-aurora {
   background:
     radial-gradient(1200px 620px at 8% -10%, #d7f5e6 0%, transparent 60%),

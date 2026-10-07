@@ -28,7 +28,7 @@ export function FloatingAudioPlayer() {
           className="relative grid place-items-center h-11 w-11 sm:h-12 sm:w-12 rounded-2xl shrink-0 overflow-hidden"
           style={{ background: focused ? `linear-gradient(135deg, ${focused.tint}55, ${focused.tint}aa)` : "linear-gradient(135deg,#8fe0c6,#35b39a)" }}
         >
-          {focused ? <focused.icon className="h-5 w-5 text-white" strokeWidth={1.5} /> : <Waves className="h-5 w-5 text-white" />}
+          {focused ? <focused.icon className="h-5 w-5 sound-icon-on-image" /> : <Waves className="h-5 w-5 sound-icon-on-image" />}
           {a.playing && <span className="absolute inset-0 rounded-2xl border border-white/70 animate-breathe" />}
         </div>
 
@@ -264,7 +264,7 @@ function ExpandedPanel() {
               <div key={id} className="glass rounded-2xl px-3 py-2 flex items-center gap-3">
                 <div className="grid place-items-center h-9 w-9 rounded-xl shrink-0"
                   style={{ background: `linear-gradient(135deg, ${s.tint}55, ${s.tint}cc)` }}>
-                  <Icon className="h-4 w-4 text-white" strokeWidth={1.5} />
+                  <Icon className="h-4 w-4 sound-icon-on-image" />
                 </div>
                 <div className="min-w-0 flex-1">
                   <div className="text-sm font-medium truncate">{s.title}</div>
