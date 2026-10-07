@@ -81,6 +81,8 @@
   --emerald: #14775b;
   --aqua: #7fd5df;
   --sun: #f4c98b;
+  --icon-on-light: #0d4436;
+  --icon-on-dark: #ffffff;
 }
 
 @layer base {
@@ -183,10 +185,10 @@
 /* High-contrast icon controls on light and photographic surfaces. */
 @utility icon-control {
   background: linear-gradient(135deg, rgba(230, 247, 239, 0.96), rgba(207, 238, 224, 0.9));
-  color: var(--ink);
+  color: var(--icon-on-light);
   border: 1px solid rgba(13, 68, 54, 0.22);
   backdrop-filter: blur(20px);
-  & svg { color: currentColor; stroke-width: 2; }
+  & svg:not(.fill-red-500) { color: var(--icon-on-light); stroke-width: 2; }
   &:hover { background: rgba(182, 242, 216, 0.96); }
 }
 
@@ -195,7 +197,7 @@
   color: #ffffff;
   border: 1px solid rgba(255, 255, 255, 0.42);
   backdrop-filter: blur(20px);
-  & svg { color: #ffffff; stroke-width: 2; }
+  & svg { color: var(--icon-on-dark); stroke-width: 2; }
   &:hover { background: rgba(4, 30, 24, 0.78); }
 }
 
