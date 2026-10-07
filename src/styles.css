@@ -393,7 +393,7 @@ html.tod-night .scene > .scene-overlay {
   background-repeat: no-repeat;
   background-color: #0b201a;
   z-index: -2;
-  filter: saturate(1.14) contrast(1.08) brightness(1.01);
+  filter: saturate(1.12) contrast(1.06);
   transform: scale(1.14);
   will-change: transform;
   animation: scene-drift 46s ease-in-out infinite alternate;
@@ -409,8 +409,8 @@ html.tod-night .scene > .scene-overlay {
 .scene > .scene-overlay {
   position: absolute; inset: 0; z-index: -1;
   background:
-    radial-gradient(120% 80% at 50% 22%, rgba(255,255,255,0.86) 0%, rgba(255,255,255,0.38) 55%, transparent 100%),
-    linear-gradient(180deg, rgba(255,255,255,0.55) 0%, rgba(255,255,255,0.28) 45%, rgba(255,255,255,0.85) 100%);
+    radial-gradient(70% 55% at 50% 38%, rgba(255,255,255,0.72) 0%, rgba(255,255,255,0.3) 60%, transparent 100%),
+    linear-gradient(180deg, rgba(255,255,255,0.18) 0%, transparent 40%, rgba(247,251,248,0.6) 100%);
 }
 .scene-dark > .scene-overlay {
   background:

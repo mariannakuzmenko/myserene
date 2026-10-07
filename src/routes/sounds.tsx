@@ -34,7 +34,7 @@ function SoundsPage() {
   const recent = audio.recent.map((id) => SOUND_BY_ID[id]).filter(Boolean);
   return (
     <PageShell>
-      <Scene image={NATURE.waterfall} className="px-4 pt-20 pb-16 rounded-b-[48px]" minHeight="60vh">
+      <Scene image={NATURE.waterfall} className="px-4 pt-20 pb-16" minHeight="60vh">
         <SectionHeading
           eyebrow="Sound library"
           title="A world of sound, curated."

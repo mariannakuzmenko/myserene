@@ -54,51 +54,53 @@ function Hero() {
   const [videoOk, setVideoOk] = useState(true);
   return (
     <section
-      className="relative mx-4 overflow-hidden rounded-[40px] px-4 pt-16 pb-20 sm:pt-24 sm:pb-24"
-      style={{ minHeight: "min(88vh, 900px)" }}
+      className="relative isolate w-full overflow-hidden -mt-32 sm:-mt-36 lg:-mt-44 px-4 pt-40 pb-20 sm:pt-48 sm:pb-24 lg:pt-56 flex items-center"
+      style={{ minHeight: "100svh" }}
     >
-      {/* Cinematic background: slow looping video, static nature image fallback */}
+      {/* Cinematic background: real looping ocean-wave video, sharp poster fallback */}
       <div aria-hidden className="absolute inset-0 -z-10 overflow-hidden bg-[#0b201a]">
         <img
-          src="/images/hero-calm-poster.jpg"
+          src="/images/hero-ocean-poster.jpg"
           alt=""
-          className="absolute inset-0 h-full w-full object-cover object-center scale-[1.06] [filter:saturate(1.12)_contrast(1.07)]"
+          className="absolute inset-0 h-full w-full object-cover object-center [filter:saturate(1.1)_contrast(1.05)]"
         />
         {videoOk && (
           <video
-            className="absolute inset-0 h-full w-full object-cover object-center scale-[1.06] [filter:saturate(1.12)_contrast(1.07)]"
-            poster="/images/hero-calm-poster.jpg"
+            className="absolute inset-0 h-full w-full object-cover object-center [filter:saturate(1.1)_contrast(1.05)]"
+            poster="/images/hero-ocean-poster.jpg"
             autoPlay
             loop
             muted
             playsInline
-            preload="metadata"
+            preload="auto"
             onError={() => setVideoOk(false)}
           >
-            <source src="/videos/hero-calm.webm" type="video/webm" />
-            <source src="/videos/hero-calm.mp4" type="video/mp4" />
+            <source src="/videos/hero-ocean.webm" type="video/webm" />
+            <source src="/videos/hero-ocean.mp4" type="video/mp4" />
           </video>
         )}
-        <div className="absolute inset-0 bg-gradient-to-b from-sky-ice/90 via-sky-mist/60 to-background/90" />
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(247,251,248,0.72),rgba(247,251,248,0.08)_70%)]" />
+        {/* Readability only where text sits: deep green wash at top fading to clear water */}
+        <div className="absolute inset-0 bg-gradient-to-b from-[rgba(4,30,24,0.72)] via-[rgba(4,30,24,0.38)] to-transparent" />
+        <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-[rgba(4,30,24,0.45)] to-transparent" />
       </div>
 
-      <div className="mx-auto max-w-6xl text-center relative">
-        <span className="inline-flex items-center gap-2 glass rounded-full px-4 py-1.5 text-xs font-semibold text-ink animate-rise">
-          <Sparkles className="h-3.5 w-3.5 text-brand" />
+      <div className="mx-auto max-w-6xl w-full text-center relative">
+        <span className="inline-flex items-center gap-2 icon-control-dark rounded-full px-4 py-1.5 text-xs font-semibold animate-rise">
+          <Sparkles className="h-3.5 w-3.5" />
           Relax. Breathe. Focus. Sleep.
         </span>
-        <h1 className="relative mt-8 text-4xl sm:text-6xl md:text-7xl font-semibold text-ink leading-[1.05] tracking-tight animate-rise">
+        <h1 className="relative mt-8 text-4xl sm:text-6xl md:text-7xl font-semibold !text-white leading-[1.05] tracking-tight animate-rise [text-shadow:0_2px_24px_rgba(4,22,18,0.55)]">
           Find Your Moment
           <br />
-          <span className="text-gradient-nature italic" style={{ fontFamily: "Fraunces, serif" }}>
+          <span className="italic text-mint" style={{ fontFamily: "Fraunces, serif" }}>
             of Calm
           </span>
         </h1>
-        <p className="relative mt-6 max-w-2xl mx-auto text-base sm:text-lg md:text-xl text-ink font-medium leading-relaxed animate-rise px-2">
+        <p className="relative mt-6 max-w-2xl mx-auto text-base sm:text-lg md:text-xl text-on-image font-medium leading-relaxed animate-rise px-2">
           Immersive sounds, meditation and peaceful environments designed to help you
           reset and find your focus.
         </p>
+
         <div className="relative mt-10 flex flex-wrap items-center justify-center gap-3 animate-rise">
           <button
             onClick={() => audio.startImmersive("rain")}
