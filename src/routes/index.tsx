@@ -137,7 +137,7 @@ function PreviewSoundCard({ icon: Icon, title, mood, soundId }: {
     <div className="glass rounded-3xl p-5 text-left transition-all hover:-translate-y-1 hover:shadow-2xl">
       <div className="flex items-center justify-between">
         <div className="grid place-items-center h-11 w-11 rounded-2xl bg-gradient-to-br from-sky-mist to-brand-soft">
-          <Icon className="h-5 w-5 text-ink" />
+          <Icon className="h-5 w-5 sound-icon" />
         </div>
         <button
           onClick={() => audio.toggleTrack(soundId, 65)}
@@ -183,7 +183,7 @@ function Features() {
         {FEATURES.map((f) => (
           <div key={f.title} className="glass-card rounded-3xl p-6 transition-all hover:-translate-y-1 group">
             <div className="grid place-items-center h-12 w-12 rounded-2xl bg-gradient-to-br from-mint to-aqua group-hover:scale-110 transition-transform">
-              <f.icon className="h-5 w-5 text-ink" />
+              <f.icon className="h-5 w-5 sound-icon" />
             </div>
             <h3 className="mt-5 text-xl font-semibold text-ink">{f.title}</h3>
             <p className="mt-2 text-sm text-ink-soft leading-relaxed">{f.desc}</p>
@@ -262,7 +262,7 @@ function Mixer() {
                       aria-label={`Toggle ${label}`}
                       className={`grid place-items-center h-10 w-10 rounded-xl shrink-0 transition ${active ? "btn-primary" : "bg-gradient-to-br from-sky-mist to-brand-soft"}`}
                     >
-                      <Icon className={`h-4 w-4 ${active ? "" : "text-ink"}`} />
+                      <Icon className={`h-4 w-4 ${active ? "" : "sound-icon"}`} />
                     </button>
                     <div className="font-medium truncate">{label}</div>
                   </div>

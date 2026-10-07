@@ -21,7 +21,7 @@ export function SoundCard(s: SoundDef) {
         />
         <div className="absolute inset-0 scrim-bottom" />
         <div className="absolute inset-0 grid place-items-center">
-          <Icon className="h-12 w-12 sm:h-14 sm:w-14 text-white drop-shadow-[0_2px_10px_rgba(0,0,0,0.5)] group-hover:scale-110 transition-transform duration-500" strokeWidth={1.4} />
+          <Icon className="h-12 w-12 sm:h-14 sm:w-14 sound-icon-on-image group-hover:scale-110 transition-transform duration-500" />
         </div>
         {/* Inset overlay layer keeps every badge/icon clear of the card border */}
         <div className="absolute inset-0 p-3 sm:p-4 flex flex-col justify-between pointer-events-none">
