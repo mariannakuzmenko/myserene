@@ -9,6 +9,9 @@ import { PageShell, SectionHeading, Scene, NATURE } from "@/components/site-chro
 import { SOUND_LIBRARY, SoundCard } from "@/components/sound-card";
 import { useAudio } from "@/lib/audio/audio-provider";
 import type { SoundId } from "@/lib/audio/catalog";
+import oceanVideo from "@/assets/hero-premium.mp4.asset.json";
+import oceanWebm from "@/assets/hero-premium.webm.asset.json";
+import oceanPoster from "@/assets/hero-premium.jpg.asset.json";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -57,17 +60,17 @@ function Hero() {
       className="relative isolate w-full overflow-hidden -mt-32 sm:-mt-36 lg:-mt-44 px-4 pt-40 pb-20 sm:pt-48 sm:pb-24 lg:pt-56 flex items-center"
       style={{ minHeight: "100svh" }}
     >
-      {/* Cinematic background: real looping ocean-wave video, sharp poster fallback */}
+      {/* Water-only cinematic loop with a matching sharp poster fallback. */}
       <div aria-hidden className="absolute inset-0 -z-10 overflow-hidden bg-[#0b201a]">
         <img
-          src="/images/hero-ocean-poster.jpg"
+          src={oceanPoster.url}
           alt=""
           className="absolute inset-0 h-full w-full object-cover object-center [filter:saturate(1.1)_contrast(1.05)]"
         />
         {videoOk && (
           <video
             className="absolute inset-0 h-full w-full object-cover object-center [filter:saturate(1.1)_contrast(1.05)]"
-            poster="/images/hero-ocean-poster.jpg"
+            poster={oceanPoster.url}
             autoPlay
             loop
             muted
@@ -75,8 +78,8 @@ function Hero() {
             preload="auto"
             onError={() => setVideoOk(false)}
           >
-            <source src="/videos/hero-ocean.webm" type="video/webm" />
-            <source src="/videos/hero-ocean.mp4" type="video/mp4" />
+            <source src={oceanVideo.url} type="video/mp4" />
+            <source src={oceanWebm.url} type="video/webm" />
           </video>
         )}
         {/* Readability only where text sits: deep green wash at top fading to clear water */}
