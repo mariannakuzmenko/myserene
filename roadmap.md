@@ -1,0 +1,4 @@
+- [x] Diagnose video delivery, codec, and visibility.
+- [x] Correct portable asset addresses and fail-safe ocean imagery without changing hero layout.
+- [x] Verify moving frames, looping, and forced network/autoplay/corruption fallback in desktop and mobile-sized Chromium.
+- [ ] Verify physical iPhone Safari playback — sandbox WebKit media process crashes; a physical device is unavailable.

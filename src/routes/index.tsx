@@ -1,5 +1,4 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useState } from "react";
 import {
   Play, Pause, Sparkles, Moon, Wind, Flame, CloudRain, Trees,
   Waves, Bird, Cloud, Music, Brain, Timer, Star, Heart,
@@ -9,9 +8,7 @@ import { PageShell, SectionHeading, Scene, NATURE } from "@/components/site-chro
 import { SOUND_LIBRARY, SoundCard } from "@/components/sound-card";
 import { useAudio } from "@/lib/audio/audio-provider";
 import type { SoundId } from "@/lib/audio/catalog";
-import oceanVideo from "@/assets/hero-premium.mp4.asset.json";
-import oceanWebm from "@/assets/hero-premium.webm.asset.json";
-import oceanPoster from "@/assets/hero-premium.jpg.asset.json";
+import { HeroOceanBackground } from "@/components/hero-ocean-background";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -21,6 +18,8 @@ export const Route = createFileRoute("/")({
       { property: "og:title", content: "MySerene — Find Your Moment of Calm" },
       { property: "og:description", content: "Immersive sounds, meditation and peaceful environments designed to help you reset and find your focus." },
       { property: "og:url", content: "/" },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
     links: [{ rel: "canonical", href: "/" }],
     scripts: [{
@@ -54,38 +53,12 @@ function HomePage() {
 
 function Hero() {
   const audio = useAudio();
-  const [videoOk, setVideoOk] = useState(true);
   return (
     <section
       className="relative isolate w-full overflow-hidden -mt-32 sm:-mt-36 lg:-mt-44 px-4 pt-40 pb-20 sm:pt-48 sm:pb-24 lg:pt-56 flex items-center"
       style={{ minHeight: "100svh" }}
     >
-      {/* Water-only cinematic loop with a matching sharp poster fallback. */}
-      <div aria-hidden className="absolute inset-0 -z-10 overflow-hidden bg-[#0b201a]">
-        <img
-          src={oceanPoster.url}
-          alt=""
-          className="absolute inset-0 h-full w-full object-cover object-center [filter:saturate(1.1)_contrast(1.05)]"
-        />
-        {videoOk && (
-          <video
-            className="absolute inset-0 h-full w-full object-cover object-center [filter:saturate(1.1)_contrast(1.05)]"
-            poster={oceanPoster.url}
-            autoPlay
-            loop
-            muted
-            playsInline
-            preload="auto"
-            onError={() => setVideoOk(false)}
-          >
-            <source src={oceanVideo.url} type="video/mp4" />
-            <source src={oceanWebm.url} type="video/webm" />
-          </video>
-        )}
-        {/* Readability only where text sits: deep green wash at top fading to clear water */}
-        <div className="absolute inset-0 bg-gradient-to-b from-[rgba(4,30,24,0.72)] via-[rgba(4,30,24,0.38)] to-transparent" />
-        <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-[rgba(4,30,24,0.45)] to-transparent" />
-      </div>
+      <HeroOceanBackground />
 
       <div className="mx-auto max-w-6xl w-full text-center relative">
         <span className="inline-flex items-center gap-2 icon-control-dark rounded-full px-4 py-1.5 text-xs font-semibold animate-rise">
