@@ -30,6 +30,7 @@ export const Route = createFileRoute("/")({
         name: "MySerene",
         applicationCategory: "HealthApplication",
         operatingSystem: "iOS, Android, Web",
+        sameAs: "https://www.instagram.com/myserene.space/",
         offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
       }),
     }],
