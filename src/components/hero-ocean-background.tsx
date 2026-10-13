@@ -9,11 +9,15 @@ const assetUrl = (path: string) => new URL(path, "https://myserene.lovable.app")
 
 export function HeroOceanBackground() {
   const videoRef = useRef<HTMLVideoElement>(null);
+  const posterRef = useRef<HTMLImageElement>(null);
   const [playing, setPlaying] = useState(false);
   const [failed, setFailed] = useState(false);
   const [posterFailed, setPosterFailed] = useState(false);
 
   useEffect(() => {
+    // A cached image failure can happen before React hydrates its error handler.
+    const poster = posterRef.current;
+    if (poster?.complete && poster.naturalWidth === 0) setPosterFailed(true);
     const video = videoRef.current;
     if (!video) return;
     // Set the property too: Safari must see muted before a programmatic play.
@@ -45,7 +49,7 @@ export function HeroOceanBackground() {
       {/* Bundled, independent ocean image remains behind both CDN resources. */}
       <img src={emergencyOcean} alt="" width={1600} height={912} fetchPriority="high"
         className="absolute inset-0 h-full w-full object-cover object-center" />
-      {!posterFailed && <img src={assetUrl(oceanPoster.url)} alt="" width={1600} height={900}
+      {!posterFailed && <img ref={posterRef} src={assetUrl(oceanPoster.url)} alt="" width={1600} height={900}
         fetchPriority="high" onError={() => setPosterFailed(true)}
         className="absolute inset-0 h-full w-full object-cover object-center [filter:saturate(1.1)_contrast(1.05)]" />}
       {!failed && <video ref={videoRef}

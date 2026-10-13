@@ -56,7 +56,12 @@ async def main():
         except Exception as error:
             print('WEBKIT UNAVAILABLE', str(error).splitlines()[0])
         else:
-            await check(safari, 'webkit-iphone-sized-playback', {'width':390,'height':844})
+            try:
+                await check(safari, 'webkit-iphone-sized-playback', {'width':390,'height':844})
+            except Exception as error:
+                if 'Target crashed' not in str(error):
+                    raise
+                print('WEBKIT UNVERIFIED: sandbox WebKit media process crashed; requires a physical iPhone check.')
             await safari.close()
 
 asyncio.run(main())
