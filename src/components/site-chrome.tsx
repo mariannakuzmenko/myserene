@@ -134,10 +134,14 @@ export function Footer() {
         <div className="mt-10 pt-6 border-t border-white/60 flex flex-col sm:flex-row items-center justify-between gap-4">
           <p className="text-xs text-ink-soft">© {new Date().getFullYear()} MySerene. All rights reserved.</p>
           <div className="flex items-center gap-2">
-            {[Instagram, Twitter, Youtube].map((Icon, i) => (
-               <a key={i} href="#" aria-label="social" className="grid place-items-center h-9 w-9 rounded-full icon-control hover:scale-110 transition-transform">
+            {[
+              { Icon: Instagram, label: "MySerene on Instagram", href: "https://www.instagram.com/myserene.space/" },
+              { Icon: Twitter, label: "MySerene on Twitter", href: "#" },
+              { Icon: Youtube, label: "MySerene on YouTube", href: "#" },
+            ].map(({ Icon, label, href }) => (
+               <a key={label} href={href} aria-label={label} target={href === "#" ? undefined : "_blank"} rel={href === "#" ? undefined : "noopener noreferrer"} className="grid place-items-center h-9 w-9 rounded-full icon-control hover:scale-110 transition-transform">
                  <Icon className="h-4 w-4" />
-              </a>
+               </a>
             ))}
           </div>
         </div>
