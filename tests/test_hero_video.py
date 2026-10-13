@@ -10,7 +10,7 @@ async def check(browser, label, viewport, failure=None):
     if failure == 'network':
         await page.route('**/__l5e/assets-v1/**', lambda route: route.abort())
     elif failure == 'autoplay':
-        await page.add_init_script("HTMLMediaElement.prototype.play = function() { return Promise.reject(new DOMException('blocked', 'NotAllowedError')); };")
+        await page.add_init_script("document.addEventListener('play', event => event.target.pause(), true); HTMLMediaElement.prototype.play = function() { return Promise.reject(new DOMException('blocked', 'NotAllowedError')); };")
     elif failure == 'corrupt':
         await page.route('**/hero-premium.mp4', lambda route: route.fulfill(status=200, content_type='video/mp4', body='not a video'))
         await page.route('**/hero-premium.webm', lambda route: route.fulfill(status=200, content_type='video/webm', body='not a video'))
