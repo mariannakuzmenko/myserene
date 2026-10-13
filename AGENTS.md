@@ -9,4 +9,4 @@
 > the editor, so keep the branch in a working state.
 <!-- LOVABLE:END -->
 
-- The homepage ocean background imports CDN asset pointers for its MP4, WebM, and matching poster; MP4 is first for native iPhone Safari playback.
+- The homepage ocean background imports CDN asset pointers resolved against the published Lovable asset origin, with MP4 first and an independent bundled ocean image behind playback-gated video; this keeps exported Netlify sites and failed or blocked playback from showing an empty background.

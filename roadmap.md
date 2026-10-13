@@ -1,0 +1,3 @@
+- [ ] Diagnose video delivery, codec, and visibility.
+- [ ] Correct portable asset addresses and fail-safe ocean imagery without changing hero layout.
+- [ ] Verify actual playback and forced-failure fallback in desktop and mobile browsers.
