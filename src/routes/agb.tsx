@@ -1,4 +1,4 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute } from "@tanstack/react-router";
 import { LegalPage, legalHead } from "@/components/legal-page";
 
 export const Route = createFileRoute("/agb")({
@@ -8,7 +8,7 @@ export const Route = createFileRoute("/agb")({
 
 function AGB() {
   return (
-    <>
+
       <LegalPage
         title="AGB / Nutzungsbedingungen"
         sections={[
@@ -24,7 +24,6 @@ function AGB() {
           { h: "§ 10 Schlussbestimmungen", p: ["Es gilt deutsches Recht unter Ausschluss des UN-Kaufrechts. Gegenüber Verbrauchern gilt diese Rechtswahl nur, soweit nicht zwingende Verbraucherschutzvorschriften des Staates ihres gewöhnlichen Aufenthalts entgegenstehen. Sollten einzelne Bestimmungen unwirksam sein, bleibt der Vertrag im Übrigen wirksam."] },
         ]}
       />
-      <span className="sr-only"><Link to="/widerruf">Widerrufsbelehrung</Link></span>
-    </>
+
   );
 }
