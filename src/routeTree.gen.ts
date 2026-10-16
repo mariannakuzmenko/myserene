@@ -10,10 +10,15 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AboBedingungenRouteImport } from './routes/abo-bedingungen'
 import { Route as AboutRouteImport } from './routes/about'
+import { Route as AgbRouteImport } from './routes/agb'
 import { Route as ContactRouteImport } from './routes/contact'
+import { Route as DatenschutzRouteImport } from './routes/datenschutz'
 import { Route as FeaturesRouteImport } from './routes/features'
 import { Route as FrequenciesRouteImport } from './routes/frequencies'
+import { Route as GesundheitRouteImport } from './routes/gesundheit'
+import { Route as ImpressumRouteImport } from './routes/impressum'
 import { Route as JianfeiRouteImport } from './routes/jianfei'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as MeditationRouteImport } from './routes/meditation'
@@ -22,6 +27,7 @@ import { Route as RegisterRouteImport } from './routes/register'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as SleepRouteImport } from './routes/sleep'
 import { Route as SoundsRouteImport } from './routes/sounds'
+import { Route as WiderrufRouteImport } from './routes/widerruf'
 import { Route as BlogIndexRouteImport } from './routes/blog.index'
 import { Route as BlogSlugRouteImport } from './routes/blog.$slug'
 
@@ -30,14 +36,29 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AboBedingungenRoute = AboBedingungenRouteImport.update({
+  id: '/abo-bedingungen',
+  path: '/abo-bedingungen',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AboutRoute = AboutRouteImport.update({
   id: '/about',
   path: '/about',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AgbRoute = AgbRouteImport.update({
+  id: '/agb',
+  path: '/agb',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ContactRoute = ContactRouteImport.update({
   id: '/contact',
   path: '/contact',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DatenschutzRoute = DatenschutzRouteImport.update({
+  id: '/datenschutz',
+  path: '/datenschutz',
   getParentRoute: () => rootRouteImport,
 } as any)
 const FeaturesRoute = FeaturesRouteImport.update({
@@ -48,6 +69,16 @@ const FeaturesRoute = FeaturesRouteImport.update({
 const FrequenciesRoute = FrequenciesRouteImport.update({
   id: '/frequencies',
   path: '/frequencies',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const GesundheitRoute = GesundheitRouteImport.update({
+  id: '/gesundheit',
+  path: '/gesundheit',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ImpressumRoute = ImpressumRouteImport.update({
+  id: '/impressum',
+  path: '/impressum',
   getParentRoute: () => rootRouteImport,
 } as any)
 const JianfeiRoute = JianfeiRouteImport.update({
@@ -90,6 +121,11 @@ const SoundsRoute = SoundsRouteImport.update({
   path: '/sounds',
   getParentRoute: () => rootRouteImport,
 } as any)
+const WiderrufRoute = WiderrufRouteImport.update({
+  id: '/widerruf',
+  path: '/widerruf',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const BlogIndexRoute = BlogIndexRouteImport.update({
   id: '/blog/',
   path: '/blog/',
@@ -103,10 +139,15 @@ const BlogSlugRoute = BlogSlugRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/abo-bedingungen': typeof AboBedingungenRoute
   '/about': typeof AboutRoute
+  '/agb': typeof AgbRoute
   '/contact': typeof ContactRoute
+  '/datenschutz': typeof DatenschutzRoute
   '/features': typeof FeaturesRoute
   '/frequencies': typeof FrequenciesRoute
+  '/gesundheit': typeof GesundheitRoute
+  '/impressum': typeof ImpressumRoute
   '/jianfei': typeof JianfeiRoute
   '/login': typeof LoginRoute
   '/meditation': typeof MeditationRoute
@@ -115,15 +156,21 @@ export interface FileRoutesByFullPath {
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/sleep': typeof SleepRoute
   '/sounds': typeof SoundsRoute
+  '/widerruf': typeof WiderrufRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/blog/': typeof BlogIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/abo-bedingungen': typeof AboBedingungenRoute
   '/about': typeof AboutRoute
+  '/agb': typeof AgbRoute
   '/contact': typeof ContactRoute
+  '/datenschutz': typeof DatenschutzRoute
   '/features': typeof FeaturesRoute
   '/frequencies': typeof FrequenciesRoute
+  '/gesundheit': typeof GesundheitRoute
+  '/impressum': typeof ImpressumRoute
   '/jianfei': typeof JianfeiRoute
   '/login': typeof LoginRoute
   '/meditation': typeof MeditationRoute
@@ -132,16 +179,22 @@ export interface FileRoutesByTo {
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/sleep': typeof SleepRoute
   '/sounds': typeof SoundsRoute
+  '/widerruf': typeof WiderrufRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/blog': typeof BlogIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/abo-bedingungen': typeof AboBedingungenRoute
   '/about': typeof AboutRoute
+  '/agb': typeof AgbRoute
   '/contact': typeof ContactRoute
+  '/datenschutz': typeof DatenschutzRoute
   '/features': typeof FeaturesRoute
   '/frequencies': typeof FrequenciesRoute
+  '/gesundheit': typeof GesundheitRoute
+  '/impressum': typeof ImpressumRoute
   '/jianfei': typeof JianfeiRoute
   '/login': typeof LoginRoute
   '/meditation': typeof MeditationRoute
@@ -150,6 +203,7 @@ export interface FileRoutesById {
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/sleep': typeof SleepRoute
   '/sounds': typeof SoundsRoute
+  '/widerruf': typeof WiderrufRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/blog/': typeof BlogIndexRoute
 }
@@ -157,10 +211,15 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/abo-bedingungen'
     | '/about'
+    | '/agb'
     | '/contact'
+    | '/datenschutz'
     | '/features'
     | '/frequencies'
+    | '/gesundheit'
+    | '/impressum'
     | '/jianfei'
     | '/login'
     | '/meditation'
@@ -169,15 +228,21 @@ export interface FileRouteTypes {
     | '/sitemap.xml'
     | '/sleep'
     | '/sounds'
+    | '/widerruf'
     | '/blog/$slug'
     | '/blog/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/abo-bedingungen'
     | '/about'
+    | '/agb'
     | '/contact'
+    | '/datenschutz'
     | '/features'
     | '/frequencies'
+    | '/gesundheit'
+    | '/impressum'
     | '/jianfei'
     | '/login'
     | '/meditation'
@@ -186,15 +251,21 @@ export interface FileRouteTypes {
     | '/sitemap.xml'
     | '/sleep'
     | '/sounds'
+    | '/widerruf'
     | '/blog/$slug'
     | '/blog'
   id:
     | '__root__'
     | '/'
+    | '/abo-bedingungen'
     | '/about'
+    | '/agb'
     | '/contact'
+    | '/datenschutz'
     | '/features'
     | '/frequencies'
+    | '/gesundheit'
+    | '/impressum'
     | '/jianfei'
     | '/login'
     | '/meditation'
@@ -203,16 +274,22 @@ export interface FileRouteTypes {
     | '/sitemap.xml'
     | '/sleep'
     | '/sounds'
+    | '/widerruf'
     | '/blog/$slug'
     | '/blog/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AboBedingungenRoute: typeof AboBedingungenRoute
   AboutRoute: typeof AboutRoute
+  AgbRoute: typeof AgbRoute
   ContactRoute: typeof ContactRoute
+  DatenschutzRoute: typeof DatenschutzRoute
   FeaturesRoute: typeof FeaturesRoute
   FrequenciesRoute: typeof FrequenciesRoute
+  GesundheitRoute: typeof GesundheitRoute
+  ImpressumRoute: typeof ImpressumRoute
   JianfeiRoute: typeof JianfeiRoute
   LoginRoute: typeof LoginRoute
   MeditationRoute: typeof MeditationRoute
@@ -221,6 +298,7 @@ export interface RootRouteChildren {
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   SleepRoute: typeof SleepRoute
   SoundsRoute: typeof SoundsRoute
+  WiderrufRoute: typeof WiderrufRoute
   BlogSlugRoute: typeof BlogSlugRoute
   BlogIndexRoute: typeof BlogIndexRoute
 }
@@ -234,6 +312,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/abo-bedingungen': {
+      id: '/abo-bedingungen'
+      path: '/abo-bedingungen'
+      fullPath: '/abo-bedingungen'
+      preLoaderRoute: typeof AboBedingungenRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/about': {
       id: '/about'
       path: '/about'
@@ -241,11 +326,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AboutRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/agb': {
+      id: '/agb'
+      path: '/agb'
+      fullPath: '/agb'
+      preLoaderRoute: typeof AgbRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/contact': {
       id: '/contact'
       path: '/contact'
       fullPath: '/contact'
       preLoaderRoute: typeof ContactRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/datenschutz': {
+      id: '/datenschutz'
+      path: '/datenschutz'
+      fullPath: '/datenschutz'
+      preLoaderRoute: typeof DatenschutzRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/features': {
@@ -260,6 +359,20 @@ declare module '@tanstack/react-router' {
       path: '/frequencies'
       fullPath: '/frequencies'
       preLoaderRoute: typeof FrequenciesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/gesundheit': {
+      id: '/gesundheit'
+      path: '/gesundheit'
+      fullPath: '/gesundheit'
+      preLoaderRoute: typeof GesundheitRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/impressum': {
+      id: '/impressum'
+      path: '/impressum'
+      fullPath: '/impressum'
+      preLoaderRoute: typeof ImpressumRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/jianfei': {
@@ -318,6 +431,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SoundsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/widerruf': {
+      id: '/widerruf'
+      path: '/widerruf'
+      fullPath: '/widerruf'
+      preLoaderRoute: typeof WiderrufRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/blog/': {
       id: '/blog/'
       path: '/blog'
@@ -337,10 +457,15 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AboBedingungenRoute: AboBedingungenRoute,
   AboutRoute: AboutRoute,
+  AgbRoute: AgbRoute,
   ContactRoute: ContactRoute,
+  DatenschutzRoute: DatenschutzRoute,
   FeaturesRoute: FeaturesRoute,
   FrequenciesRoute: FrequenciesRoute,
+  GesundheitRoute: GesundheitRoute,
+  ImpressumRoute: ImpressumRoute,
   JianfeiRoute: JianfeiRoute,
   LoginRoute: LoginRoute,
   MeditationRoute: MeditationRoute,
@@ -349,6 +474,7 @@ const rootRouteChildren: RootRouteChildren = {
   SitemapDotxmlRoute: SitemapDotxmlRoute,
   SleepRoute: SleepRoute,
   SoundsRoute: SoundsRoute,
+  WiderrufRoute: WiderrufRoute,
   BlogSlugRoute: BlogSlugRoute,
   BlogIndexRoute: BlogIndexRoute,
 }
