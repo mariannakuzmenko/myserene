@@ -127,8 +127,9 @@ export function Footer() {
           <FooterCol title="Company" links={[
             ["/about","About"],["/blog","Blog"],["/contact","Contact"],
           ]} />
-          <FooterCol title="Legal" links={[
-            ["/privacy","Privacy"],["/terms","Terms"],["/cookies","Cookies"],
+          <FooterCol title="Rechtliches" links={[
+            ["/impressum","Impressum"],["/datenschutz","Datenschutz"],["/agb","AGB / Terms"],
+            ["/widerruf","Widerrufsbelehrung"],["/abo-bedingungen","Abo-Bedingungen"],["/gesundheit","Gesundheit & Sicherheit"],
           ]} />
         </div>
         <div className="mt-10 pt-6 border-t border-white/60 flex flex-col sm:flex-row items-center justify-between gap-4">
