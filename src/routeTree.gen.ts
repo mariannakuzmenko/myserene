@@ -12,10 +12,12 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AboBedingungenRouteImport } from './routes/abo-bedingungen'
 import { Route as AboutRouteImport } from './routes/about'
+import { Route as AccountRouteImport } from './routes/account'
 import { Route as AgbRouteImport } from './routes/agb'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as DatenschutzRouteImport } from './routes/datenschutz'
 import { Route as FeaturesRouteImport } from './routes/features'
+import { Route as ForgotPasswordRouteImport } from './routes/forgot-password'
 import { Route as FrequenciesRouteImport } from './routes/frequencies'
 import { Route as GesundheitRouteImport } from './routes/gesundheit'
 import { Route as ImpressumRouteImport } from './routes/impressum'
@@ -24,6 +26,7 @@ import { Route as LoginRouteImport } from './routes/login'
 import { Route as MeditationRouteImport } from './routes/meditation'
 import { Route as PricingRouteImport } from './routes/pricing'
 import { Route as RegisterRouteImport } from './routes/register'
+import { Route as ResetPasswordRouteImport } from './routes/reset-password'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as SleepRouteImport } from './routes/sleep'
 import { Route as SoundsRouteImport } from './routes/sounds'
@@ -46,6 +49,11 @@ const AboutRoute = AboutRouteImport.update({
   path: '/about',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AccountRoute = AccountRouteImport.update({
+  id: '/account',
+  path: '/account',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AgbRoute = AgbRouteImport.update({
   id: '/agb',
   path: '/agb',
@@ -64,6 +72,11 @@ const DatenschutzRoute = DatenschutzRouteImport.update({
 const FeaturesRoute = FeaturesRouteImport.update({
   id: '/features',
   path: '/features',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ForgotPasswordRoute = ForgotPasswordRouteImport.update({
+  id: '/forgot-password',
+  path: '/forgot-password',
   getParentRoute: () => rootRouteImport,
 } as any)
 const FrequenciesRoute = FrequenciesRouteImport.update({
@@ -106,6 +119,11 @@ const RegisterRoute = RegisterRouteImport.update({
   path: '/register',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ResetPasswordRoute = ResetPasswordRouteImport.update({
+  id: '/reset-password',
+  path: '/reset-password',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
   id: '/sitemap.xml',
   path: '/sitemap.xml',
@@ -141,10 +159,12 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/abo-bedingungen': typeof AboBedingungenRoute
   '/about': typeof AboutRoute
+  '/account': typeof AccountRoute
   '/agb': typeof AgbRoute
   '/contact': typeof ContactRoute
   '/datenschutz': typeof DatenschutzRoute
   '/features': typeof FeaturesRoute
+  '/forgot-password': typeof ForgotPasswordRoute
   '/frequencies': typeof FrequenciesRoute
   '/gesundheit': typeof GesundheitRoute
   '/impressum': typeof ImpressumRoute
@@ -153,6 +173,7 @@ export interface FileRoutesByFullPath {
   '/meditation': typeof MeditationRoute
   '/pricing': typeof PricingRoute
   '/register': typeof RegisterRoute
+  '/reset-password': typeof ResetPasswordRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/sleep': typeof SleepRoute
   '/sounds': typeof SoundsRoute
@@ -164,10 +185,12 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/abo-bedingungen': typeof AboBedingungenRoute
   '/about': typeof AboutRoute
+  '/account': typeof AccountRoute
   '/agb': typeof AgbRoute
   '/contact': typeof ContactRoute
   '/datenschutz': typeof DatenschutzRoute
   '/features': typeof FeaturesRoute
+  '/forgot-password': typeof ForgotPasswordRoute
   '/frequencies': typeof FrequenciesRoute
   '/gesundheit': typeof GesundheitRoute
   '/impressum': typeof ImpressumRoute
@@ -176,6 +199,7 @@ export interface FileRoutesByTo {
   '/meditation': typeof MeditationRoute
   '/pricing': typeof PricingRoute
   '/register': typeof RegisterRoute
+  '/reset-password': typeof ResetPasswordRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/sleep': typeof SleepRoute
   '/sounds': typeof SoundsRoute
@@ -188,10 +212,12 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/abo-bedingungen': typeof AboBedingungenRoute
   '/about': typeof AboutRoute
+  '/account': typeof AccountRoute
   '/agb': typeof AgbRoute
   '/contact': typeof ContactRoute
   '/datenschutz': typeof DatenschutzRoute
   '/features': typeof FeaturesRoute
+  '/forgot-password': typeof ForgotPasswordRoute
   '/frequencies': typeof FrequenciesRoute
   '/gesundheit': typeof GesundheitRoute
   '/impressum': typeof ImpressumRoute
@@ -200,6 +226,7 @@ export interface FileRoutesById {
   '/meditation': typeof MeditationRoute
   '/pricing': typeof PricingRoute
   '/register': typeof RegisterRoute
+  '/reset-password': typeof ResetPasswordRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/sleep': typeof SleepRoute
   '/sounds': typeof SoundsRoute
@@ -213,10 +240,12 @@ export interface FileRouteTypes {
     | '/'
     | '/abo-bedingungen'
     | '/about'
+    | '/account'
     | '/agb'
     | '/contact'
     | '/datenschutz'
     | '/features'
+    | '/forgot-password'
     | '/frequencies'
     | '/gesundheit'
     | '/impressum'
@@ -225,6 +254,7 @@ export interface FileRouteTypes {
     | '/meditation'
     | '/pricing'
     | '/register'
+    | '/reset-password'
     | '/sitemap.xml'
     | '/sleep'
     | '/sounds'
@@ -236,10 +266,12 @@ export interface FileRouteTypes {
     | '/'
     | '/abo-bedingungen'
     | '/about'
+    | '/account'
     | '/agb'
     | '/contact'
     | '/datenschutz'
     | '/features'
+    | '/forgot-password'
     | '/frequencies'
     | '/gesundheit'
     | '/impressum'
@@ -248,6 +280,7 @@ export interface FileRouteTypes {
     | '/meditation'
     | '/pricing'
     | '/register'
+    | '/reset-password'
     | '/sitemap.xml'
     | '/sleep'
     | '/sounds'
@@ -259,10 +292,12 @@ export interface FileRouteTypes {
     | '/'
     | '/abo-bedingungen'
     | '/about'
+    | '/account'
     | '/agb'
     | '/contact'
     | '/datenschutz'
     | '/features'
+    | '/forgot-password'
     | '/frequencies'
     | '/gesundheit'
     | '/impressum'
@@ -271,6 +306,7 @@ export interface FileRouteTypes {
     | '/meditation'
     | '/pricing'
     | '/register'
+    | '/reset-password'
     | '/sitemap.xml'
     | '/sleep'
     | '/sounds'
@@ -283,10 +319,12 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboBedingungenRoute: typeof AboBedingungenRoute
   AboutRoute: typeof AboutRoute
+  AccountRoute: typeof AccountRoute
   AgbRoute: typeof AgbRoute
   ContactRoute: typeof ContactRoute
   DatenschutzRoute: typeof DatenschutzRoute
   FeaturesRoute: typeof FeaturesRoute
+  ForgotPasswordRoute: typeof ForgotPasswordRoute
   FrequenciesRoute: typeof FrequenciesRoute
   GesundheitRoute: typeof GesundheitRoute
   ImpressumRoute: typeof ImpressumRoute
@@ -295,6 +333,7 @@ export interface RootRouteChildren {
   MeditationRoute: typeof MeditationRoute
   PricingRoute: typeof PricingRoute
   RegisterRoute: typeof RegisterRoute
+  ResetPasswordRoute: typeof ResetPasswordRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   SleepRoute: typeof SleepRoute
   SoundsRoute: typeof SoundsRoute
@@ -326,6 +365,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AboutRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/account': {
+      id: '/account'
+      path: '/account'
+      fullPath: '/account'
+      preLoaderRoute: typeof AccountRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/agb': {
       id: '/agb'
       path: '/agb'
@@ -352,6 +398,13 @@ declare module '@tanstack/react-router' {
       path: '/features'
       fullPath: '/features'
       preLoaderRoute: typeof FeaturesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/forgot-password': {
+      id: '/forgot-password'
+      path: '/forgot-password'
+      fullPath: '/forgot-password'
+      preLoaderRoute: typeof ForgotPasswordRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/frequencies': {
@@ -410,6 +463,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof RegisterRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/reset-password': {
+      id: '/reset-password'
+      path: '/reset-password'
+      fullPath: '/reset-password'
+      preLoaderRoute: typeof ResetPasswordRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/sitemap.xml': {
       id: '/sitemap.xml'
       path: '/sitemap.xml'
@@ -459,10 +519,12 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboBedingungenRoute: AboBedingungenRoute,
   AboutRoute: AboutRoute,
+  AccountRoute: AccountRoute,
   AgbRoute: AgbRoute,
   ContactRoute: ContactRoute,
   DatenschutzRoute: DatenschutzRoute,
   FeaturesRoute: FeaturesRoute,
+  ForgotPasswordRoute: ForgotPasswordRoute,
   FrequenciesRoute: FrequenciesRoute,
   GesundheitRoute: GesundheitRoute,
   ImpressumRoute: ImpressumRoute,
@@ -471,6 +533,7 @@ const rootRouteChildren: RootRouteChildren = {
   MeditationRoute: MeditationRoute,
   PricingRoute: PricingRoute,
   RegisterRoute: RegisterRoute,
+  ResetPasswordRoute: ResetPasswordRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
   SleepRoute: SleepRoute,
   SoundsRoute: SoundsRoute,
