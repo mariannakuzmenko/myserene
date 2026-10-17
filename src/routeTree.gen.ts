@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AboBedingungenRouteImport } from './routes/abo-bedingungen'
 import { Route as AboutRouteImport } from './routes/about'
+import { Route as AccountRouteImport } from './routes/account'
 import { Route as AgbRouteImport } from './routes/agb'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as DatenschutzRouteImport } from './routes/datenschutz'
@@ -46,6 +47,11 @@ const AboBedingungenRoute = AboBedingungenRouteImport.update({
 const AboutRoute = AboutRouteImport.update({
   id: '/about',
   path: '/about',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AccountRoute = AccountRouteImport.update({
+  id: '/account',
+  path: '/account',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AgbRoute = AgbRouteImport.update({
@@ -153,6 +159,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/abo-bedingungen': typeof AboBedingungenRoute
   '/about': typeof AboutRoute
+  '/account': typeof AccountRoute
   '/agb': typeof AgbRoute
   '/contact': typeof ContactRoute
   '/datenschutz': typeof DatenschutzRoute
@@ -178,6 +185,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/abo-bedingungen': typeof AboBedingungenRoute
   '/about': typeof AboutRoute
+  '/account': typeof AccountRoute
   '/agb': typeof AgbRoute
   '/contact': typeof ContactRoute
   '/datenschutz': typeof DatenschutzRoute
@@ -204,6 +212,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/abo-bedingungen': typeof AboBedingungenRoute
   '/about': typeof AboutRoute
+  '/account': typeof AccountRoute
   '/agb': typeof AgbRoute
   '/contact': typeof ContactRoute
   '/datenschutz': typeof DatenschutzRoute
@@ -231,6 +240,7 @@ export interface FileRouteTypes {
     | '/'
     | '/abo-bedingungen'
     | '/about'
+    | '/account'
     | '/agb'
     | '/contact'
     | '/datenschutz'
@@ -256,6 +266,7 @@ export interface FileRouteTypes {
     | '/'
     | '/abo-bedingungen'
     | '/about'
+    | '/account'
     | '/agb'
     | '/contact'
     | '/datenschutz'
@@ -281,6 +292,7 @@ export interface FileRouteTypes {
     | '/'
     | '/abo-bedingungen'
     | '/about'
+    | '/account'
     | '/agb'
     | '/contact'
     | '/datenschutz'
@@ -307,6 +319,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboBedingungenRoute: typeof AboBedingungenRoute
   AboutRoute: typeof AboutRoute
+  AccountRoute: typeof AccountRoute
   AgbRoute: typeof AgbRoute
   ContactRoute: typeof ContactRoute
   DatenschutzRoute: typeof DatenschutzRoute
@@ -350,6 +363,13 @@ declare module '@tanstack/react-router' {
       path: '/about'
       fullPath: '/about'
       preLoaderRoute: typeof AboutRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/account': {
+      id: '/account'
+      path: '/account'
+      fullPath: '/account'
+      preLoaderRoute: typeof AccountRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/agb': {
@@ -499,6 +519,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboBedingungenRoute: AboBedingungenRoute,
   AboutRoute: AboutRoute,
+  AccountRoute: AccountRoute,
   AgbRoute: AgbRoute,
   ContactRoute: ContactRoute,
   DatenschutzRoute: DatenschutzRoute,
