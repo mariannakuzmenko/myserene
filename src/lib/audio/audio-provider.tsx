@@ -5,6 +5,8 @@ import {
 import { SOUND_BY_ID, SOUND_CATALOG, type SoundDef, type SoundId } from "./catalog";
 import { getSoundBuffer } from "./synth";
 import { setBackgroundAudioActive, getBackgroundAudioElement } from "./background-audio";
+import { supabase } from "@/integrations/supabase/client";
+import { useAuth } from "@/lib/auth";
 
 type ActiveTracks = Record<SoundId, number>; // id -> 0..100 volume
 
@@ -121,9 +123,41 @@ export function AudioProvider({ children }: { children: ReactNode }) {
     try { window.localStorage.setItem(RECENT_STORAGE_KEY, JSON.stringify(recent)); } catch { /* ignore */ }
   }, [recent]);
 
+  // Account sync: when signed in, favorites + history live in the user's private rows.
+  const { user } = useAuth();
+  const userIdRef = useRef<string | null>(null);
+  useEffect(() => {
+    userIdRef.current = user?.id ?? null;
+    if (!user) return;
+    let cancelled = false;
+    (async () => {
+      const [f, h] = await Promise.all([
+        supabase.from("favorites").select("sound_id, created_at").eq("user_id", user.id).order("created_at", { ascending: false }),
+        supabase.from("play_history").select("sound_id, played_at").eq("user_id", user.id).order("played_at", { ascending: false }).limit(12),
+      ]);
+      if (cancelled) return;
+      const valid = (id: string): id is SoundId => id in SOUND_BY_ID;
+      const remoteFav = (f.data ?? []).map((r) => r.sound_id).filter(valid);
+      setFavorites((local) => {
+        const missing = local.filter((id) => !remoteFav.includes(id));
+        if (missing.length) void supabase.from("favorites").upsert(missing.map((sound_id) => ({ user_id: user.id, sound_id })));
+        return [...remoteFav, ...missing];
+      });
+      const remoteRecent = (h.data ?? []).map((r) => r.sound_id).filter(valid);
+      setRecent((local) => [...remoteRecent, ...local.filter((id) => !remoteRecent.includes(id))].slice(0, 12));
+    })();
+    return () => { cancelled = true; };
+  }, [user]);
+
   const remember = useCallback((ids: SoundId[]) => {
     if (ids.length === 0) return;
     setRecent((prev) => [...ids, ...prev.filter((p) => !ids.includes(p))].slice(0, 12));
+    const uid = userIdRef.current;
+    if (uid) {
+      const now = new Date().toISOString();
+      void supabase.from("play_history").upsert(ids.map((sound_id) => ({ user_id: uid, sound_id, played_at: now })))
+        .then(({ error }) => { if (error) console.warn("history sync failed", error.message); });
+    }
   }, []);
 
   // Refs for Web Audio machinery (persist across renders)
@@ -471,7 +505,17 @@ export function AudioProvider({ children }: { children: ReactNode }) {
   }, [ensureCtx, nextPrev]);
 
   const toggleFavorite = useCallback((id: SoundId) =>
-    setFavorites((prev) => (prev.includes(id) ? prev.filter((f) => f !== id) : [id, ...prev])), []);
+    setFavorites((prev) => {
+      const removing = prev.includes(id);
+      const uid = userIdRef.current;
+      if (uid) {
+        const q = removing
+          ? supabase.from("favorites").delete().eq("user_id", uid).eq("sound_id", id)
+          : supabase.from("favorites").upsert({ user_id: uid, sound_id: id });
+        void q.then(({ error }) => { if (error) console.warn("favorite sync failed", error.message); });
+      }
+      return removing ? prev.filter((f) => f !== id) : [id, ...prev];
+    }), []);
   const isFavorite = useCallback((id: SoundId) => favorites.includes(id), [favorites]);
 
   const api = useMemo<AudioApi>(() => ({
